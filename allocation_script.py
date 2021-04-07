@@ -50,7 +50,7 @@ def setup_logger(name, log_file, level=logging.INFO):
 
 
 # Grab relevant Data from the Network graph.
-# Subgraph Data: All Subgraphs with Name, SignalledTokens and StakedTokens
+# Subgraph Data: All Subgraphs with Name, SignalledTokens and StakedTokens,id
 # Indexer Data: Input your Indexer ID, Allocated Tokens Total and all Allocations
 # Graph Network Data: Total Tokens Allocated, total TokensStaked, Total Supply, GRT Issurance.
 
