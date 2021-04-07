@@ -557,7 +557,6 @@ if __name__ == '__main__':
 
     starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
     final_value = optimized_reward_weekly  # after optimization
-    #final_value = 7000  # after optimization
 
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000

@@ -319,6 +319,75 @@ values are the relevant variables for the indexing reward formula:
                                                  'id': df['id'].values[j]} for j in set_J}
 ```
 
+Now we run the optimization code for each IndexingReward Interval ['daily','weekly','yearly']. The
+objective of the optimization algorithm is to maximize the Indexing Rewards. Therefore it has to
+maximize the summation of the indexing reward formula:
+
+```python
+model.rewards = pyomo.Objective(
+   expr=sum((model.x[c] / data[c]['stakedTokensTotal']) * (
+           data[c]['signalledTokensTotal'] / data[c]['SignalledNetwork']) * data[c][reward_interval] for c in
+            C),  # Indexing Rewards Formula (Daily Rewards)
+   sense=pyomo.maximize)  # maximize Indexing Rewards
+```
+The variable in this case is model.x[c], this is the variable allocation amount per Subgraph which has
+to be optimized to generate the max(Indexing Reward). The formula takes the allocation per subgraph,
+the entire allocated stake on the specific subgraph and the signalled tokens on that subgraph into consideration.
+
+The optimization also includes a few constraints:
+1. The sum of the allocations can not be higher than the indexer total stake.
+2. The allocation per Subgraph should always be higher than 0.0 (optional!!!) if you don't need it
+you can comment that line. (Line 528)
+```python
+model.bound_x.add(model.x[c] >= 0.0)  # Allocations per Subgraph should be higher than zero
+```
+3. The Allocation per Subgraph should be less than the max_percentage * indexer_total_allocations value.
+This means that only x % of the total stake can be allocated on one subgraph.
+4. Also one single allocation can not be higher than the total staked tokens on the specific subgraph. This
+constraint should be deleted later, when there are much more subgraphs to choose from.
+   
+After calculating the optimal allocations per subgraph, we split the allocation amount by the desired
+amount of parallel allocations. For the calculation of the threshold, we use the weekly indexing rewards,
+because reaching the threshold with the transaction costs for the daily basis is not useful. We can not
+discard an optimization because it doesn't reach the threshold on daily indexing rewards when the 
+current gas prices lead to transaction costs for allocations of 100-400 USD.
+
+```python
+# Threshold Calculation
+
+ starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
+ final_value = optimized_reward_weekly  # after optimization
+
+ # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
+ gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000
+ allocation_costs_eth = gas_costs_eth * parallel_allocations * 2  # multiply by 2 for close/new-allocation
+ allocation_costs_fiat = allocation_costs_eth * ETH_USD
+ allocation_costs_grt = allocation_costs_eth * (1 / GRT_ETH)
+
+ final_value = final_value - allocation_costs_grt
+ diff_rewards = percentage_increase(starting_value, final_value)  # Percentage increase in Rewards
+ diff_rewards_fiat = (final_value - starting_value) * GRT_USD  # Fiat increase in Rewards
+
+    if diff_rewards >= threshold:
+        logger.info(
+            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
+            threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
+        print(
+            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
+                threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
+
+        allocation_script(indexer_id, FIXED_ALLOCATION)
+    if diff_rewards < threshold:
+        logger.info(
+            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED',
+            threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
+        print(
+            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
+                threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
+```
+If the threshold is reached, we create a script.txt file. For the creation of the script.txt file look
+into the function allocation_script().
+
 ## Anyblock Analytics and Contact
 
 Check out anyblockanalytics.com. We started participating in TheGraph ecosystem in the incentivized testnet as 
