@@ -1,0 +1,50 @@
+{
+    "Problem": [
+        {
+            "Lower bound": 248272.3008,
+            "Number of constraints": 4,
+            "Number of nonzeros": 4,
+            "Number of objectives": 1,
+            "Number of variables": 2,
+            "Sense": "maximize",
+            "Upper bound": 248272.3008
+        }
+    ],
+    "Solution": [
+        {
+            "number of solutions": 1,
+            "number of solutions displayed": 1
+        },
+        {
+            "Constraint": "No values",
+            "Gap": 0.0,
+            "Message": null,
+            "Objective": {
+                "rewards": {
+                    "Value": 248271.8971357542
+                }
+            },
+            "Problem": {},
+            "Status": "optimal",
+            "Variable": {
+                "x[PoolTogether]": {
+                    "Value": 1845050.0
+                }
+            }
+        }
+    ],
+    "Solver": [
+        {
+            "Error rc": 0,
+            "Statistics": {
+                "Branch and bound": {
+                    "Number of bounded subproblems": 0,
+                    "Number of created subproblems": 0
+                }
+            },
+            "Status": "ok",
+            "Termination condition": "optimal",
+            "Time": 0.004553556442260742
+        }
+    ]
+}

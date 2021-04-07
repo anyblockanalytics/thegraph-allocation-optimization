@@ -1,0 +1,62 @@
+Execution of Optimization Script started at: 07042021_06:38:06 
+
+Graph Network Statistics:                 
+ TOTAL SUPPLY: 10071934874.075735 
+ TOTAL ALLOCATIONS: 2591580982.4446683 
+ TOTAL INDEXING REWARDS: 83735935.63106632 
+ TOTAL TOKENS SIGNALLED: 104838.04008660032 
+ GRT_ISSUANCE_YEARLY: 1.0300000002147995
+
+ Price Statistics:                 
+ GAS PRICE (GWEI): 98 
+ GRT-USD: 1.73 
+ ETH-USD: 2091.27 
+ GAS-USAGE per Transaction: 250000
+Indexer Statistics:                 
+ INDEXER TOTAL ALLOCATIONS: 2322000.0 
+
+
+
+              Allocation  signalledTokensTotal  stakedTokensTotal  \
+Name                                                                
+PoolTogether   2322000.0         108934.570805       2.591581e+09   
+
+                                                          id  
+Name                                                          
+PoolTogether  QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF  
+
+Indexing Reward per Subgraph (Daily/Weekly/Monthly):                 
+
+ ['PoolTogether'] , 
+ Reward (Daily): [770.70011759] 
+ Reward (Weekly): [5394.89803016] 
+ Reward (Yearly): [281305.63229522] 
+
+
+ Total Indexing Rewards (Daily/Weekly/Yearly):                 
+
+ Daily: 770.7001175899545 
+Weekly: 5394.898030164516 
+Yearly: 281305.6322952187 
+
+
+
+Optimize Allocations:
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Percentage per Allocation: 1.0
+  PoolTogether: 2322000.0 allocations
+  Allocations Total = 2322000.0 GRT
+  Reward = GRT 770.700657710043
+
+Optimize Allocations for Interval: indexingRewardWeek and Percentage per Allocation: 1.0
+  PoolTogether: 2322000.0 allocations
+  Allocations Total = 2322000.0 GRT
+  Reward = GRT 5394.900169805777
+
+Optimize Allocations for Interval: indexingRewardYear and Percentage per Allocation: 1.0
+  PoolTogether: 2322000.0 allocations
+  Allocations Total = 2322000.0 GRT
+  Reward = GRT 281305.7400641657
+
+THRESHOLD of 20.0 NOT REACHED. Increase in Weekly Rewards of -4.39 Percent (-409.30558598006866 in USD). Transaction Costs 409.88892 USD. Allocation script NOT CREATED
