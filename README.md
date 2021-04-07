@@ -390,7 +390,7 @@ into the function allocation_script().
 
 ## Anyblock Analytics and Contact
 
-Check out [anyblockanalytics.com](anyblockanalytics.com). We started participating in TheGraph ecosystem in the incentivized testnet as 
+Check out [anyblockanalytics.com](https://anyblockanalytics.com). We started participating in TheGraph ecosystem in the incentivized testnet as 
 both indexers and curators and are Mainnet indexers from the start. Besides professionally running blockchain 
 infrastructure for rpc and data, we can provide benefits through our data analytics and visualization expertise as well as 
 ecosystem tool building.
