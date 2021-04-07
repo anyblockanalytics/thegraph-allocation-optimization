@@ -557,32 +557,33 @@ if __name__ == '__main__':
 
     starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
     final_value = optimized_reward_weekly  # after optimization
+    #final_value = 7000
 
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000
     allocation_costs_eth = gas_costs_eth * parallel_allocations * 2  # multiply by 2 for close/new-allocation
-    allocation_costs_fiat = allocation_costs_eth * ETH_USD
+    allocation_costs_fiat = round(allocation_costs_eth * ETH_USD,2)
     allocation_costs_grt = allocation_costs_eth * (1 / GRT_ETH)
 
     final_value = final_value - allocation_costs_grt
     diff_rewards = percentage_increase(starting_value, final_value)  # Percentage increase in Rewards
-    diff_rewards_fiat = (final_value - starting_value) * GRT_USD  # Fiat increase in Rewards
+    diff_rewards_fiat = round(((final_value - starting_value) * GRT_USD),2)  # Fiat increase in Rewards
 
     if diff_rewards >= threshold:
         logger.info(
-            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
+            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
             threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
         print(
-            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
+            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
                 threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
 
         allocation_script(indexer_id, FIXED_ALLOCATION)
     if diff_rewards < threshold:
         logger.info(
-            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED',
+            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED',
             threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
         print(
-            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
+            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
                 threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
 
     # Run the Optimization for Daily/Weekly/Yearly Indexing Rewards AND different max allocations (data_log)
