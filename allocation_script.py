@@ -1,3 +1,9 @@
+"""
+TheGraph Allocation Optimizer by Anyblock Analytics GmbH is licensed under a 
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+Based on a work at https://github.com/anyblockanalytics/thegraph-allocation-optimization.
+Permissions beyond the scope of this license may be available at contact@anyblockanalytics.com.
+"""
 import requests
 import pandas as pd
 import pyomo.environ as pyomo
