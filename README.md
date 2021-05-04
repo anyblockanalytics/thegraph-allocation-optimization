@@ -82,7 +82,7 @@ sudo apt-get install glpk-utils libglpk-dev glpk-doc python-glpk
 
 6. Now everything should be installed. Start a terminal in the Repository directory and run the script:
 ```shell
-python ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4
+python ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4 --no-subgraph-list
 ```
 ## Parameters
 
@@ -111,6 +111,9 @@ If your current **weekly** Indexing Rewards are 5000 and the threshold is set to
 
 4. **parallel_allocations**: Amoutn of parallel allocations (required for creating the script.txt file). Basically
 splits the allocation amount into subsets of the supplied parallel allocation amount.
+   
+5. **no-subgraph-list**: Disables the config.json, so no manual subgraph list is provided. (Default)
+6. **subgraph-list**: utilizes the provided list in config.json as subgraphs that should be considered for the optimization.
    
 ## Tech-Stack and Functioning
 
