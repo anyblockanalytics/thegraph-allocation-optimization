@@ -1,3 +1,21 @@
+# Allocation Optimization Script
+"""
+ Copyright (C) 2021 Anyblock Analytics
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 import requests
 import pandas as pd
 import pyomo.environ as pyomo
@@ -77,6 +95,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
           allocatedTokens
           subgraphDeployment {
             originalName
+            id
           }
           indexingRewards
         }
@@ -238,13 +257,15 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     print(f"Total Stake: {total_stake / 10 ** 18:,.2f}")
     print('=' * 40)
     dynamic_allocation = 0
+    # error
+    """
     if remaining_stake != 0:
         if len(subgraphs) > 1:
             dynamic_allocation = math.floor(
                 remaining_stake / (len(subgraphs - set(FIXED_ALLOCATION.keys()))) / PARALLEL_ALLOCATIONS / (
                         500 * 10 ** 18)) * (
                                          500 * 10 ** 18)
-
+    """
     print(f"Subgraphs: {len(subgraphs)}")
     print(f"Fixed: {len(set(FIXED_ALLOCATION.keys()))}")
     print(f"Dynamic: {len(subgraphs - set(FIXED_ALLOCATION.keys()))}")
@@ -329,12 +350,17 @@ if __name__ == '__main__':
                            help='Amount of parallel Allocations per Subgraph. Defaults to 1.',
                            default=2)
 
+    my_parser.add_argument('--subgraph-list', dest='subgraph_list', action='store_true')
+    my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
     args = my_parser.parse_args()
 
     indexer_id = args.indexer_id  # get indexer parameter input
     max_percentage = args.max_percentage
     threshold = args.threshold
     parallel_allocations = args.parallel_allocations
+    subgraph_list_parameter = args.subgraph_list
 
     # initialize logger
     if not os.path.exists("./logs/"):
@@ -387,15 +413,16 @@ if __name__ == '__main__':
         sublist = []
         # print(allocation.get('allocatedTokens'))
         # print(allocation.get('subgraphDeployment').get('originalName'))
-        sublist = [allocation.get('subgraphDeployment').get('originalName'), allocation.get('allocatedTokens'),
+        sublist = [allocation.get('subgraphDeployment').get('id'),
+                   allocation.get('subgraphDeployment').get('originalName'), allocation.get('allocatedTokens'),
                    allocation.get('indexingRewards')]
         allocation_list.append(sublist)
 
-        df = pd.DataFrame(allocation_list, columns=['Name', 'Allocation', 'IndexingReward'])
+        df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
         df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
         df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
 
-        df = df.groupby(by=df.Name).agg({
+        df = df.groupby(by=[df.Address, df.Name]).agg({
             'Allocation': 'sum',
             'IndexingReward': 'sum'
         }).reset_index()
@@ -407,17 +434,27 @@ if __name__ == '__main__':
     subgraph_list = []
     for subgraph in subgraph_data:
         sublist = []
-        sublist = [subgraph.get('originalName'), subgraph.get('signalledTokens'),
+        sublist = [subgraph.get('id'), subgraph.get('originalName'), subgraph.get('signalledTokens'),
                    subgraph.get('stakedTokens'),
                    base58.b58encode(bytearray.fromhex('1220' + subgraph.get('id')[2:])).decode("utf-8")]
         subgraph_list.append(sublist)
 
-    df_subgraphs = pd.DataFrame(subgraph_list, columns=['Name', 'signalledTokensTotal', 'stakedTokensTotal', 'id'])
+    df_subgraphs = pd.DataFrame(subgraph_list,
+                                columns=['Address', 'Name', 'signalledTokensTotal', 'stakedTokensTotal', 'id'])
     df_subgraphs['signalledTokensTotal'] = df_subgraphs['signalledTokensTotal'].astype(float) / 10 ** 18
     df_subgraphs['stakedTokensTotal'] = df_subgraphs['stakedTokensTotal'].astype(float) / 10 ** 18
 
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Name
-    df = pd.merge(df, df_subgraphs, how='left', on='Name').set_index('Name')
+    # df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('Address')
+    df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
+
+    # Manuell select List of Subgraphs from config.py
+    # (only indexed or desired subgraphs should be included into the optimization)
+    if subgraph_list_parameter:
+        with open("config.json", "r") as jsonfile:
+            list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
+
+        df = df[df['id'].isin(list_desired_subgraphs)]
 
     # print Table with allocations, Subgraph, total Tokens signalled and total tokens staked
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
@@ -474,14 +511,15 @@ if __name__ == '__main__':
     n = len(df)  # amount of subgraphs
     set_J = range(0, n)
 
-    data = {df.reset_index()['Name'].values[j]: {'Allocation': df['Allocation'].values[j],
-                                                 'signalledTokensTotal': df['signalledTokensTotal'].values[j],
-                                                 'stakedTokensTotal': df['stakedTokensTotal'].values[j],
-                                                 'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
-                                                 'indexingRewardYear': indexing_reward_year,
-                                                 'indexingRewardWeek': indexing_reward_week,
-                                                 'indexingRewardDay': indexing_reward_day,
-                                                 'id': df['id'].values[j]} for j in set_J}
+    data = {(df.reset_index()['Name_x'].values[j], df.reset_index()['Address'].values[j]): {
+        'Allocation': df['Allocation'].values[j],
+        'signalledTokensTotal': df['signalledTokensTotal'].values[j],
+        'stakedTokensTotal': df['stakedTokensTotal'].values[j],
+        'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
+        'indexingRewardYear': indexing_reward_year,
+        'indexingRewardWeek': indexing_reward_week,
+        'indexingRewardDay': indexing_reward_day,
+        'id': df['id'].values[j]} for j in set_J}
 
     """ Possibility to add random/test Subgraph Data
     data['test_subgraph'] = {'Allocation': 2322000.0,
@@ -557,17 +595,17 @@ if __name__ == '__main__':
 
     starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
     final_value = optimized_reward_weekly  # after optimization
-    #final_value = 7000
+    # final_value = 7000
 
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000
     allocation_costs_eth = gas_costs_eth * parallel_allocations * 2  # multiply by 2 for close/new-allocation
-    allocation_costs_fiat = round(allocation_costs_eth * ETH_USD,2)
+    allocation_costs_fiat = round(allocation_costs_eth * ETH_USD, 2)
     allocation_costs_grt = allocation_costs_eth * (1 / GRT_ETH)
 
     final_value = final_value - allocation_costs_grt
     diff_rewards = percentage_increase(starting_value, final_value)  # Percentage increase in Rewards
-    diff_rewards_fiat = round(((final_value - starting_value) * GRT_USD),2)  # Fiat increase in Rewards
+    diff_rewards_fiat = round(((final_value - starting_value) * GRT_USD), 2)  # Fiat increase in Rewards
 
     if diff_rewards >= threshold:
         logger.info(
