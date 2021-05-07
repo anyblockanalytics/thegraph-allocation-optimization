@@ -91,6 +91,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
       }
       indexer(id: $input) {
         allocatedTokens
+        stakedTokens
         allocations {
           allocatedTokens
           subgraphDeployment {
@@ -153,14 +154,14 @@ def optimization_for_data_logger(range_percentage_allocations):
                          for c in C),  # Indexing Rewards Formula (Daily Rewards)
                 sense=pyomo.maximize)  # maximize Indexing Rewards
 
-            model.vol = pyomo.Constraint(expr=indexer_total_allocations >= sum(
+            model.vol = pyomo.Constraint(expr=indexer_total_stake >= sum(
                 model.x[c] for c in C))  # Allocation can not be more than total Allocations
             model.bound_x = pyomo.ConstraintList()
 
             for c in C:
                 # model.bound_x.add(model.x[c] >= 0.0)  # Allocations per Subgraph should be higher than zero
                 model.bound_x.add(model.x[
-                                      c] <= percentage * indexer_total_allocations)  # Allocation per Subgraph can't be higher than x % of total Allocations
+                                      c] <= percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
                 model.bound_x.add(model.x[c] <= int(
                     data[c][
                         'stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
@@ -403,6 +404,7 @@ if __name__ == '__main__':
     # 'Allocation' (sum of Allocations from Indexer on Subgraph), 'IndexingReward' (curr. empty),
 
     indexer_data = data['indexer']
+    indexer_total_stake = int(indexer_data.get('stakedTokens')) * 10 ** -18
     indexer_total_allocations = int(indexer_data.get('allocatedTokens')) * 10 ** -18
     allocation_list = []
 
@@ -446,7 +448,9 @@ if __name__ == '__main__':
 
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Name
     # df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('Address')
-    df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
+    df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
+    df.fillna(0, inplace=True)
+    #df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
 
     # Manuell select List of Subgraphs from config.py
     # (only indexed or desired subgraphs should be included into the optimization)
@@ -511,7 +515,7 @@ if __name__ == '__main__':
     n = len(df)  # amount of subgraphs
     set_J = range(0, n)
 
-    data = {(df.reset_index()['Name_x'].values[j], df.reset_index()['Address'].values[j]): {
+    data = {(df.reset_index()['Name_y'].values[j], df.reset_index()['Address'].values[j]): {
         'Allocation': df['Allocation'].values[j],
         'signalledTokensTotal': df['signalledTokensTotal'].values[j],
         'stakedTokensTotal': df['stakedTokensTotal'].values[j],
@@ -557,15 +561,15 @@ if __name__ == '__main__':
                      C),  # Indexing Rewards Formula (Daily Rewards)
             sense=pyomo.maximize)  # maximize Indexing Rewards
 
-        model.vol = pyomo.Constraint(expr=indexer_total_allocations >= sum(
+        model.vol = pyomo.Constraint(expr=indexer_total_stake >= sum(
             model.x[c] for c in C))  # Allocation can not be more than total Allocations
         model.bound_x = pyomo.ConstraintList()
 
         for c in C:
             # model.bound_x.add(0 <= model.x[n] <= 15400000000000000000000000 / 10 ** 18)
-            model.bound_x.add(model.x[c] >= 0.0)  # Allocations per Subgraph should be higher than zero
+            model.bound_x.add(model.x[c] >= 1000.0)  # Allocations per Subgraph should be higher than zero
             model.bound_x.add(model.x[
-                                  c] <= max_percentage * indexer_total_allocations)  # Allocation per Subgraph can't be higher than x % of total Allocations
+                                  c] <= max_percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
             model.bound_x.add(model.x[c] <= int(
                 data[c]['stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
 
