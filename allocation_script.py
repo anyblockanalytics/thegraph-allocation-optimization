@@ -90,6 +90,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
         id
       }
       indexer(id: $input) {
+        tokenCapacity
         allocatedTokens
         stakedTokens
         allocations {
@@ -404,7 +405,7 @@ if __name__ == '__main__':
     # 'Allocation' (sum of Allocations from Indexer on Subgraph), 'IndexingReward' (curr. empty),
 
     indexer_data = data['indexer']
-    indexer_total_stake = int(indexer_data.get('stakedTokens')) * 10 ** -18
+    indexer_total_stake = int(indexer_data.get('tokenCapacity')) * 10 ** -18
     indexer_total_allocations = int(indexer_data.get('allocatedTokens')) * 10 ** -18
     allocation_list = []
 
