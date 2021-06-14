@@ -275,6 +275,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     print('=' * 40)
     print()
     script_file = open("script.txt", "w+")
+    script_never = open("script_never.txt", "w+")
     # print(
     #    "graph indexer rules set global allocationAmount 10.0 parallelAllocations 2 minStake 500.0 decisionBasis rules && \\")
     for subgraph in subgraphs:
@@ -299,13 +300,17 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
         script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\ \n")
         script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\ \n")
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\ \n")
 
     print("graph indexer rules get all --merged && \\ \n")
     print("graph indexer cost get all \n")
 
-    script_file.write("graph indexer rules get all --merged && \\")
+    script_file.write("graph indexer rules get all --merged && \\ \n")
+    script_never.write("graph indexer rules get all --merged && \\ \n")
     script_file.write("graph indexer cost get all")
+    script_never.write("graph indexer cost get all")
     script_file.close()
+    script_never.close()
 
 
 if __name__ == '__main__':
