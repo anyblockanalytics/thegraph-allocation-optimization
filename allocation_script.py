@@ -30,7 +30,8 @@ import json
 from pycoingecko import CoinGeckoAPI
 
 # Gateway to Graph Meta Subgraph
-API_GATEWAY = "https://gateway.network.thegraph.com/network"
+# API_GATEWAY = "https://gateway.network.thegraph.com/network"
+API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
 
 # Get the current (fast) Gas Price from anyblock api endpoint
 gas_price_resp = requests.get("https://api.anyblock.tools/latest-minimum-gasprice/",
@@ -275,41 +276,51 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     print('=' * 40)
     print()
     script_file = open("script.txt", "w+")
-    script_never = open("script_never.txt", "w+")
     # print(
     #    "graph indexer rules set global allocationAmount 10.0 parallelAllocations 2 minStake 500.0 decisionBasis rules && \\")
     for subgraph in subgraphs:
         # Delete rule -> reverts to default. This will trigger extra allocations!
         # print(f"graph indexer rules delete {subgraph} && \\")
-        # Disable rule -> this is required to "reset" allocations
-        print(f"graph indexer rules set {subgraph} decisionBasis never && \\")
         # Set fixed or dynamic allocation
         if subgraph in FIXED_ALLOCATION.keys():
             print(
                 f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
-            script_file.write(
-                f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+            if FIXED_ALLOCATION[subgraph] != 0:
+                script_file.write(
+                    f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+                script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
+                script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
+    
         else:
+            
             print(
                 f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
-            script_file.write(
-                f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+            if dynamic_allocation != 0:
+                script_file.write(
+                    f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+                script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
+                script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
+    
 
         # Set cost model & variables
         print(f"graph indexer cost set model {subgraph} default.agora && \\")
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
-        script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
-        script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
-        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
+    
 
     print("graph indexer rules get all --merged && \\ \n")
     print("graph indexer cost get all \n")
 
     script_file.write("graph indexer rules get all --merged && \\\n")
-    script_never.write("graph indexer rules get all --merged && \\\n")
     script_file.write("graph indexer cost get all")
-    script_never.write("graph indexer cost get all")
     script_file.close()
+
+    # Disable rule -> this is required to "reset" allocations
+    script_never = open("script_never.txt", "w+")
+
+    for i, subgraph in df.iterrows():
+        script_never.write(f"graph indexer rules set {subgraph['id']} decisionBasis never && \\\n")
+    script_never.write("graph indexer rules get all --merged && \\\n")
+    script_never.write("graph indexer cost get all")
     script_never.close()
 
 
@@ -444,7 +455,7 @@ if __name__ == '__main__':
     for subgraph in subgraph_data:
         subgraph_name = subgraph.get('originalName')
         if subgraph_name is None:
-            subgraph_name = "Not found v" + str(n)
+            subgraph_name = "Invalid name v" + str(n)
             n += 1
         sublist = []
         sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
