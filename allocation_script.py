@@ -440,9 +440,14 @@ if __name__ == '__main__':
     subgraph_data = data['subgraphDeployments']
 
     subgraph_list = []
+    n = 1
     for subgraph in subgraph_data:
+        subgraph_name = subgraph.get('originalName')
+        if subgraph_name is None:
+            subgraph_name = "Not found v" + str(n)
+            n += 1
         sublist = []
-        sublist = [subgraph.get('id'), subgraph.get('originalName'), subgraph.get('signalledTokens'),
+        sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
                    subgraph.get('stakedTokens'),
                    base58.b58encode(bytearray.fromhex('1220' + subgraph.get('id')[2:])).decode("utf-8")]
         subgraph_list.append(sublist)
