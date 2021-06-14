@@ -1,0 +1,17 @@
+graph indexer rules set QmTKXLEdMD6Vq7Nwxo8XAfnHpG6H1TzL1AGwiqLpoae3Pb decisionBasis never && \ 
+graph indexer rules set QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8 decisionBasis never && \ 
+graph indexer rules set QmVEV7RA2U6BJT9Ssjxcfyrk4YQUnVqSRNX4TvYagjzh9h decisionBasis never && \ 
+graph indexer rules set QmbHg6vAJRD9ZWz5GTP9oMrfDyetnGTr5KWJBYAq59fm1W decisionBasis never && \ 
+graph indexer rules set QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8 decisionBasis never && \ 
+graph indexer rules set QmRDGLp6BHwiH9HAE2NYEE3f7LrKuRqziHBv76trT4etgU decisionBasis never && \ 
+graph indexer rules set QmZdsSbRwVD7VVVm5WGxZZC6HYvbjnFb4hcwvQ4fTs5bxA decisionBasis never && \ 
+graph indexer rules set QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE decisionBasis never && \ 
+graph indexer rules set Qmav8jkmAeKBLyxmngJVwprN3ZsJA9A57jeoikdCU2Dyrv decisionBasis never && \ 
+graph indexer rules set Qmf3qbX2SF58ifUQfMvWJKe99g9DavSKtRxm3evvCHocwS decisionBasis never && \ 
+graph indexer rules set QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg decisionBasis never && \ 
+graph indexer rules set QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG decisionBasis never && \ 
+graph indexer rules set QmUghXvKf5cVjtayNNRHCd3RbHEwfbGBQ95s9vheJjN5hH decisionBasis never && \ 
+graph indexer rules set Qmaz1R8vcv9v3gUfksqiS9JUz7K9G8S5By3JYn8kTiiP5K decisionBasis never && \ 
+graph indexer rules set QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF decisionBasis never && \ 
+graph indexer rules get all --merged && \ 
+graph indexer cost get all
