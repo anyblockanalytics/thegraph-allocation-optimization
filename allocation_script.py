@@ -287,7 +287,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
                 f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
             if FIXED_ALLOCATION[subgraph] != 0:
                 script_file.write(
-                    f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+                    f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
                 script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
                 script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
     
@@ -297,7 +297,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
                 f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
             if dynamic_allocation != 0:
                 script_file.write(
-                    f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+                    f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
                 script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
                 script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
     
@@ -307,7 +307,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
     
 
-    print("graph indexer rules get all --merged && \\ \n")
+    print("graph indexer rules get all --merged && \\\n")
     print("graph indexer cost get all \n")
 
     script_file.write("graph indexer rules get all --merged && \\\n")
