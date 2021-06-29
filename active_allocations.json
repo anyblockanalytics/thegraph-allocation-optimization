@@ -1,0 +1,107 @@
+{
+    "QmRDGLp6BHwiH9HAE2NYEE3f7LrKuRqziHBv76trT4etgU": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xa0892940a9a62d6d675c2237f5cf3bcaf4ab8e5b",
+        "name": "UMA Mainnet Voting",
+        "status": "Active",
+        "subgraph_id": "0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715"
+    },
+    "QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xfad528f32f8936fa0ca9aef5574785b8cca66ce6",
+        "name": "PoolTogether",
+        "status": "Active",
+        "subgraph_id": "0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500"
+    },
+    "QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8": {
+        "allocatedTokens": 500.0,
+        "allocation_id": "0xd4f874e58bf9a2992205cc99eba0b80447b0ee05",
+        "name": "Omen",
+        "status": "Active",
+        "subgraph_id": "0x31f6fb67c823a07a93bae6b022798eebdf86210033c0e97a1402795c0c2fa99b"
+    },
+    "QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xbeb8075cd2c002050b34dedb16c1d156233770f8",
+        "name": "Subgraph15",
+        "status": "Active",
+        "subgraph_id": "0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5"
+    },
+    "QmTKXLEdMD6Vq7Nwxo8XAfnHpG6H1TzL1AGwiqLpoae3Pb": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0x036f42a1223e3b0dc02ccdb166770fa465cdb796",
+        "name": "PoolTogether v3_1_0",
+        "status": "Active",
+        "subgraph_id": "0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e"
+    },
+    "QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8": {
+        "allocatedTokens": 2094523.81,
+        "allocation_id": "0xb4c059f10f2995c1deb02e3f65eceebc6f7f6317",
+        "name": "Audius Network Mainnet",
+        "status": "Active",
+        "subgraph_id": "0x500a8e47cbdeca7386448ae9e7d52578871b9942ebbef4892469da293bb661f9"
+    },
+    "QmUVskWrz1ZiQZ76AtyhcfFDEH1ELnRpoyEhVL8p6NFTbR": {
+        "allocatedTokens": 10.0,
+        "allocation_id": "0xfecc4c62cac0db85a568ded10e27b8516a6345ee",
+        "name": "Subgraph22",
+        "status": "Active",
+        "subgraph_id": "0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54"
+    },
+    "QmUghXvKf5cVjtayNNRHCd3RbHEwfbGBQ95s9vheJjN5hH": {
+        "allocatedTokens": 222922.69,
+        "allocation_id": "0xef92a6bb44ecb2a7ebb7e446dd28def9888388ef",
+        "name": "DODOEX V2",
+        "status": "Active",
+        "subgraph_id": "0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78"
+    },
+    "QmVEV7RA2U6BJT9Ssjxcfyrk4YQUnVqSRNX4TvYagjzh9h": {
+        "allocatedTokens": 9000.0,
+        "allocation_id": "0x0e3a880bab773c53eddd1a4b6b5bea1f8458f669",
+        "name": "PoolTogether",
+        "status": "Active",
+        "subgraph_id": "0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40"
+    },
+    "QmZdsSbRwVD7VVVm5WGxZZC6HYvbjnFb4hcwvQ4fTs5bxA": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0x6d88f2542d8a98da0653cfd8354bf4a5267015b9",
+        "name": "mStable Protocol",
+        "status": "Active",
+        "subgraph_id": "0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947"
+    },
+    "Qmav8jkmAeKBLyxmngJVwprN3ZsJA9A57jeoikdCU2Dyrv": {
+        "allocatedTokens": 500.0,
+        "allocation_id": "0x8e634c46834370b061733f1de82b4b039de5b480",
+        "name": "PoolTogether",
+        "status": "Active",
+        "subgraph_id": "0xbae01a063ad846d7e4200757480544b5feb1f0217d94db1db97b48bb7f124dbf"
+    },
+    "Qmaz1R8vcv9v3gUfksqiS9JUz7K9G8S5By3JYn8kTiiP5K": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xe014c08525875b9f300f4045cf6f6075ba95b50a",
+        "name": "PoolTogether",
+        "status": "Active",
+        "subgraph_id": "0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a"
+    },
+    "QmbHg6vAJRD9ZWz5GTP9oMrfDyetnGTr5KWJBYAq59fm1W": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0x7bb0f33046257c819445fd7c9f6e0c240b9edcb8",
+        "name": "Subgraph10",
+        "status": "Active",
+        "subgraph_id": "0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd"
+    },
+    "QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xdbcfe839bf12fc1cbbe5375e1224748f3f6f3994",
+        "name": "RAI Mainnet",
+        "status": "Active",
+        "subgraph_id": "0xc420d79a888eb0e34203bfeca1048d35f9763b9880a94922249096e4c9a191c7"
+    },
+    "Qmf3qbX2SF58ifUQfMvWJKe99g9DavSKtRxm3evvCHocwS": {
+        "allocatedTokens": 1000.0,
+        "allocation_id": "0xcc3d0727a95ee5fa8fc58e29ca4c71d91ef0ab5a",
+        "name": "Subgraph16",
+        "status": "Active",
+        "subgraph_id": "0xf8481d0118ec6098d00629414d600f5d87a1c8a94e2720933643d2eacf648311"
+    }
+}
