@@ -8,16 +8,19 @@
     "QmVEV7RA2U6BJT9Ssjxcfyrk4YQUnVqSRNX4TvYagjzh9h",
     "QmZdsSbRwVD7VVVm5WGxZZC6HYvbjnFb4hcwvQ4fTs5bxA",
     "Qmaz1R8vcv9v3gUfksqiS9JUz7K9G8S5By3JYn8kTiiP5K",
+    "QmbHg6vAJRD9ZWz5GTP9oMrfDyetnGTr5KWJBYAq59fm1W",
+    "QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg",
+    "Qmav8jkmAeKBLyxmngJVwprN3ZsJA9A57jeoikdCU2Dyrv",
+    "QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8",
     "QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG",
     "Qmf3qbX2SF58ifUQfMvWJKe99g9DavSKtRxm3evvCHocwS",
-    "QmbHg6vAJRD9ZWz5GTP9oMrfDyetnGTr5KWJBYAq59fm1W",
-    "QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg"
+    "QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8"
   ],
-  "broken_subgraphs": [
+  "blacklist": [
     "Qmav8jkmAeKBLyxmngJVwprN3ZsJA9A57jeoikdCU2Dyrv",
-    "QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8"
-  ],
-  "ignore_subgraphs": [
+    "QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8",
+    "QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG",
+    "Qmf3qbX2SF58ifUQfMvWJKe99g9DavSKtRxm3evvCHocwS",
     "QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8"
   ],
   "nan_subgraphs": [
