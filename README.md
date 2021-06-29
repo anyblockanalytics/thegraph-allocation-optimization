@@ -82,8 +82,14 @@ sudo apt-get install glpk-utils libglpk-dev glpk-doc python-glpk
 
 6. Now everything should be installed. Start a terminal in the Repository directory and run the script:
 ```shell
-python ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4 --no-subgraph-list
+python ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4 --no-subgraph-list --blacklist
 ```
+
+Some Linux distros may require the following:
+```shell
+python3 ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4 --no-subgraph-list --blacklist
+```
+
 ## Parameters
 
 1. **indexer_id** : It is necessary to supply the indexer address.
@@ -114,12 +120,14 @@ splits the allocation amount into subsets of the supplied parallel allocation am
    
 5. **no-subgraph-list**: Disables the config.json, so no manual subgraph list is provided. (Default)
 6. **subgraph-list**: utilizes the provided list in config.json as subgraphs that should be considered for the optimization.
+7. **blacklist**: tells the script to ignore the blacklisted subgraphs in config.json. We will try to keep this as up-to-date
+as possible. For the newest information on failed subgraphs, please check the Graph Protocol Discord server.
    
 ## Tech-Stack and Functioning
 
 ### Tech-Stack
 
-This script is developed using python. The data is grabbed using the meta-subgraph of The Graph. GraphQL is used
+The allocation_script.py script is developed using python. The data is grabbed using the meta-subgraph of The Graph. GraphQL is used
 for the data query. Price Data is obtained via the **CoinGeckoAPI** for ETH-USD, GRT-USD and GRT-ETH. Pandas
 is used for the preprocessing of the obtained data. 
 
@@ -131,7 +139,7 @@ The linear optimization is done via pyomo and the gltk backend. For further info
 [pyomo.org](pyomo.org).
 
 ### Log-Files
-The script is called with the above parameters. Each run of the script is logged in **./logs/** 
+The script is called with the provided parameters. Each run of the script is logged in **./logs/** 
 The log file contains the date and time of execution. For example, a log file is then called: 
 **"07042021_06:37:06.log"**.
 
@@ -163,6 +171,22 @@ If 4 parallel allocations are desired, and the stake is to be allocated on a sub
 An additional log file is created in the ".logs/data" subdirectory. Here the possible indexing rewards at other max_percentages are logged. 
 [0.1,0.2,0.3,04 ... 1].
 
+### script_never.txt
+
+The NEVER script file contains the necessary commands that must be entered to drop all current allocations 
+at the end of the current epoch. This is necessary to be able to use the script.txt and reallocate
+The NEVER script takes all subgraphs available into consideration and clears all allocations. It should 
+be adapted if this is not the desired outcome. 
+
+An example of a script_never.txt file:
+
+```shell
+graph indexer rules set QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG decisionBasis never && \
+graph indexer rules set QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8 decisionBasis never && \
+graph indexer rules get all --merged && \
+graph indexer cost get all
+```
+
 ### script.txt
 
 The script file contains the necessary commands that must be entered to change the allocations 
@@ -176,6 +200,15 @@ graph indexer rules set QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF allocatio
 graph indexer cost set model QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF default.agora && \ 
 graph indexer cost set variables QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF '{}' && \ 
 graph indexer rules get all --merged && \graph indexer cost get all
+```
+
+### fetch_allocations.py and active_allocations.json
+This script can be used to fetch the active allocations within the Graph Protocol subgraph environment. It creates a JSON in active_allocations.json with important subgraph-specific and indexer-specific information. It should be used with the 
+--indexer_id parameter
+
+Example:
+```shell
+python3 ./fetch_allocations.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c
 ```
 
 ### Functioning
