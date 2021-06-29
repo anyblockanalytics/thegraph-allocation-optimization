@@ -24,8 +24,6 @@ import logging
 from datetime import datetime
 import os
 import base58
-import math
-import sys
 import json
 from pycoingecko import CoinGeckoAPI
 
@@ -182,33 +180,10 @@ def optimization_for_data_logger(range_percentage_allocations):
 
 def allocation_script(indexer_id, FIXED_ALLOCATION):
     INDEXER_ID = indexer_id.lower()
-    INVALID_SUBGRAPHS = set([
-        # 'QmWPnuoYxQrb8Hc5MNZboRmyAqjYhV5B8ndgyHywUptcRV',
-        # 'QmYMUQESxrhz7UkwnshnCEbprLWQbZVPyNd3jFggS8FAtK',
-        # 'QmVxQBxjdswNYNmz2ocSDknkbnCwvQLJd1onxwuHtuoumd',
-        # 'QmNkNBJKGzN65UtD3PKC2zV7EeHrHtWZsRErRsxyq55xw1',
-        # 'QmYefoMwvtKYPQVrZZRTaVeX1K2CP51Eft8E7Dt8LeCRsa',
-        # 'QmRQJBmUh1vxp184FScwLeKviNXiazbxWKRBWkeh1HXhVw',
-        # 'QmVRkGqh7mCsZdgfMGQDLUjTYDbR6u51jWCTsG2mj8wLHf',
-        # 'QmSZ6wNaTQdCCqsfPNPrCXq9oGLKt7rRE3cHYWDjiTksjq',
-        # 'QmYUdKTsNe9fDuWZMeXTAF7tKosSuokzgauHQSEUUU89B1',
-        # 'QmVivTDmJMXJXyJcjcFDV2NLqf27xMzedXmCvmFcPdFoco',
-        # 'QmSgYxcy6AJ41ZdvmVgdZYEU4yzeccZeCQK8QNn75X5wtL',
-        # 'QmeHPFWH8qmEBpzZRTzjEa7vajnbGQZ2SzJ8v6fkA6W9nX',
-        # 'QmNVAQpyWNiHQrmvXLQSCG7PLDEUcQ9Ay3nU9j5ppTgFFU',
-        # 'QmafKiDwT7EBJYL9y3rdfnBFUWzkGNytoGzUsiJAxePnLm',
-        # 'QmYnxSNW9iDPNvHQyP5HZsMsn7chXeKKY7yaQ1uSBvyx28',
-        # 'QmcyT4SWn7ctMsm1avAV3jnmCL7u3ZK93XrxcJJJt7hUF5',
-        # 'QmXRD5WZYtVERWkTpFvmqWGkpbbQ1KmsLUgCiRckkNmSJp',
-        # 'QmS8beCgmU8JLgXCTn7jxkCRtZ5p5mirh1Npcuk7RrBmNJ',
-        # 'QmPrz3AMvEJR5dbaxHWvDawJQBFWYRTuSHp5rdrQowSayj',
-        # 'QmWNcVnVeLHW2QzbUvgEycYdPCNEict1Kd7n9p8ywNPTqD',
-        # 'QmPNCGkzNffdimLqmchcf7EdT5UwwDjkVcUpgwivkt8RtH',
-        # 'QmZpWRNJTYViKpX1iUF6jWw4vdK9s5EMiwAYHfFWtdwVUe',
-        # 'QmWEwbbB4ZZRjEfedBNfPKHNEyLSCiSQswnWnaHXs8LdBW',
-        # 'QmTAXJgwyFShE297dU7qRVRtz7EigRrprZyYGfbnFpLj1e',
-        # 'Qmex7X63rHpoodb7tEveu8C9CabMmAQdKtQew3vC8dHhQb'
-    ])
+    INVALID_SUBGRAPHS = set()
+    if blacklist_parameter:
+        with open("config.json", "r") as jsonfile:
+                INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
     PARALLEL_ALLOCATIONS = parallel_allocations
 
     FIXED_ALLOCATION_SUM = sum(list(FIXED_ALLOCATION.values())) * PARALLEL_ALLOCATIONS
@@ -241,13 +216,15 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     ).json()['data']['subgraphDeployments']
 
     subgraphs = set()
+    invalid_subgraphs = set()
     total_signal = 0
     total_stake = 0
 
     for subgraph_deployment in subgraph_data:
         subgraph = base58.b58encode(bytearray.fromhex('1220' + subgraph_deployment['id'][2:])).decode("utf-8")
         if subgraph in INVALID_SUBGRAPHS:
-            # print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
+            print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
+            invalid_subgraphs.add(subgraph)
             pass
         else:
             print(
@@ -300,13 +277,11 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
                     f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
                 script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
                 script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
-    
 
         # Set cost model & variables
         print(f"graph indexer cost set model {subgraph} default.agora && \\")
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
     
-
     print("graph indexer rules get all --merged && \\\n")
     print("graph indexer cost get all \n")
 
@@ -317,8 +292,10 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     # Disable rule -> this is required to "reset" allocations
     script_never = open("script_never.txt", "w+")
 
-    for i, subgraph in df.iterrows():
-        script_never.write(f"graph indexer rules set {subgraph['id']} decisionBasis never && \\\n")
+    for subgraph in subgraphs:
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
+    for subgraph in invalid_subgraphs:
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
     script_never.write("graph indexer rules get all --merged && \\\n")
     script_never.write("graph indexer cost get all")
     script_never.close()
@@ -372,6 +349,10 @@ if __name__ == '__main__':
     my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
     my_parser.set_defaults(subgraph_list=False)
 
+    my_parser.add_argument('--blacklist', dest='blacklist', action='store_true')
+    my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
     args = my_parser.parse_args()
 
     indexer_id = args.indexer_id  # get indexer parameter input
@@ -379,6 +360,7 @@ if __name__ == '__main__':
     threshold = args.threshold
     parallel_allocations = args.parallel_allocations
     subgraph_list_parameter = args.subgraph_list
+    blacklist_parameter = args.blacklist
 
     # initialize logger
     if not os.path.exists("./logs/"):
@@ -451,12 +433,10 @@ if __name__ == '__main__':
     subgraph_data = data['subgraphDeployments']
 
     subgraph_list = []
-    n = 1
     for subgraph in subgraph_data:
         subgraph_name = subgraph.get('originalName')
         if subgraph_name is None:
-            subgraph_name = "Invalid name v" + str(n)
-            n += 1
+            subgraph_name = f"Subgraph {subgraph_data.index(subgraph)}"
         sublist = []
         sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
                    subgraph.get('stakedTokens'),
@@ -479,8 +459,12 @@ if __name__ == '__main__':
     if subgraph_list_parameter:
         with open("config.json", "r") as jsonfile:
             list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
-
         df = df[df['id'].isin(list_desired_subgraphs)]
+
+    if blacklist_parameter:
+        with open("config.json", "r") as jsonfile:    
+            blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
+        df = df[-df['id'].isin(blacklisted_subgraphs)]
 
     # print Table with allocations, Subgraph, total Tokens signalled and total tokens staked
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also

@@ -1,9 +1,8 @@
 import json
 import base58
 import requests
-import pyomo.environ as pyomo
 import argparse
-import logging
+import datetime as dt
 from datetime import datetime
 
 API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
@@ -57,7 +56,7 @@ if __name__ == '__main__':
 
     # datetime object containing current date and time
     now = datetime.now()
-    DT_STRING = now.strftime("%d%m%Y_%H:%M:%S")
+    DT_STRING = now.strftime("%d-%m-%Y %H:%M:%S")
     print("Script Execution on: ", DT_STRING)
 
     # initialize argument parser
@@ -103,3 +102,7 @@ if __name__ == '__main__':
     # magic happens here to make it pretty-printed
     active_allocations.write(json.dumps(subgraphs, indent=4, sort_keys=True))
     active_allocations.close()
+    
+    print("Populated active_allocations.json for indexer", indexer_id)
+    DT_STRING = now.strftime("%d-%m-%Y %H:%M:%S")
+    print("Script Completion on:", DT_STRING)
