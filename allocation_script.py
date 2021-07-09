@@ -183,7 +183,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     INVALID_SUBGRAPHS = set()
     if blacklist_parameter:
         with open("config.json", "r") as jsonfile:
-                INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
+            INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
     PARALLEL_ALLOCATIONS = parallel_allocations
 
     FIXED_ALLOCATION_SUM = sum(list(FIXED_ALLOCATION.values())) * PARALLEL_ALLOCATIONS
@@ -267,9 +267,9 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
                     f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
                 script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
                 script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
-    
+
         else:
-            
+
             print(
                 f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
             if dynamic_allocation != 0:
@@ -281,7 +281,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
         # Set cost model & variables
         print(f"graph indexer cost set model {subgraph} default.agora && \\")
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
-    
+
     print("graph indexer rules get all --merged && \\\n")
     print("graph indexer cost get all \n")
 
@@ -353,6 +353,11 @@ if __name__ == '__main__':
     my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
     my_parser.set_defaults(subgraph_list=False)
 
+    my_parser.add_argument('--threshold_interval',
+                           metavar='threshold_interval',
+                           type=str,
+                           help='Set the Interval for Optimization and Threshold Calculation (Either "daily", or "weekly")',
+                           default="daily")
     args = my_parser.parse_args()
 
     indexer_id = args.indexer_id  # get indexer parameter input
@@ -361,6 +366,7 @@ if __name__ == '__main__':
     parallel_allocations = args.parallel_allocations
     subgraph_list_parameter = args.subgraph_list
     blacklist_parameter = args.blacklist
+    threshold_interval = args.threshold_interval
 
     # initialize logger
     if not os.path.exists("./logs/"):
@@ -452,7 +458,7 @@ if __name__ == '__main__':
     # df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('Address')
     df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
     df.fillna(0, inplace=True)
-    #df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
+    # df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
 
     # Manuell select List of Subgraphs from config.py
     # (only indexed or desired subgraphs should be included into the optimization)
@@ -462,7 +468,7 @@ if __name__ == '__main__':
         df = df[df['id'].isin(list_desired_subgraphs)]
 
     if blacklist_parameter:
-        with open("config.json", "r") as jsonfile:    
+        with open("config.json", "r") as jsonfile:
             blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
         df = df[-df['id'].isin(blacklisted_subgraphs)]
 
@@ -483,7 +489,6 @@ if __name__ == '__main__':
 
     # remove rows (subgraphs) where signalledTokensTotal and stakedTokensTotal are zero
     df = df[(df.signalledTokensTotal != 0) & (df.stakedTokensTotal != 0)]
-
 
     # Calculate Indexing Reward per Subgraph daily / weekly / yearly
     indexing_reward_daily = (df['Allocation'] / df['stakedTokensTotal']) * \
@@ -580,11 +585,11 @@ if __name__ == '__main__':
             model.bound_x.add(model.x[c] >= 1000.0)  # Allocations per Subgraph should be higher than zero
             model.bound_x.add(model.x[
                                   c] <= max_percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
-            model.bound_x.add(model.x[c] <= int(
-                data[c]['stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
+            # model.bound_x.add(model.x[c] <= int(
+            # data[c]['stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
 
         solver = pyomo.SolverFactory('glpk')
-        solver.solve(model)
+        solver.solve(model, keepfiles=True)
 
         # list of optimized allocations, formated as key(id): allocation_amount / parallel_allocations * 10** 18
         FIXED_ALLOCATION = dict()
@@ -605,11 +610,18 @@ if __name__ == '__main__':
         if reward_interval == 'indexingRewardWeek':
             optimized_reward_weekly = model.rewards() / 10 ** 18
 
-    # Threshold Calculation
+        if reward_interval == 'indexingRewardDay':
+            optimized_reward_daily = model.rewards() / 10 ** 18
 
-    starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
-    final_value = optimized_reward_weekly  # after optimization
-    # final_value = 7000
+    # set interval and calculate threshold based on daily, or weekly rewards
+    if threshold_interval == 'weekly':
+        # Threshold Calculation
+
+        starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
+        final_value = optimized_reward_weekly  # after optimization
+    else:
+        starting_value = sum(indexing_reward_daily.values)  # rewards per week before optimization
+        final_value = optimized_reward_daily  # after optimization
 
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000
@@ -620,23 +632,33 @@ if __name__ == '__main__':
     final_value = final_value - allocation_costs_grt
     diff_rewards = percentage_increase(starting_value, final_value)  # Percentage increase in Rewards
     diff_rewards_fiat = round(((final_value - starting_value) * GRT_USD), 2)  # Fiat increase in Rewards
-
+    diff_rewards_grt = round((final_value - starting_value), 2)
     if diff_rewards >= threshold:
         logger.info(
-            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
-            threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
+            '\nTHRESHOLD of %s Percent REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+            subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
+            Allocation script CREATED IN ./script.txt created',
+            threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt, allocation_costs_fiat,
+            starting_value, final_value)
         print(
-            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
-                threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
+            '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
+             Allocation script CREATED IN ./script.txt created\n' % (
+                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                allocation_costs_fiat, starting_value, final_value))
 
         allocation_script(indexer_id, FIXED_ALLOCATION)
     if diff_rewards < threshold:
         logger.info(
-            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED',
-            threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
+            '\nTHRESHOLD of %s NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+            subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED',
+            threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt, allocation_costs_fiat,
+            starting_value, final_value)
         print(
-            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
-                threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
+            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                allocation_costs_fiat, starting_value, final_value))
 
     # Run the Optimization for Daily/Weekly/Yearly Indexing Rewards AND different max allocations (data_log)
     range_percentage_allocations = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
