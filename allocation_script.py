@@ -434,6 +434,10 @@ if __name__ == '__main__':
     indexing_reward_day = indexing_reward_year / 365  # Daily
     indexing_reward_week = indexing_reward_year / 52.1429  # Weekly
 
+    # remove rows (subgraphs) where signalledTokensTotal and stakedTokensTotal are zero
+    df = df[(df.signalledTokensTotal != 0) & (df.stakedTokensTotal != 0)]
+
+
     # Calculate Indexing Reward per Subgraph daily / weekly / yearly
     indexing_reward_daily = (df['Allocation'] / df['stakedTokensTotal']) * \
                             (df['signalledTokensTotal'] / total_tokens_signalled) * (
