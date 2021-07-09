@@ -1,0 +1,550 @@
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 238963.814519244 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 238963.814519244 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 238963.814519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 238963.814519244 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 238963.814519244 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 238963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 238963.814519244 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 225963.814519244 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 238963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 238963.814519244 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924406 GRT
+  Reward = GRT 2436.5198479896176
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 238963.814519244 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 238963.814519244 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 238963.814519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 238963.814519244 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 238963.814519244 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 238963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 238963.814519244 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 225963.814519244 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 238963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 238963.814519244 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924406 GRT
+  Reward = GRT 17055.624917605477
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 238963.814519244 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 238963.814519244 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 238963.814519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 238963.814519244 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 238963.814519244 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 238963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 238963.814519244 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 225963.814519244 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 238963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 238963.814519244 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924406 GRT
+  Reward = GRT 889329.7445162104
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.2
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 477927.629038488 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 477927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 477927.629038488 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 464927.629038488 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 477927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 2446.38037134958
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.2
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 477927.629038488 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 477927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 477927.629038488 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 464927.629038488 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 477927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 17124.648524393477
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.2
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 477927.629038488 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 477927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 477927.629038488 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 464927.629038488 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 477927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 892928.8355425965
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.3
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 716891.443557733 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 716891.443557733 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 225963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 716891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 2449.1402724152963
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.3
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 716891.443557733 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 716891.443557733 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 225963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 716891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 17143.967815974625
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.3
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 716891.443557733 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 716891.443557733 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 225963.814519244 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 716891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 893936.1994315833
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.4
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 955855.258076977 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 464927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 955855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192442 GRT
+  Reward = GRT 2449.982255220101
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.4
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 955855.258076977 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 464927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 955855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192442 GRT
+  Reward = GRT 17149.861690763977
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.4
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 955855.258076977 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 464927.629038488 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 955855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192442 GRT
+  Reward = GRT 894243.5231553369
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.5
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1194819.07259622 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 1181819.07259622 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 2450.175355856785
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.5
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1194819.07259622 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 1181819.07259622 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 17151.21339410977
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.5
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1194819.07259622 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 1181819.07259622 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 894314.0048877264
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.6
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1433782.88711547 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 942855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192447 GRT
+  Reward = GRT 2450.2091326834957
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.6
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1433782.88711547 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 942855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192447 GRT
+  Reward = GRT 17151.44983170242
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.6
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1433782.88711547 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 942855.258076977 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192447 GRT
+  Reward = GRT 894326.333429476
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.7
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1672746.70163471 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 703891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 2450.2429095102043
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.7
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1672746.70163471 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 703891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 17151.686269295045
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.7
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1672746.70163471 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 703891.443557733 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192443 GRT
+  Reward = GRT 894338.6619712246
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.8
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1911710.51615395 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 464927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192438 GRT
+  Reward = GRT 2450.276686336912
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.8
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1911710.51615395 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 464927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192438 GRT
+  Reward = GRT 17151.922706887668
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.8
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 1911710.51615395 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 464927.629038488 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.145192438 GRT
+  Reward = GRT 894350.9905129728
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 0.9
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2150674.3306732 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 225963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924443 GRT
+  Reward = GRT 2450.310463163623
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 0.9
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2150674.3306732 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 225963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924443 GRT
+  Reward = GRT 17152.159144480316
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 0.9
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2150674.3306732 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 225963.814519244 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.1451924443 GRT
+  Reward = GRT 894363.3190547224
+==============================
+
+Optimize Allocations for Interval: indexingRewardDay and Max Allocation Percentage: 1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2376638.14519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 0.0 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 2450.3424024788737
+
+Optimize Allocations for Interval: indexingRewardWeek and Max Allocation Percentage: 1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2376638.14519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 0.0 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 17152.382719503305
+
+Optimize Allocations for Interval: indexingRewardYear and Max Allocation Percentage: 1
+  ('Opyn Gamma Mainnet', '0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811'): 0.0 allocations
+  ('UMA Mainnet Voting', '0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715'): 0.0 allocations
+  ('PoolTogether', '0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500'): 2376638.14519244 allocations
+  ('Subgraph 4', '0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5'): 0.0 allocations
+  ('PoolTogether v3_1_0', '0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e'): 0.0 allocations
+  ('Subgraph 7', '0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54'): 0.0 allocations
+  ('DODOEX V2', '0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78'): 0.0 allocations
+  ('PoolTogether', '0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40'): 13000.0 allocations
+  ('mStable Protocol', '0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947'): 0.0 allocations
+  ('PoolTogether', '0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a'): 0.0 allocations
+  ('Subgraph 13', '0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd'): 0.0 allocations
+  ('Dinosaur', '0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823'): 0.0 allocations
+
+
+  Allocations Total = 2389638.14519244 GRT
+  Reward = GRT 894374.9769047888

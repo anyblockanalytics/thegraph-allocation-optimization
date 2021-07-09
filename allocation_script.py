@@ -1,3 +1,21 @@
+# Allocation Optimization Script
+"""
+ Copyright (C) 2021 Anyblock Analytics
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 import requests
 import pandas as pd
 import pyomo.environ as pyomo
@@ -6,13 +24,12 @@ import logging
 from datetime import datetime
 import os
 import base58
-import math
-import sys
 import json
 from pycoingecko import CoinGeckoAPI
 
 # Gateway to Graph Meta Subgraph
-API_GATEWAY = "https://gateway.network.thegraph.com/network"
+# API_GATEWAY = "https://gateway.network.thegraph.com/network"
+API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
 
 # Get the current (fast) Gas Price from anyblock api endpoint
 gas_price_resp = requests.get("https://api.anyblock.tools/latest-minimum-gasprice/",
@@ -72,11 +89,14 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
         id
       }
       indexer(id: $input) {
+        tokenCapacity
         allocatedTokens
+        stakedTokens
         allocations {
           allocatedTokens
           subgraphDeployment {
             originalName
+            id
           }
           indexingRewards
         }
@@ -134,14 +154,14 @@ def optimization_for_data_logger(range_percentage_allocations):
                          for c in C),  # Indexing Rewards Formula (Daily Rewards)
                 sense=pyomo.maximize)  # maximize Indexing Rewards
 
-            model.vol = pyomo.Constraint(expr=indexer_total_allocations >= sum(
+            model.vol = pyomo.Constraint(expr=indexer_total_stake >= sum(
                 model.x[c] for c in C))  # Allocation can not be more than total Allocations
             model.bound_x = pyomo.ConstraintList()
 
             for c in C:
                 # model.bound_x.add(model.x[c] >= 0.0)  # Allocations per Subgraph should be higher than zero
                 model.bound_x.add(model.x[
-                                      c] <= percentage * indexer_total_allocations)  # Allocation per Subgraph can't be higher than x % of total Allocations
+                                      c] <= percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
                 model.bound_x.add(model.x[c] <= int(
                     data[c][
                         'stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
@@ -160,33 +180,10 @@ def optimization_for_data_logger(range_percentage_allocations):
 
 def allocation_script(indexer_id, FIXED_ALLOCATION):
     INDEXER_ID = indexer_id.lower()
-    INVALID_SUBGRAPHS = set([
-        # 'QmWPnuoYxQrb8Hc5MNZboRmyAqjYhV5B8ndgyHywUptcRV',
-        # 'QmYMUQESxrhz7UkwnshnCEbprLWQbZVPyNd3jFggS8FAtK',
-        # 'QmVxQBxjdswNYNmz2ocSDknkbnCwvQLJd1onxwuHtuoumd',
-        # 'QmNkNBJKGzN65UtD3PKC2zV7EeHrHtWZsRErRsxyq55xw1',
-        # 'QmYefoMwvtKYPQVrZZRTaVeX1K2CP51Eft8E7Dt8LeCRsa',
-        # 'QmRQJBmUh1vxp184FScwLeKviNXiazbxWKRBWkeh1HXhVw',
-        # 'QmVRkGqh7mCsZdgfMGQDLUjTYDbR6u51jWCTsG2mj8wLHf',
-        # 'QmSZ6wNaTQdCCqsfPNPrCXq9oGLKt7rRE3cHYWDjiTksjq',
-        # 'QmYUdKTsNe9fDuWZMeXTAF7tKosSuokzgauHQSEUUU89B1',
-        # 'QmVivTDmJMXJXyJcjcFDV2NLqf27xMzedXmCvmFcPdFoco',
-        # 'QmSgYxcy6AJ41ZdvmVgdZYEU4yzeccZeCQK8QNn75X5wtL',
-        # 'QmeHPFWH8qmEBpzZRTzjEa7vajnbGQZ2SzJ8v6fkA6W9nX',
-        # 'QmNVAQpyWNiHQrmvXLQSCG7PLDEUcQ9Ay3nU9j5ppTgFFU',
-        # 'QmafKiDwT7EBJYL9y3rdfnBFUWzkGNytoGzUsiJAxePnLm',
-        # 'QmYnxSNW9iDPNvHQyP5HZsMsn7chXeKKY7yaQ1uSBvyx28',
-        # 'QmcyT4SWn7ctMsm1avAV3jnmCL7u3ZK93XrxcJJJt7hUF5',
-        # 'QmXRD5WZYtVERWkTpFvmqWGkpbbQ1KmsLUgCiRckkNmSJp',
-        # 'QmS8beCgmU8JLgXCTn7jxkCRtZ5p5mirh1Npcuk7RrBmNJ',
-        # 'QmPrz3AMvEJR5dbaxHWvDawJQBFWYRTuSHp5rdrQowSayj',
-        # 'QmWNcVnVeLHW2QzbUvgEycYdPCNEict1Kd7n9p8ywNPTqD',
-        # 'QmPNCGkzNffdimLqmchcf7EdT5UwwDjkVcUpgwivkt8RtH',
-        # 'QmZpWRNJTYViKpX1iUF6jWw4vdK9s5EMiwAYHfFWtdwVUe',
-        # 'QmWEwbbB4ZZRjEfedBNfPKHNEyLSCiSQswnWnaHXs8LdBW',
-        # 'QmTAXJgwyFShE297dU7qRVRtz7EigRrprZyYGfbnFpLj1e',
-        # 'Qmex7X63rHpoodb7tEveu8C9CabMmAQdKtQew3vC8dHhQb'
-    ])
+    INVALID_SUBGRAPHS = set()
+    if blacklist_parameter:
+        with open("config.json", "r") as jsonfile:
+                INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
     PARALLEL_ALLOCATIONS = parallel_allocations
 
     FIXED_ALLOCATION_SUM = sum(list(FIXED_ALLOCATION.values())) * PARALLEL_ALLOCATIONS
@@ -219,13 +216,15 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     ).json()['data']['subgraphDeployments']
 
     subgraphs = set()
+    invalid_subgraphs = set()
     total_signal = 0
     total_stake = 0
 
     for subgraph_deployment in subgraph_data:
         subgraph = base58.b58encode(bytearray.fromhex('1220' + subgraph_deployment['id'][2:])).decode("utf-8")
         if subgraph in INVALID_SUBGRAPHS:
-            # print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
+            print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
+            invalid_subgraphs.add(subgraph)
             pass
         else:
             print(
@@ -238,13 +237,15 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     print(f"Total Stake: {total_stake / 10 ** 18:,.2f}")
     print('=' * 40)
     dynamic_allocation = 0
+    # error
+    """
     if remaining_stake != 0:
         if len(subgraphs) > 1:
             dynamic_allocation = math.floor(
                 remaining_stake / (len(subgraphs - set(FIXED_ALLOCATION.keys()))) / PARALLEL_ALLOCATIONS / (
                         500 * 10 ** 18)) * (
                                          500 * 10 ** 18)
-
+    """
     print(f"Subgraphs: {len(subgraphs)}")
     print(f"Fixed: {len(set(FIXED_ALLOCATION.keys()))}")
     print(f"Dynamic: {len(subgraphs - set(FIXED_ALLOCATION.keys()))}")
@@ -257,32 +258,47 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     for subgraph in subgraphs:
         # Delete rule -> reverts to default. This will trigger extra allocations!
         # print(f"graph indexer rules delete {subgraph} && \\")
-        # Disable rule -> this is required to "reset" allocations
-        print(f"graph indexer rules set {subgraph} decisionBasis never && \\")
         # Set fixed or dynamic allocation
         if subgraph in FIXED_ALLOCATION.keys():
             print(
                 f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
-            script_file.write(
-                f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+            if FIXED_ALLOCATION[subgraph] != 0:
+                script_file.write(
+                    f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
+                script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
+                script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
+    
         else:
+            
             print(
                 f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
-            script_file.write(
-                f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\ \n")
+            if dynamic_allocation != 0:
+                script_file.write(
+                    f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
+                script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
+                script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
 
         # Set cost model & variables
         print(f"graph indexer cost set model {subgraph} default.agora && \\")
         print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
-        script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\ \n")
-        script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\ \n")
-
-    print("graph indexer rules get all --merged && \\ \n")
+    
+    print("graph indexer rules get all --merged && \\\n")
     print("graph indexer cost get all \n")
 
-    script_file.write("graph indexer rules get all --merged && \\")
+    script_file.write("graph indexer rules get all --merged && \\\n")
     script_file.write("graph indexer cost get all")
     script_file.close()
+
+    # Disable rule -> this is required to "reset" allocations
+    script_never = open("script_never.txt", "w+")
+
+    for subgraph in subgraphs:
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
+    for subgraph in invalid_subgraphs:
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
+    script_never.write("graph indexer rules get all --merged && \\\n")
+    script_never.write("graph indexer cost get all")
+    script_never.close()
 
 
 if __name__ == '__main__':
@@ -329,12 +345,22 @@ if __name__ == '__main__':
                            help='Amount of parallel Allocations per Subgraph. Defaults to 1.',
                            default=2)
 
+    my_parser.add_argument('--subgraph-list', dest='subgraph_list', action='store_true')
+    my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
+    my_parser.add_argument('--blacklist', dest='blacklist', action='store_true')
+    my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
     args = my_parser.parse_args()
 
     indexer_id = args.indexer_id  # get indexer parameter input
     max_percentage = args.max_percentage
     threshold = args.threshold
     parallel_allocations = args.parallel_allocations
+    subgraph_list_parameter = args.subgraph_list
+    blacklist_parameter = args.blacklist
 
     # initialize logger
     if not os.path.exists("./logs/"):
@@ -377,6 +403,7 @@ if __name__ == '__main__':
     # 'Allocation' (sum of Allocations from Indexer on Subgraph), 'IndexingReward' (curr. empty),
 
     indexer_data = data['indexer']
+    indexer_total_stake = int(indexer_data.get('tokenCapacity')) * 10 ** -18
     indexer_total_allocations = int(indexer_data.get('allocatedTokens')) * 10 ** -18
     allocation_list = []
 
@@ -387,15 +414,16 @@ if __name__ == '__main__':
         sublist = []
         # print(allocation.get('allocatedTokens'))
         # print(allocation.get('subgraphDeployment').get('originalName'))
-        sublist = [allocation.get('subgraphDeployment').get('originalName'), allocation.get('allocatedTokens'),
+        sublist = [allocation.get('subgraphDeployment').get('id'),
+                   allocation.get('subgraphDeployment').get('originalName'), allocation.get('allocatedTokens'),
                    allocation.get('indexingRewards')]
         allocation_list.append(sublist)
 
-        df = pd.DataFrame(allocation_list, columns=['Name', 'Allocation', 'IndexingReward'])
+        df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
         df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
         df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
 
-        df = df.groupby(by=df.Name).agg({
+        df = df.groupby(by=[df.Address, df.Name]).agg({
             'Allocation': 'sum',
             'IndexingReward': 'sum'
         }).reset_index()
@@ -406,18 +434,37 @@ if __name__ == '__main__':
 
     subgraph_list = []
     for subgraph in subgraph_data:
+        subgraph_name = subgraph.get('originalName')
+        if subgraph_name is None:
+            subgraph_name = f"Subgraph {subgraph_data.index(subgraph)}"
         sublist = []
-        sublist = [subgraph.get('originalName'), subgraph.get('signalledTokens'),
+        sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
                    subgraph.get('stakedTokens'),
                    base58.b58encode(bytearray.fromhex('1220' + subgraph.get('id')[2:])).decode("utf-8")]
         subgraph_list.append(sublist)
 
-    df_subgraphs = pd.DataFrame(subgraph_list, columns=['Name', 'signalledTokensTotal', 'stakedTokensTotal', 'id'])
+    df_subgraphs = pd.DataFrame(subgraph_list,
+                                columns=['Address', 'Name', 'signalledTokensTotal', 'stakedTokensTotal', 'id'])
     df_subgraphs['signalledTokensTotal'] = df_subgraphs['signalledTokensTotal'].astype(float) / 10 ** 18
     df_subgraphs['stakedTokensTotal'] = df_subgraphs['stakedTokensTotal'].astype(float) / 10 ** 18
 
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Name
-    df = pd.merge(df, df_subgraphs, how='left', on='Name').set_index('Name')
+    # df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('Address')
+    df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
+    df.fillna(0, inplace=True)
+    #df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
+
+    # Manuell select List of Subgraphs from config.py
+    # (only indexed or desired subgraphs should be included into the optimization)
+    if subgraph_list_parameter:
+        with open("config.json", "r") as jsonfile:
+            list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
+        df = df[df['id'].isin(list_desired_subgraphs)]
+
+    if blacklist_parameter:
+        with open("config.json", "r") as jsonfile:    
+            blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
+        df = df[-df['id'].isin(blacklisted_subgraphs)]
 
     # print Table with allocations, Subgraph, total Tokens signalled and total tokens staked
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
@@ -478,14 +525,15 @@ if __name__ == '__main__':
     n = len(df)  # amount of subgraphs
     set_J = range(0, n)
 
-    data = {df.reset_index()['Name'].values[j]: {'Allocation': df['Allocation'].values[j],
-                                                 'signalledTokensTotal': df['signalledTokensTotal'].values[j],
-                                                 'stakedTokensTotal': df['stakedTokensTotal'].values[j],
-                                                 'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
-                                                 'indexingRewardYear': indexing_reward_year,
-                                                 'indexingRewardWeek': indexing_reward_week,
-                                                 'indexingRewardDay': indexing_reward_day,
-                                                 'id': df['id'].values[j]} for j in set_J}
+    data = {(df.reset_index()['Name_y'].values[j], df.reset_index()['Address'].values[j]): {
+        'Allocation': df['Allocation'].values[j],
+        'signalledTokensTotal': df['signalledTokensTotal'].values[j],
+        'stakedTokensTotal': df['stakedTokensTotal'].values[j],
+        'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
+        'indexingRewardYear': indexing_reward_year,
+        'indexingRewardWeek': indexing_reward_week,
+        'indexingRewardDay': indexing_reward_day,
+        'id': df['id'].values[j]} for j in set_J}
 
     """ Possibility to add random/test Subgraph Data
     data['test_subgraph'] = {'Allocation': 2322000.0,
@@ -523,15 +571,15 @@ if __name__ == '__main__':
                      C),  # Indexing Rewards Formula (Daily Rewards)
             sense=pyomo.maximize)  # maximize Indexing Rewards
 
-        model.vol = pyomo.Constraint(expr=indexer_total_allocations >= sum(
+        model.vol = pyomo.Constraint(expr=indexer_total_stake >= sum(
             model.x[c] for c in C))  # Allocation can not be more than total Allocations
         model.bound_x = pyomo.ConstraintList()
 
         for c in C:
             # model.bound_x.add(0 <= model.x[n] <= 15400000000000000000000000 / 10 ** 18)
-            model.bound_x.add(model.x[c] >= 0.0)  # Allocations per Subgraph should be higher than zero
+            model.bound_x.add(model.x[c] >= 1000.0)  # Allocations per Subgraph should be higher than zero
             model.bound_x.add(model.x[
-                                  c] <= max_percentage * indexer_total_allocations)  # Allocation per Subgraph can't be higher than x % of total Allocations
+                                  c] <= max_percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
             model.bound_x.add(model.x[c] <= int(
                 data[c]['stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
 
@@ -561,33 +609,33 @@ if __name__ == '__main__':
 
     starting_value = sum(indexing_reward_weekly.values)  # rewards per week before optimization
     final_value = optimized_reward_weekly  # after optimization
-    #final_value = 7000  # after optimization
+    # final_value = 7000
 
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (GAS_PRICE * ALLOCATION_GAS) / 1000000000
     allocation_costs_eth = gas_costs_eth * parallel_allocations * 2  # multiply by 2 for close/new-allocation
-    allocation_costs_fiat = allocation_costs_eth * ETH_USD
+    allocation_costs_fiat = round(allocation_costs_eth * ETH_USD, 2)
     allocation_costs_grt = allocation_costs_eth * (1 / GRT_ETH)
 
     final_value = final_value - allocation_costs_grt
     diff_rewards = percentage_increase(starting_value, final_value)  # Percentage increase in Rewards
-    diff_rewards_fiat = (final_value - starting_value) * GRT_USD  # Fiat increase in Rewards
+    diff_rewards_fiat = round(((final_value - starting_value) * GRT_USD), 2)  # Fiat increase in Rewards
 
     if diff_rewards >= threshold:
         logger.info(
-            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
+            '\nTHRESHOLD of %s Percent REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created',
             threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
         print(
-            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
+            '\nTHRESHOLD of %s Percent reached. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script CREATED IN ./script.txt created\n' % (
                 threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
 
         allocation_script(indexer_id, FIXED_ALLOCATION)
     if diff_rewards < threshold:
         logger.info(
-            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED',
+            '\nTHRESHOLD of %s NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED',
             threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat)
         print(
-            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD). Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
+            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in Weekly Rewards of %s Percent (%s in USD) after subtracting Transaction Costs. Transaction Costs %s USD. Allocation script NOT CREATED\n' % (
                 threshold, diff_rewards, diff_rewards_fiat, allocation_costs_fiat))
 
     # Run the Optimization for Daily/Weekly/Yearly Indexing Rewards AND different max allocations (data_log)
