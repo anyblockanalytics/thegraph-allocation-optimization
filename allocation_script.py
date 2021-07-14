@@ -28,8 +28,8 @@ import json
 from pycoingecko import CoinGeckoAPI
 
 # Gateway to Graph Meta Subgraph
-# API_GATEWAY = "https://gateway.network.thegraph.com/network"
-API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+API_GATEWAY = "https://gateway.network.thegraph.com/network"
+#API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
 
 # Get the current (fast) Gas Price from anyblock api endpoint
 gas_price_resp = requests.get("https://api.anyblock.tools/latest-minimum-gasprice/",
@@ -228,7 +228,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
             pass
         else:
             print(
-                f"{subgraph_deployment['originalName']} ({subgraph}) Total Stake: {int(subgraph_deployment['stakedTokens']) / 10 ** 18:,.2f} Total Signal: {int(subgraph_deployment['signalledTokens']) / 10 ** 18:,.2f}")
+                f"{subgraph_deployment['originalName']} ({subgraph}) Total Stake: {int(subgraph_deployment['stakedTokens']) / 10 ** 18:,.2f} Total Signal: {int(subgraph_deployment['signalledTokens']) / 10 ** 18:,.2f} , Ratio: {(int(subgraph_deployment['stakedTokens']) / 10 ** 18) /( (int(subgraph_deployment['signalledTokens']) +1) / 10 ** 18 ) }")
             subgraphs.add(subgraph)
             total_signal += int(subgraph_deployment['signalledTokens'])
             total_stake += int(subgraph_deployment['stakedTokens'])
@@ -260,8 +260,6 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
         # print(f"graph indexer rules delete {subgraph} && \\")
         # Set fixed or dynamic allocation
         if subgraph in FIXED_ALLOCATION.keys():
-            print(
-                f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
             if FIXED_ALLOCATION[subgraph] != 0:
                 script_file.write(
                     f"graph indexer rules set {subgraph} allocationAmount {FIXED_ALLOCATION[subgraph] / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
@@ -270,20 +268,14 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
 
         else:
 
-            print(
-                f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\")
+
             if dynamic_allocation != 0:
                 script_file.write(
                     f"graph indexer rules set {subgraph} allocationAmount {dynamic_allocation / 10 ** 18:.2f} parallelAllocations {PARALLEL_ALLOCATIONS} decisionBasis always && \\\n")
                 script_file.write(f"graph indexer cost set model {subgraph} default.agora && \\\n")
                 script_file.write(f"graph indexer cost set variables {subgraph} '{{}}' && \\\n")
 
-        # Set cost model & variables
-        print(f"graph indexer cost set model {subgraph} default.agora && \\")
-        print(f"graph indexer cost set variables {subgraph} '{{}}' && \\")
 
-    print("graph indexer rules get all --merged && \\\n")
-    print("graph indexer cost get all \n")
 
     script_file.write("graph indexer rules get all --merged && \\\n")
     script_file.write("graph indexer cost get all")
