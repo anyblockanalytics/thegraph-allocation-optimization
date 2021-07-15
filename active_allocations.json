@@ -1,464 +1,800 @@
-{
-    "QmNd7CBxJPDuPoEfwjLX1ockBc315X5fBDzW4QN9ZKwFLW": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x413828bb7e9ac9d9b29462cc5995d5c1461ad612",
-        "name": "Access Control Mainnet",
-        "status": "Active",
-        "subgraph_id": "0x04373d1c6436e9333992e19a7f6c37e20603b57a18aabc4d2bb0e219c0216f73"
-    },
-    "QmNiU5YXnQk7ghyWfbqDrKG8ZH5b8ji389YYxhJCjYgeHu": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x39a469f1d19ae22cffaed4faa39649a83e7a41b3",
-        "name": "PokeMoon",
-        "status": "Active",
-        "subgraph_id": "0x0596c20b7be7d067567cb00652ffb7091a2dadcb797557efcfbab4e592a9b090"
-    },
-    "QmNukFUkc6DspWQx8ZzRSvbpsBWaiPirQdbYPq6Qc4B4Wi": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x779a6c5317541a39ade3b430692f462d9119b944",
-        "name": "Dummy Subgraph 1",
-        "status": "Active",
-        "subgraph_id": "0x087a6e8c03e01c5f29767e57ff2dd0ea619de26c46841ce4cf952e1c9cd64c07"
-    },
-    "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x3bb8090f12d51efc6b679fff5d7a3ab3a0944535",
-        "name": "Bot Bait v1",
-        "status": "Active",
-        "subgraph_id": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4"
-    },
-    "QmP7ZmWYHN9CTVZyEQ6zu1kuaJgi2AreAw3zFRjbgA5oMS": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x5aeba850b52d9d9ef95df9d2cecaa65cf3e4897e",
-        "name": "Ribbon Finance",
-        "status": "Active",
-        "subgraph_id": "0x0b818c9b0a4eae4b7c2322636df77ce458ed9ff5e120a3d91524c66d1046f029"
-    },
-    "QmPRDAzwTWFTDCvwjzM1G54tehxMTM7jG2bZjTpaGC4eZH": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xb2f0efc7c1a6bf3a2498f49469b4f6a1897bff41",
-        "name": "vechain",
-        "status": "Active",
-        "subgraph_id": "0x1006b78a758d0759f9ca1f8724dd8fa9b7e3979e248bc37d17d196c5ba61c9cc"
-    },
-    "QmPTV3wHaqKKZ7GNRY7Y96nzV7hYdWmZVVANfVdzDeFvpk": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x8e0266f4d9f81469827d16477bb29b21ad94c87c",
-        "name": "Wrapped BTC (WBTC)",
-        "status": "Active",
-        "subgraph_id": "0x109bd507245662b8e8bdbcc252300be1cc7aaa6863c3357b6ff892e52c614a85"
-    },
-    "QmPWwJodEWyB2UgqnnqjPPb713PQi1K7b73syd9QxGTDRa": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x35b1c0aede4977f599f4a45376d27a8c687d4d54",
-        "name": "Lend721",
-        "status": "Active",
-        "subgraph_id": "0x117e4340ed192c5c59a2fc5fef4568bfeab74577003c492cadd74ba2ca374461"
-    },
-    "QmPhfSkFPbooXNJUMcQSWjMXoJYF3GnWT4JmHkxYXA85Zz": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x19525fe6519ac31da1e4bc3bb4adcdb24d5a582e",
-        "name": "Bancor",
-        "status": "Active",
-        "subgraph_id": "0x143db715c25f1e97631fd370a1db89108baace5ae71366da39fa44136b3567b1"
-    },
-    "QmPt9BqZFvWS41FFcUohkaZ1ZiToJfCwAYvFMknNa9kgcz": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x54a803c41d99c65a2e5711d82896d3d465a0e61e",
-        "name": "mooass",
-        "status": "Active",
-        "subgraph_id": "0x16ece46f9fbce6dabf2093daaffece91347d47503fe547ccdcdbea9c61fbde3b"
-    },
-    "QmQKU61VgfxvD1zsRKXydV1cDrirRJnjfmz6jnP3fonYZw": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x7bb9cc693a6e1523fee00b99f4f405dd3df4f876",
-        "name": "Hopr on Mainnet",
-        "status": "Active",
-        "subgraph_id": "0x1d69c84478129a01ca1ab08c2337e640ff42d959637f21f8f2414cb7512086fa"
-    },
-    "QmQj3DDJzo9mS9m7bHriw8XdnU3od65HSThebeeDBQiujP": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x602557a3c86114268cd1062fed1b88bb3a86ef61",
-        "name": "Wrapped ETH",
-        "status": "Active",
-        "subgraph_id": "0x23739834f69676e56923f399b360beaf32cb222b1871dc85000ac7839b1c8682"
-    },
-    "QmR3K5dUyreHXmYybUkwSunFkZrmbQUfiXp1yf8XDnstuh": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x8decc001fd891f7066d1abe35e64579aec6d3ccb",
-        "name": "Cryptokitties",
-        "status": "Active",
-        "subgraph_id": "0x2821fe176a07d1e7f7df14d10967008cb930551e54e5c9a0da61dc3798c7083c"
-    },
-    "QmR6Sv5TPHktkK98GqZt4dhLNQ81CzXpASaqsibAxewv57": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x4702ccad6dbada7ac190544a72df0b0f2e904d63",
-        "name": "makerdao-governance",
-        "status": "Active",
-        "subgraph_id": "0x28ef98296776cf391293841a8f8a838cea705599b33d95dbd333049c631478c2"
-    },
-    "QmRDGLp6BHwiH9HAE2NYEE3f7LrKuRqziHBv76trT4etgU": {
-        "allocatedTokens": 100.0,
-        "allocation_id": "0xfe3283cc1b358167c974931776c7e2c63627cf9a",
-        "name": "UMA Mainnet Voting",
-        "status": "Active",
-        "subgraph_id": "0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715"
-    },
-    "QmRWuFqUhuiggfSaSUsk4Z3BvZHwuwn66xw92k2fpNC2gF": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xd4c05356028d775007ad7aeee8f057faae876be4",
-        "name": "PAX",
-        "status": "Active",
-        "subgraph_id": "0x2f33513a1eafee12fd3f75bbe0c6a25348a74887b1e566f911e8cc55a04b9d70"
-    },
-    "QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8": {
-        "allocatedTokens": 1000.0,
-        "allocation_id": "0x758507f2a0aefd75d9a5b67036941b5b02d9400c",
-        "name": "Omen",
-        "status": "Active",
-        "subgraph_id": "0x31f6fb67c823a07a93bae6b022798eebdf86210033c0e97a1402795c0c2fa99b"
-    },
-    "QmSGQsLs7Tpm4hGWULFcjVc7suYzZrtLz1M5nGq2SjT1kb": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x1283025a2cde6ef0dc64733334cefb8c2d88ea0c",
-        "name": "Subgraph7",
-        "status": "Active",
-        "subgraph_id": "0x3a58c651d725002d73537e44bc940763ee1647329f5dbcaf2c74a0831e16a270"
-    },
-    "QmSVcqmXU7iYqZv9pu3uH3hUyLP6EtMutoMdiVEUv6HTmk": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x0db46e3b34465f314d496fdace852d77d56999d1",
-        "name": "Pickle Finance Polygon",
-        "status": "Active",
-        "subgraph_id": "0x3dbadcea160399a85d7ae2fcacd4face1ce909d17057f5f3890ff674523444fb"
-    },
-    "QmSqAS1zCsMgadZqXRwmAxMenz3erHMyK3eg4oP7QeyHXQ": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x48509e34c7b21526901b2e57b243e5761c52bbc8",
-        "name": "badger-harvests",
-        "status": "Active",
-        "subgraph_id": "0x42bc9e295060d391903599a9094506de9079103b6a45218fb6908a2188b47313"
-    },
-    "QmSqNTuVwKTYLXdBVULroCKh3pUNNBVUmcu8tXJAXXdeUr": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x61ae801adc15d189909e7ed87958a6375bb7d928",
-        "name": "USDC Protocol",
-        "status": "Active",
-        "subgraph_id": "0x42ca391b2466a83fc073fa8743ba0df9802e99e70022bd3be5f62334bade8d83"
-    },
-    "QmT2Y7SHXGRt7EKXzFPYMjnrgX64PQr86EjbsHoDLNzwLy": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xac6ceaf74570adf34965ff58675de2647f88c080",
-        "name": "ENS Protocol",
-        "status": "Active",
-        "subgraph_id": "0x45a6851c2f977fc91a390eb6f4c67a035296581244bc83cf8b74c5371f438436"
-    },
-    "QmT8ngrbQVeVJA1YjuBSvM4bpzQcsND6kCXa19FJcakaa1": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x114d279cd61142052e00ac0722d6b1677efe7c95",
-        "name": "C.R.E.A.M.",
-        "status": "Active",
-        "subgraph_id": "0x47407c7583302ed18f73106524af8d5c6da897ce816cf02e3383d21fb97feb06"
-    },
-    "QmTBjLFUyifcZKuy1UqJM1GM5Lp6Ne8cZL7zmSnZK6uPkE": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x363438394f932a132a17226bb21b3a2dae231e99",
-        "name": "Subgraph16",
-        "status": "Active",
-        "subgraph_id": "0x48016f4e170edd34080ab9385c3845f8cb62275e4fde63243dc381e1a5027713"
-    },
-    "QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg": {
-        "allocatedTokens": 477927.63,
-        "allocation_id": "0x0e68c46191ab4b011a9fc93590149479b687b3c6",
-        "name": "Subgraph4",
-        "status": "Active",
-        "subgraph_id": "0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5"
-    },
-    "QmTKXLEdMD6Vq7Nwxo8XAfnHpG6H1TzL1AGwiqLpoae3Pb": {
-        "allocatedTokens": 1000.0,
-        "allocation_id": "0x10fb06f0fb5adfbae7a4aacf322562d3a3dfaf17",
-        "name": "PoolTogether v3_1_0",
-        "status": "Active",
-        "subgraph_id": "0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e"
-    },
-    "QmTYMx6Ls53MfqAPYbPwMyt45KKzayznc2kxeDiwmgvtF9": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x07e079e22accb718716ecfd64fef6ebf3eddd91f",
-        "name": "eip1155",
-        "status": "Active",
-        "subgraph_id": "0x4d4a747d890c63f85e47b9df02a9d490284b9163cd8c23d91c956feaab063298"
-    },
-    "QmTkM4Gxh7wctYdwvdicnRt6oP2V62b5FGGMEDupbWcb4k": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x30ccfd814f5e5e1570071f9c492ce70fc1eaddbd",
-        "name": "Yearn Vaults V2 Subgraph",
-        "status": "Active",
-        "subgraph_id": "0x505c6a222cd399857412c6003f615e07626875c477fa1a61d6f2cb8aa93deae9"
-    },
-    "QmU3MkEQCHCJbZ5U6sJbifpNLKwehSnYRgSGbeNUyY8Kb2": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xbbe4a26f266406147fd972d8a5a30d39eeeb6f0b",
-        "name": "Tacoswap Vision",
-        "status": "Active",
-        "subgraph_id": "0x54b81138d236538ce5098b45a63598cb6cc68f791fc67b239b63329db47b2d85"
-    },
-    "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x85ce2df44bc18d84ba8f8db3d5ea0e6456d4bfbd",
-        "name": "AAVE V2",
-        "status": "Active",
-        "subgraph_id": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56"
-    },
-    "QmUVskWrz1ZiQZ76AtyhcfFDEH1ELnRpoyEhVL8p6NFTbR": {
-        "allocatedTokens": 477927.63,
-        "allocation_id": "0x5fba0769b42393cafbc148125b12899be7c17754",
-        "name": "Subgraph30",
-        "status": "Active",
-        "subgraph_id": "0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54"
-    },
-    "QmUghXvKf5cVjtayNNRHCd3RbHEwfbGBQ95s9vheJjN5hH": {
-        "allocatedTokens": 458927.63,
-        "allocation_id": "0x0af6b0e07827befe075916e0a24cde610c3110b1",
-        "name": "DODOEX V2",
-        "status": "Active",
-        "subgraph_id": "0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78"
-    },
-    "QmVEV7RA2U6BJT9Ssjxcfyrk4YQUnVqSRNX4TvYagjzh9h": {
-        "allocatedTokens": 13000.0,
-        "allocation_id": "0xd4ac281baddcee5452e388e2463ec2478865231c",
-        "name": "PoolTogether",
-        "status": "Active",
-        "subgraph_id": "0x666d78959706d7e1ed20befeb1d2c9a4e512a22931d8e22928b1f63ce48fcb40"
-    },
-    "QmVTrLgYWwa6siFYGfBnBR4nyCqhBJ25z2akHijKkRsB9X": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x18d022b28a15e3129076cdf2266fa0b73abdc477",
-        "name": "Balancer",
-        "status": "Active",
-        "subgraph_id": "0x69da0661f0434ec96f8135a82b11d2191e34441efc8f46c7e21b2cc2e75e9306"
-    },
-    "QmVWutowpFyP64HNDuctPVmZLWa2zMnf8kbxdKmQUucHad": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x57444738e7b1a7b46d781fda5337a35b71ae65a6",
-        "name": "Pickle Finance",
-        "status": "Active",
-        "subgraph_id": "0x6aa2c929d0717bbde9879e6da407f80a8020cabe95fbe6b9a28bcf42807cb036"
-    },
-    "QmVf6LXmnRGexmsA6BqiVdwtL22fDVN289pLU8qEhr5GqC": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x1494e1d08d6f4e9cd4852c2797fd1bd0d42d1387",
-        "name": "0x-exchange-proxy",
-        "status": "Active",
-        "subgraph_id": "0x6cbb3da0becfbdc8da2cbde7f47838743a8c8b46dfdcefd0bef35340f6058bf7"
-    },
-    "QmWXF3jTLo6Wy9MxDZz6WKhET3GFcSFqn6vmrDDYPF7UHK": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xf8c2a172f158c14e51b53f1ac7da53a9e8d7c646",
-        "name": "NFTX",
-        "status": "Active",
-        "subgraph_id": "0x79942149e2a7507a726b4c80d4319e4527c9c985cf4f8473e3b1f77d1fe6c3ce"
-    },
-    "QmWdVndjDjT8gXsiv2J4XhknjcoZhpNf3N7cZoLV6HzTPk": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x6c66ad6bd6f6d5980b3796cffe94b13c20364325",
-        "name": "Synthetix",
-        "status": "Active",
-        "subgraph_id": "0x7b2e47f5c8f1b951645e9c2858eb3fca35b2e473d2f8994fd3ac9094c739db57"
-    },
-    "QmWiFjHuEzoKk6GkgUWvUHo6bCwqAZwYWPAw6VyG5vtTwQ": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xae40233cb8711f9a97fabd84e2907bc01cc9465b",
-        "name": "Curve Finance",
-        "status": "Active",
-        "subgraph_id": "0x7c664a469ea98278e5124e165e0744085b1a9d3903ffe37c7c25b1d7aec5aa83"
-    },
-    "QmWu4VcZ1qsz2xG1CTk3UNM85rUTn9KiQhfb84YgCJKpt9": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x899a6c9367e88d2201efcaf7af7afe065e772a5b",
-        "name": "MetaFactory ROBOT",
-        "status": "Active",
-        "subgraph_id": "0x7f2af9820fb561b9ad48d4d803784f56fc7b023cafaf8999fac9596fb7cd6232"
-    },
-    "QmY68uGbdgD9gkhvEQrAMp3DDj3ojrKhe23fTmXpRkqgmm": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xf82668d87377f9e87da8a11aa016739111e96329",
-        "name": "dChan",
-        "status": "Active",
-        "subgraph_id": "0x90dd08d1d1809777337d846d1fed3d6c00d932fe9802ead39c81fc8614bff390"
-    },
-    "QmZJRx81nYuWpLEAUkn6ZdeMN9Bxmxkd8Q8jT9P8uKmtM5": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x1c74ec46ff909768abfa5233cd50c38a9db2b6b0",
-        "name": "Maddie's NFT Lookup",
-        "status": "Active",
-        "subgraph_id": "0xa2def7f94b52e2a519ba9646a2c755b8dc81ffd8a7e6a5c51b43f72f0c2c1ff8"
-    },
-    "QmZdsSbRwVD7VVVm5WGxZZC6HYvbjnFb4hcwvQ4fTs5bxA": {
-        "allocatedTokens": 1000.0,
-        "allocation_id": "0x04d0aee85481b09a697cb430345e6a1ad4adbb70",
-        "name": "mStable Protocol",
-        "status": "Active",
-        "subgraph_id": "0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947"
-    },
-    "QmZpPd19qjejmHYXjKSiBMJMZMEqxFunHJvrt3zfpyQXeo": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xedac51154f1574e06c14f42d6bfc0f159c7079fc",
-        "name": "Auctus Options",
-        "status": "Active",
-        "subgraph_id": "0xaa8bc240f4f3e3e3e59e1927fd4818f46799cbdf6ba0c92ad2acac30ef82f040"
-    },
-    "QmZsXh48bDVNVvrkweZRoGJrXbvbXzTE5M8ztZYc46dPRx": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xb537ad5b09f4cc818a22d5582798baedfb44a5db",
-        "name": "Badger DAO",
-        "status": "Active",
-        "subgraph_id": "0xab59a037137e1e8dcb769904b557bd00e7bf9d5b8c7fd6e89f356615508a40cf"
-    },
-    "QmZz1qRApELxp97cuAHJjDkQwehH9TwBuqmpakt6fQDu5c": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xe4fb047382db68c758e1a3fddb9ca92fa75dfe05",
-        "name": "Curve",
-        "status": "Active",
-        "subgraph_id": "0xad02eef50657ecfcd2f5ceffe9e3e807d3b97c40b28ab5fc130d86919146602b"
-    },
-    "Qma6MbdJJ3sAi5HAB1tQ3WLvRXSkGRDM24Xp88Rry8rPkR": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x5773e02dff6c6ff55292a2842979bace73fbd0ca",
-        "name": "Yearn Finance",
-        "status": "Active",
-        "subgraph_id": "0xaea2c374cf906e6e9942d0e1d751896f86688b15fb303691586fc2371e302a46"
-    },
-    "QmaaDA7XVVktfxCLMgfwG1z3KM8DSMoLkbemkTt9mQT8Qf": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x27015a3791ac380c27a8f577e58328b9d981d478",
-        "name": "eip721",
-        "status": "Active",
-        "subgraph_id": "0xb5c57baf86e39e2a837634f5dcab48a536f3b29397d36eb165a821bd080146d8"
-    },
-    "QmauD14T4Uqrsik6vkxGnutzpjbi9FTzBiYKfX45BQGLMM": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x3f53c7f04ffa15f145bd06224c4449c6643e466c",
-        "name": "Yearn Finance Vaults",
-        "status": "Active",
-        "subgraph_id": "0xbaa3578f5fae044773afb1d2f86eb9f2fbd91473faea64441c9b3d53c3854dd0"
-    },
-    "QmauYgPmss6CEZXtaRvvGW2oiyLqxpoCkWNCTmFPVTFDfk": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x63b563d8f64bf03322ce38a3d5fba96b55118d8d",
-        "name": "Compound V2",
-        "status": "Active",
-        "subgraph_id": "0xbab9979a276e230ab7f6dc18ea66a8d6e3fc662f5fc080b862f5a30c86883647"
-    },
-    "Qmaz1R8vcv9v3gUfksqiS9JUz7K9G8S5By3JYn8kTiiP5K": {
-        "allocatedTokens": 477927.63,
-        "allocation_id": "0xb307c4e2d20f95f90c4c2751347cb32bfcf44143",
-        "name": "PoolTogether",
-        "status": "Active",
-        "subgraph_id": "0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a"
-    },
-    "Qmb31DYo9MHj4JBW8fqDoXBK87Bgun4DZMaxyXmNH17Qj6": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x9794644ff6863999d6422fbf49219264f904b4b3",
-        "name": "MetroScan",
-        "status": "Active",
-        "subgraph_id": "0xbca2a9dceb15b43904251bf973a9309d5a5978121e13af412b3d6ac884b791f5"
-    },
-    "QmbDmyGzNwWF7bcc6YhXP9vCmS8VBBdLfrq37JePa5dkHT": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xcc04da7b80e37d37e6ca472f5efa6fea89858d8f",
-        "name": "TheGraph[RandomDev]",
-        "status": "Active",
-        "subgraph_id": "0xbf651335bff40ebeb04f9f29efeb0f96c95d7cc5d07545eca89e3f357dfad746"
-    },
-    "QmbHg6vAJRD9ZWz5GTP9oMrfDyetnGTr5KWJBYAq59fm1W": {
-        "allocatedTokens": 1000.0,
-        "allocation_id": "0x4e6c0a5b68eaac7802342a18ff4abd10fc22bdd0",
-        "name": "Subgraph25",
-        "status": "Active",
-        "subgraph_id": "0xc064c354bc21dd958b1d41b67b8ef161b75d2246b425f68ed4c74964ae705cbd"
-    },
-    "QmbvTyvmxqHLahZwS7fZtVWGM85VCpCiKHiagPxQJp5ktS": {
-        "allocatedTokens": 1000.0,
-        "allocation_id": "0xdabd95ccda70b6bab0ece6641024b7a1c36ed6c8",
-        "name": "Dinosaur",
-        "status": "Active",
-        "subgraph_id": "0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823"
-    },
-    "QmcCoXhCZX3NXftj15YLg4FG9AwWANJWK7j1gwLR4JZ6Gt": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x7535b3841fafe550635b293a76a3b04a15cc5d0d",
-        "name": "badger-harvests",
-        "status": "Active",
-        "subgraph_id": "0xce00f19f160756ed28bc1c8a3ecb54486d40448579b940dfdaa30b5024b062bd"
-    },
-    "QmdoQo45eEeqc9z9j71DxEGFDrUTaTqtvmjTLZcXgDfwtr": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xb12ed77088a06a56e170dd94857a3986aa188524",
-        "name": "Uniswap V2",
-        "status": "Active",
-        "subgraph_id": "0xe5ba4099206741bfe3bb4e3f7318a9a772f1974b30718c02600f0f4967510c67"
-    },
-    "Qmdpkd8yvD4XR3mQMZQmY5nqBQtjEac8gb8RoFFcWan7xE": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xb4a1409b6be688e1bee8aa6a6e487af3dbdfc719",
-        "name": "Sushiswap - Exchange",
-        "status": "Active",
-        "subgraph_id": "0xe6124100a73a72ba708b48e32b446800054d5fecb2bfa80b1746613b6e4c3653"
-    },
-    "Qme66ZNMxSdCQKzaDuvS381whCVYCQjf637sGZCqJHAWHB": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x25f623b2c0e4839e76b18a7750aba26ec3af92d8",
-        "name": "Uniswap V3",
-        "status": "Active",
-        "subgraph_id": "0xea0081b34c9d8ae0c52c2131711f093d33bd6efb8638f0a5bbc3da0a08462a46"
-    },
-    "Qme7cpR3TvrvFCG5eRL4SKBECrZfrt7ivZZB6MWRUsBgnh": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x6df7b53836464d67e72dff19915873b240a8f978",
-        "name": "CryptoPunks",
-        "status": "Active",
-        "subgraph_id": "0xea644d48435cd634d9e7f22c2b75fdecfcb0efb916cdbec234c7e16d2af3e9e6"
-    },
-    "QmeLLM9VgPFMRhMJnnDN3fAse86biLLqxgBtW2B8ZF8eix": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xb667ba35eecfc8cab9d312524127c1db920de340",
-        "name": "Paraswap",
-        "status": "Active",
-        "subgraph_id": "0xeda63ac431d3484ad7413989cc7044b87ef8d01252c2f610e415c8f0798fa56d"
-    },
-    "QmeUiEKEDTJ5gPRoN5FcUZn2tp1cBdae5DMbFDiL8UPxrZ": {
-        "allocatedTokens": 50.0,
-        "allocation_id": "0xa85b3f0ed9da8badab6b2ad826aeb78a614eda86",
-        "name": "Liquity",
-        "status": "Active",
-        "subgraph_id": "0xefcb9e49ebac50f2f87251f78c28b730f5cecebfab5b05a799c8888b98ff5ab6"
-    },
-    "QmekqcLE25A51MTpWyWhYqy5vRL25KmZVNRfMCkrStQh8k": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x373ab0b001016726ff2929e51cecfbad420bb790",
-        "name": "Subgraph17",
-        "status": "Active",
-        "subgraph_id": "0xf3ed4162725f4d690b1a532481e3cfdd15605aa919922cf43f5da92110419089"
-    },
-    "Qmf5a5VJqg2rpQ6RQ9AASBYh9UVkcWQx9q2SHo9Bjm9Eqw": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xc83240c165a954826ec97f1edee69da06ae5c289",
-        "name": "0x Protocol",
-        "status": "Active",
-        "subgraph_id": "0xf8b9ba9bb1c05096370606aa5fcc6313641e5a96be8101fc3a238aea7336deaa"
-    },
-    "QmfWjxaEaaLDVpZssqXEX3aHvLMiWdxxwbS4n1Vc658q1M": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0x4bb82309e3d8d3eb995d54c63d91c2f7f9ec14d2",
-        "name": "eth2",
-        "status": "Active",
-        "subgraph_id": "0xff2c6be06625859aaa16daa989956bb8ec2773a597daa1031a25f84b4d4e550c"
-    },
-    "QmfWvW1C8EKFGMhe1cDh8jErpFepdarvDXAzBV3hyYK3yu": {
-        "allocatedTokens": 10.0,
-        "allocation_id": "0xf0a652466940139b7e90e0f9add3d6aa4d3ce954",
-        "name": "Olympus",
-        "status": "Active",
-        "subgraph_id": "0xff385756354ffb35725cedf2aaa62ddaccd6cea38728b4a7993b8569089e28ec"
-    }
-}
+[
+    [
+        "QmT2Y7SHXGRt7EKXzFPYMjnrgX64PQr86EjbsHoDLNzwLy",
+        {
+            "allocated_tokens": 1.0,
+            "allocation_created_epoch": 201,
+            "allocation_created_timestamp": 1625779363,
+            "allocation_id": "0x08EBCE42f2aD9a6951c92038E993F89Fb2880d17",
+            "allocation_status": "Active",
+            "name": "ENS Protocol",
+            "rewards_pending": 22.750421336205353,
+            "rewards_pending_hourly": 0.13946877395234328,
+            "rewards_pending_per_token": 22.750421336205353,
+            "rewards_pending_per_token_hourly": 0.13946877395234328,
+            "subgraph_id": "0x45a6851c2f977fc91a390eb6f4c67a035296581244bc83cf8b74c5371f438436",
+            "subgraph_signal": 4209.925314526222,
+            "subgraph_signal_ratio": 0.0018710687701198891,
+            "subgraph_stake": 2250011.0
+        }
+    ],
+    [
+        "QmX21Jk6wxeLN2Lbn3RTdmAfHAbW8QYrkbBqbz2vqUvazV",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626283542,
+            "allocation_id": "0x1DD312BCc60608DC741Ec09E07CB8116b0436CB8",
+            "allocation_status": "Active",
+            "name": "Composable Finance",
+            "rewards_pending": 24.87370494315207,
+            "rewards_pending_hourly": 1.0768152817262155,
+            "rewards_pending_per_token": 2.487370494315207,
+            "rewards_pending_per_token_hourly": 0.10768152817262155,
+            "subgraph_id": "0x80f26fb08bfe8f4da90d3cf43103d0fde225951e3aa1dd72dbca7ced446d8a62",
+            "subgraph_signal": 4416.047753624093,
+            "subgraph_signal_ratio": 0.003148562452675175,
+            "subgraph_stake": 1402560.0
+        }
+    ],
+    [
+        "QmSqNTuVwKTYLXdBVULroCKh3pUNNBVUmcu8tXJAXXdeUr",
+        {
+            "allocated_tokens": 1.0,
+            "allocation_created_epoch": 201,
+            "allocation_created_timestamp": 1625777910,
+            "allocation_id": "0x1a5e523feeDfd3a93660adb10cd30d18dAcE8F91",
+            "allocation_status": "Active",
+            "name": "USDC Protocol",
+            "rewards_pending": 14.334786497068748,
+            "rewards_pending_hourly": 0.08764731075252923,
+            "rewards_pending_per_token": 14.334786497068748,
+            "rewards_pending_per_token_hourly": 0.08764731075252923,
+            "subgraph_id": "0x42ca391b2466a83fc073fa8743ba0df9802e99e70022bd3be5f62334bade8d83",
+            "subgraph_signal": 792.4012424484329,
+            "subgraph_signal_ratio": 0.00031695910235932274,
+            "subgraph_stake": 2500011.0
+        }
+    ],
+    [
+        "QmT8ngrbQVeVJA1YjuBSvM4bpzQcsND6kCXa19FJcakaa1",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 205,
+            "allocation_created_timestamp": 1626076143,
+            "allocation_id": "0x114d279cD61142052E00AC0722d6B1677EfE7C95",
+            "allocation_status": "Active",
+            "name": "C.R.E.A.M.",
+            "rewards_pending": 39.359077499061286,
+            "rewards_pending_hourly": 0.487739583467336,
+            "rewards_pending_per_token": 3.9359077499061286,
+            "rewards_pending_per_token_hourly": 0.0487739583467336,
+            "subgraph_id": "0x47407c7583302ed18f73106524af8d5c6da897ce816cf02e3383d21fb97feb06",
+            "subgraph_signal": 29427.219092150204,
+            "subgraph_signal_ratio": 0.0008685747320674314,
+            "subgraph_stake": 33879893.12342284
+        }
+    ],
+    [
+        "QmSGQsLs7Tpm4hGWULFcjVc7suYzZrtLz1M5nGq2SjT1kb",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625851732,
+            "allocation_id": "0x1283025a2CdE6Ef0DC64733334CeFB8c2D88eA0c",
+            "allocation_status": "Active",
+            "name": "Subgraph63",
+            "rewards_pending": 63.57301285589527,
+            "rewards_pending_hourly": 0.4444610193736025,
+            "rewards_pending_per_token": 6.357301285589527,
+            "rewards_pending_per_token_hourly": 0.04444610193736025,
+            "subgraph_id": "0x3a58c651d725002d73537e44bc940763ee1647329f5dbcaf2c74a0831e16a270",
+            "subgraph_signal": 36161.51398562843,
+            "subgraph_signal_ratio": 0.0020812368171277567,
+            "subgraph_stake": 17375011.67
+        }
+    ],
+    [
+        "QmVf6LXmnRGexmsA6BqiVdwtL22fDVN289pLU8qEhr5GqC",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 205,
+            "allocation_created_timestamp": 1626110596,
+            "allocation_id": "0x1494E1d08D6F4E9Cd4852C2797fd1bd0d42d1387",
+            "allocation_status": "Active",
+            "name": "0x-exchange-proxy",
+            "rewards_pending": 27.351375975997183,
+            "rewards_pending_hourly": 0.38450885039804455,
+            "rewards_pending_per_token": 2.735137597599718,
+            "rewards_pending_per_token_hourly": 0.03845088503980445,
+            "subgraph_id": "0x6cbb3da0becfbdc8da2cbde7f47838743a8c8b46dfdcefd0bef35340f6058bf7",
+            "subgraph_signal": 33947.38627598062,
+            "subgraph_signal_ratio": 0.0006473170634775319,
+            "subgraph_stake": 52443212.43998679
+        }
+    ],
+    [
+        "QmSVcqmXU7iYqZv9pu3uH3hUyLP6EtMutoMdiVEUv6HTmk",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 204,
+            "allocation_created_timestamp": 1626047351,
+            "allocation_id": "0x0dB46E3B34465F314D496fDaCe852d77D56999d1",
+            "allocation_status": "Active",
+            "name": "Pickle Finance Polygon",
+            "rewards_pending": 13.29439345114199,
+            "rewards_pending_hourly": 0.1498986426335424,
+            "rewards_pending_per_token": 1.329439345114199,
+            "rewards_pending_per_token_hourly": 0.014989864263354242,
+            "subgraph_id": "0x3dbadcea160399a85d7ae2fcacd4face1ce909d17057f5f3890ff674523444fb",
+            "subgraph_signal": 0.0,
+            "subgraph_signal_ratio": 0.0,
+            "subgraph_stake": 101010.0
+        }
+    ],
+    [
+        "QmeM8PbQwRSiXr8pddPm91Jocrxy2pVyLeva1aYmBLLpuK",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626280793,
+            "allocation_id": "0x036f034eE0F779005a52887405b2ed632CE4231b",
+            "allocation_status": "Active",
+            "name": "CryptovoxelsParcel (not official)",
+            "rewards_pending": 248.57717314883627,
+            "rewards_pending_hourly": 10.43203148426695,
+            "rewards_pending_per_token": 0.24857717314883626,
+            "rewards_pending_per_token_hourly": 0.01043203148426695,
+            "subgraph_id": "0xedda4a24c26e2e4657e2b63439121acc4111554b218a2f822218d34507568c5e",
+            "subgraph_signal": 3022.5,
+            "subgraph_signal_ratio": 0.27452316076294275,
+            "subgraph_stake": 11010.0
+        }
+    ],
+    [
+        "QmZz1qRApELxp97cuAHJjDkQwehH9TwBuqmpakt6fQDu5c",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 205,
+            "allocation_created_timestamp": 1626088613,
+            "allocation_id": "0x17e3e8a928fAd869F5D9d0915A2A8C1E7E3F3c00",
+            "allocation_status": "Active",
+            "name": "Curve",
+            "rewards_pending": 358.58448442242957,
+            "rewards_pending_hourly": 4.642376156342602,
+            "rewards_pending_per_token": 0.3585844844224296,
+            "rewards_pending_per_token_hourly": 0.004642376156342601,
+            "subgraph_id": "0xad02eef50657ecfcd2f5ceffe9e3e807d3b97c40b28ab5fc130d86919146602b",
+            "subgraph_signal": 86420.00733359066,
+            "subgraph_signal_ratio": 0.08526837269201235,
+            "subgraph_stake": 1013506.0
+        }
+    ],
+    [
+        "QmZJRx81nYuWpLEAUkn6ZdeMN9Bxmxkd8Q8jT9P8uKmtM5",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625866405,
+            "allocation_id": "0x1C74eC46FF909768ABFA5233cD50c38A9DB2B6b0",
+            "allocation_status": "Active",
+            "name": "Maddie's NFT Lookup",
+            "rewards_pending": 4.376114387792547,
+            "rewards_pending_hourly": 0.031489611427304144,
+            "rewards_pending_per_token": 0.4376114387792547,
+            "rewards_pending_per_token_hourly": 0.0031489611427304143,
+            "subgraph_id": "0xa2def7f94b52e2a519ba9646a2c755b8dc81ffd8a7e6a5c51b43f72f0c2c1ff8",
+            "subgraph_signal": 10095.566458442881,
+            "subgraph_signal_ratio": 0.0016695110084707643,
+            "subgraph_stake": 6047020.0
+        }
+    ],
+    [
+        "QmVTrLgYWwa6siFYGfBnBR4nyCqhBJ25z2akHijKkRsB9X",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625837000,
+            "allocation_id": "0x18D022b28A15e3129076CdF2266fa0B73aBdc477",
+            "allocation_status": "Active",
+            "name": "Balancer",
+            "rewards_pending": 3.7682435777201757,
+            "rewards_pending_hourly": 0.02561087442425923,
+            "rewards_pending_per_token": 0.37682435777201756,
+            "rewards_pending_per_token_hourly": 0.0025610874424259232,
+            "subgraph_id": "0x69da0661f0434ec96f8135a82b11d2191e34441efc8f46c7e21b2cc2e75e9306",
+            "subgraph_signal": 6869.092596469625,
+            "subgraph_signal_ratio": 0.002847012582171047,
+            "subgraph_stake": 2412737.0
+        }
+    ],
+    [
+        "Qmf5a5VJqg2rpQ6RQ9AASBYh9UVkcWQx9q2SHo9Bjm9Eqw",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 203,
+            "allocation_created_timestamp": 1625877743,
+            "allocation_id": "0x1A84bF7358dAF999c9b722B4bf6b8e8346D3a033",
+            "allocation_status": "Active",
+            "name": "0x Protocol",
+            "rewards_pending": 219.48190767124865,
+            "rewards_pending_hourly": 1.6159805049059919,
+            "rewards_pending_per_token": 0.21948190767124864,
+            "rewards_pending_per_token_hourly": 0.0016159805049059917,
+            "subgraph_id": "0xf8b9ba9bb1c05096370606aa5fcc6313641e5a96be8101fc3a238aea7336deaa",
+            "subgraph_signal": 68.97172106133615,
+            "subgraph_signal_ratio": 0.006264461495125899,
+            "subgraph_stake": 11010.0
+        }
+    ],
+    [
+        "QmbvTyvmxqHLahZwS7fZtVWGM85VCpCiKHiagPxQJp5ktS",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 190,
+            "allocation_created_timestamp": 1624780716,
+            "allocation_id": "0x101Ee352eAA3Ae9C2f569eE17A0bE6040545A4b6",
+            "allocation_status": "Active",
+            "name": "Dinosaur",
+            "rewards_pending": 189.06429750217788,
+            "rewards_pending_hourly": 0.4291709311270206,
+            "rewards_pending_per_token": 0.18906429750217787,
+            "rewards_pending_per_token_hourly": 0.0004291709311270206,
+            "subgraph_id": "0xc9d18c59e4aaf2c1f86dfef16fbdc0f81eae8ada58d87a23d2666c45704b8823",
+            "subgraph_signal": 390.6866537734492,
+            "subgraph_signal_ratio": 0.03255722114778743,
+            "subgraph_stake": 12000.0
+        }
+    ],
+    [
+        "QmPRDAzwTWFTDCvwjzM1G54tehxMTM7jG2bZjTpaGC4eZH",
+        {
+            "allocated_tokens": 10000.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626248036,
+            "allocation_id": "0x03473A9F4b5Aa8cAfA214916405147e6886772ad",
+            "allocation_status": "Active",
+            "name": "vechain",
+            "rewards_pending": 39.95413323946749,
+            "rewards_pending_hourly": 1.213415540366731,
+            "rewards_pending_per_token": 0.0039954133239467485,
+            "rewards_pending_per_token_hourly": 0.00012134155403667308,
+            "subgraph_id": "0x1006b78a758d0759f9ca1f8724dd8fa9b7e3979e248bc37d17d196c5ba61c9cc",
+            "subgraph_signal": 27.155636675636863,
+            "subgraph_signal_ratio": 0.0027128508167469393,
+            "subgraph_stake": 10010.0
+        }
+    ],
+    [
+        "QmTYMx6Ls53MfqAPYbPwMyt45KKzayznc2kxeDiwmgvtF9",
+        {
+            "allocated_tokens": 1000000.0,
+            "allocation_created_epoch": 203,
+            "allocation_created_timestamp": 1625874602,
+            "allocation_id": "0x157637118c9D48adeAE21bd526c9b4Fe7866D385",
+            "allocation_status": "Active",
+            "name": "eip1155",
+            "rewards_pending": 10619.954826272628,
+            "rewards_pending_hourly": 77.6947786896461,
+            "rewards_pending_per_token": 0.010619954826272628,
+            "rewards_pending_per_token_hourly": 7.76947786896461e-05,
+            "subgraph_id": "0x4d4a747d890c63f85e47b9df02a9d490284b9163cd8c23d91c956feaab063298",
+            "subgraph_signal": 9744.325187550156,
+            "subgraph_signal_ratio": 0.000583290350070133,
+            "subgraph_stake": 16705788.44031712
+        }
+    ],
+    [
+        "Qma6MbdJJ3sAi5HAB1tQ3WLvRXSkGRDM24Xp88Rry8rPkR",
+        {
+            "allocated_tokens": 350.0,
+            "allocation_created_epoch": 205,
+            "allocation_created_timestamp": 1626071930,
+            "allocation_id": "0x02e5e80d5cdbE192885F9A043C4462DCB4B2C720",
+            "allocation_status": "Active",
+            "name": "Yearn Finance",
+            "rewards_pending": 1.778000207026735,
+            "rewards_pending_hourly": 0.021724003222565295,
+            "rewards_pending_per_token": 0.0050800005915049564,
+            "rewards_pending_per_token_hourly": 6.206858063590084e-05,
+            "subgraph_id": "0xaea2c374cf906e6e9942d0e1d751896f86688b15fb303691586fc2371e302a46",
+            "subgraph_signal": 149.3454683886543,
+            "subgraph_signal_ratio": 0.00046330796221654466,
+            "subgraph_stake": 322346.0
+        }
+    ],
+    [
+        "QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE",
+        {
+            "allocated_tokens": 352000.0,
+            "allocation_created_epoch": 189,
+            "allocation_created_timestamp": 1624639482,
+            "allocation_id": "0x1dA27e9D2C9cC43A493E53cbcCa8F881C4A7373a",
+            "allocation_status": "Active",
+            "name": "Opyn Gamma Mainnet",
+            "rewards_pending": 7853.797575505894,
+            "rewards_pending_hourly": 16.369494226837375,
+            "rewards_pending_per_token": 0.02231192493041447,
+            "rewards_pending_per_token_hourly": 4.6504244962606176e-05,
+            "subgraph_id": "0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811",
+            "subgraph_signal": 154260.92047099138,
+            "subgraph_signal_ratio": 0.0029909235418068537,
+            "subgraph_stake": 51576350.3529082
+        }
+    ],
+    [
+        "QmauD14T4Uqrsik6vkxGnutzpjbi9FTzBiYKfX45BQGLMM",
+        {
+            "allocated_tokens": 200000.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626297248,
+            "allocation_id": "0x0f3466116eBfd54BF36acD2efE4079c3972c6eb2",
+            "allocation_status": "Active",
+            "name": "Yearn Finance Vaults",
+            "rewards_pending": 169.4824096093038,
+            "rewards_pending_hourly": 8.793082234017488,
+            "rewards_pending_per_token": 0.000847412048046519,
+            "rewards_pending_per_token_hourly": 4.396541117008744e-05,
+            "subgraph_id": "0xbaa3578f5fae044773afb1d2f86eb9f2fbd91473faea64441c9b3d53c3854dd0",
+            "subgraph_signal": 9899.651278763855,
+            "subgraph_signal_ratio": 0.002890175386914359,
+            "subgraph_stake": 3425277.0
+        }
+    ],
+    [
+        "Qmav8jkmAeKBLyxmngJVwprN3ZsJA9A57jeoikdCU2Dyrv",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 131,
+            "allocation_created_timestamp": 1619538934,
+            "allocation_id": "0x108b764340A115569e078B920adD2D23be234C56",
+            "allocation_status": "Active",
+            "name": "PoolTogether",
+            "rewards_pending": 81.99537727673105,
+            "rewards_pending_hourly": 0.04323312648442615,
+            "rewards_pending_per_token": 0.08199537727673105,
+            "rewards_pending_per_token_hourly": 4.323312648442615e-05,
+            "subgraph_id": "0xbae01a063ad846d7e4200757480544b5feb1f0217d94db1db97b48bb7f124dbf",
+            "subgraph_signal": 0.0,
+            "subgraph_signal_ratio": 0.0,
+            "subgraph_stake": 22000.08
+        }
+    ],
+    [
+        "QmdoQo45eEeqc9z9j71DxEGFDrUTaTqtvmjTLZcXgDfwtr",
+        {
+            "allocated_tokens": 321986.0,
+            "allocation_created_epoch": 206,
+            "allocation_created_timestamp": 1626187102,
+            "allocation_id": "0x0aa84fFf14b425bc6e1911B1A695e6baf4C3E3D2",
+            "allocation_status": "Active",
+            "name": "Uniswap V2",
+            "rewards_pending": 675.4444194910467,
+            "rewards_pending_hourly": 13.546050645329897,
+            "rewards_pending_per_token": 0.002097744682970833,
+            "rewards_pending_per_token_hourly": 4.207030940888702e-05,
+            "subgraph_id": "0xe5ba4099206741bfe3bb4e3f7318a9a772f1974b30718c02600f0f4967510c67",
+            "subgraph_signal": 975.0,
+            "subgraph_signal_ratio": 0.0030265780112123074,
+            "subgraph_stake": 322146.0
+        }
+    ],
+    [
+        "QmZpPd19qjejmHYXjKSiBMJMZMEqxFunHJvrt3zfpyQXeo",
+        {
+            "allocated_tokens": 1033100.0,
+            "allocation_created_epoch": 205,
+            "allocation_created_timestamp": 1626123797,
+            "allocation_id": "0x0A6C7cA84a52fD0eA0D7F3CE4325f313C687fCa4",
+            "allocation_status": "Active",
+            "name": "Auctus Options",
+            "rewards_pending": 2618.7489100533326,
+            "rewards_pending_hourly": 38.82674115501606,
+            "rewards_pending_per_token": 0.002534845523234278,
+            "rewards_pending_per_token_hourly": 3.758275206177143e-05,
+            "subgraph_id": "0xaa8bc240f4f3e3e3e59e1927fd4818f46799cbdf6ba0c92ad2acac30ef82f040",
+            "subgraph_signal": 7038.213617360447,
+            "subgraph_signal_ratio": 0.0022061221691185014,
+            "subgraph_stake": 3190310.0
+        }
+    ],
+    [
+        "QmRWuFqUhuiggfSaSUsk4Z3BvZHwuwn66xw92k2fpNC2gF",
+        {
+            "allocated_tokens": 200000.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625827805,
+            "allocation_id": "0x1125996792DDFa7FF373515b53905f90922A6E05",
+            "allocation_status": "Active",
+            "name": "PAX",
+            "rewards_pending": 1021.5126311863964,
+            "rewards_pending_hourly": 6.8246772197064836,
+            "rewards_pending_per_token": 0.0051075631559319825,
+            "rewards_pending_per_token_hourly": 3.4123386098532416e-05,
+            "subgraph_id": "0x2f33513a1eafee12fd3f75bbe0c6a25348a74887b1e566f911e8cc55a04b9d70",
+            "subgraph_signal": 9811.700178466417,
+            "subgraph_signal_ratio": 0.0010711451909421225,
+            "subgraph_stake": 9160009.55
+        }
+    ],
+    [
+        "QmTkM4Gxh7wctYdwvdicnRt6oP2V62b5FGGMEDupbWcb4k",
+        {
+            "allocated_tokens": 405000.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626249545,
+            "allocation_id": "0x10315479c2E633892E7C61Fc59cD9891987c6D94",
+            "allocation_status": "Active",
+            "name": "Yearn Vaults V2 Subgraph",
+            "rewards_pending": 342.9462499214519,
+            "rewards_pending_hourly": 10.543209794301301,
+            "rewards_pending_per_token": 0.0008467808640035849,
+            "rewards_pending_per_token_hourly": 2.6032616776052592e-05,
+            "subgraph_id": "0x505c6a222cd399857412c6003f615e07626875c477fa1a61d6f2cb8aa93deae9",
+            "subgraph_signal": 42950.311240120776,
+            "subgraph_signal_ratio": 0.0010208867164309904,
+            "subgraph_stake": 42071574.2
+        }
+    ],
+    [
+        "QmfWjxaEaaLDVpZssqXEX3aHvLMiWdxxwbS4n1Vc658q1M",
+        {
+            "allocated_tokens": 1604430.0,
+            "allocation_created_epoch": 204,
+            "allocation_created_timestamp": 1626015802,
+            "allocation_id": "0x1aa1d27EAC1652CE50978fdFFC1f81A1b34C8513",
+            "allocation_status": "Active",
+            "name": "eth2",
+            "rewards_pending": 3928.2437950564704,
+            "rewards_pending_hourly": 40.301861740556014,
+            "rewards_pending_per_token": 0.002448373437953959,
+            "rewards_pending_per_token_hourly": 2.511911503808581e-05,
+            "subgraph_id": "0xff2c6be06625859aaa16daa989956bb8ec2773a597daa1031a25f84b4d4e550c",
+            "subgraph_signal": 1876.7553084816159,
+            "subgraph_signal_ratio": 0.0004539748804457458,
+            "subgraph_stake": 4134051.0
+        }
+    ],
+    [
+        "QmZsXh48bDVNVvrkweZRoGJrXbvbXzTE5M8ztZYc46dPRx",
+        {
+            "allocated_tokens": 240000.0,
+            "allocation_created_epoch": 206,
+            "allocation_created_timestamp": 1626173451,
+            "allocation_id": "0x1D3478b06725D696914B079fF6cd025b227e0b59",
+            "allocation_status": "Active",
+            "name": "Badger DAO",
+            "rewards_pending": 270.20275949935007,
+            "rewards_pending_hourly": 5.033601098675136,
+            "rewards_pending_per_token": 0.001125844831247292,
+            "rewards_pending_per_token_hourly": 2.0973337911146398e-05,
+            "subgraph_id": "0xab59a037137e1e8dcb769904b557bd00e7bf9d5b8c7fd6e89f356615508a40cf",
+            "subgraph_signal": 23416.74134351905,
+            "subgraph_signal_ratio": 0.0005089315725863037,
+            "subgraph_stake": 46011571.30912346
+        }
+    ],
+    [
+        "Qme66ZNMxSdCQKzaDuvS381whCVYCQjf637sGZCqJHAWHB",
+        {
+            "allocated_tokens": 0.01,
+            "allocation_created_epoch": 208,
+            "allocation_created_timestamp": 1626342895,
+            "allocation_id": "0x1ea763d7ff15281eF90926d48718e02ef91c60D2",
+            "allocation_status": "Active",
+            "name": "Uniswap V3",
+            "rewards_pending": 1.30491767756e-06,
+            "rewards_pending_hourly": 1.9733616625979827e-07,
+            "rewards_pending_per_token": 0.000130491767756,
+            "rewards_pending_per_token_hourly": 1.9733616625979826e-05,
+            "subgraph_id": "0xea0081b34c9d8ae0c52c2131711f093d33bd6efb8638f0a5bbc3da0a08462a46",
+            "subgraph_signal": 35395.81467648693,
+            "subgraph_signal_ratio": 0.0012824409112603189,
+            "subgraph_stake": 27600347.4044677
+        }
+    ],
+    [
+        "QmaaDA7XVVktfxCLMgfwG1z3KM8DSMoLkbemkTt9mQT8Qf",
+        {
+            "allocated_tokens": 0.01,
+            "allocation_created_epoch": 204,
+            "allocation_created_timestamp": 1626001138,
+            "allocation_id": "0x1A8e50d9E28C86DF1eB1bfCaba1b07972902d6b8",
+            "allocation_status": "Active",
+            "name": "eip721",
+            "rewards_pending": 1.9837178723776e-05,
+            "rewards_pending_hourly": 1.9535661943477287e-07,
+            "rewards_pending_per_token": 0.0019837178723775997,
+            "rewards_pending_per_token_hourly": 1.9535661943477284e-05,
+            "subgraph_id": "0xb5c57baf86e39e2a837634f5dcab48a536f3b29397d36eb165a821bd080146d8",
+            "subgraph_signal": 24989.3862093814,
+            "subgraph_signal_ratio": 0.00033350852484917464,
+            "subgraph_stake": 74928777.96956632
+        }
+    ],
+    [
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV",
+        {
+            "allocated_tokens": 1321520.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625821191,
+            "allocation_id": "0x1e63A2E4cA4000Ac3B900e287B6833Ea56b5ea87",
+            "allocation_status": "Active",
+            "name": "AAVE V2",
+            "rewards_pending": 3452.2227420155723,
+            "rewards_pending_hourly": 22.78238806060428,
+            "rewards_pending_per_token": 0.0026123121420906018,
+            "rewards_pending_per_token_hourly": 1.7239533310584993e-05,
+            "subgraph_id": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+            "subgraph_signal": 656.2002704153302,
+            "subgraph_signal_ratio": 0.00024025164185873497,
+            "subgraph_stake": 2731304.0
+        }
+    ],
+    [
+        "QmPhfSkFPbooXNJUMcQSWjMXoJYF3GnWT4JmHkxYXA85Zz",
+        {
+            "allocated_tokens": 10.0,
+            "allocation_created_epoch": 202,
+            "allocation_created_timestamp": 1625836814,
+            "allocation_id": "0x19525Fe6519aC31DA1E4bc3Bb4adCDb24D5a582E",
+            "allocation_status": "Active",
+            "name": "Bancor",
+            "rewards_pending": 0.02194482755999805,
+            "rewards_pending_hourly": 0.00014909523456310637,
+            "rewards_pending_per_token": 0.002194482755999805,
+            "rewards_pending_per_token_hourly": 1.4909523456310636e-05,
+            "subgraph_id": "0x143db715c25f1e97631fd370a1db89108baace5ae71366da39fa44136b3567b1",
+            "subgraph_signal": 517.1672173299436,
+            "subgraph_signal_ratio": 0.00022256961483683175,
+            "subgraph_stake": 2323620.04
+        }
+    ],
+    [
+        "QmQKU61VgfxvD1zsRKXydV1cDrirRJnjfmz6jnP3fonYZw",
+        {
+            "allocated_tokens": 1875103.0,
+            "allocation_created_epoch": 206,
+            "allocation_created_timestamp": 1626145532,
+            "allocation_id": "0x03674aB006F33E0E0B7A5A8B1A5Ae71528De2BEB",
+            "allocation_status": "Active",
+            "name": "Hopr on Mainnet",
+            "rewards_pending": 1569.8574484486987,
+            "rewards_pending_hourly": 25.56749386833945,
+            "rewards_pending_per_token": 0.0008372113150310669,
+            "rewards_pending_per_token_hourly": 1.3635247700174044e-05,
+            "subgraph_id": "0x1d69c84478129a01ca1ab08c2337e640ff42d959637f21f8f2414cb7512086fa",
+            "subgraph_signal": 16884.684313837464,
+            "subgraph_signal_ratio": 0.0007377294989544434,
+            "subgraph_stake": 22887365.0
+        }
+    ],
+    [
+        "QmUghXvKf5cVjtayNNRHCd3RbHEwfbGBQ95s9vheJjN5hH",
+        {
+            "allocated_tokens": 989810.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626272239,
+            "allocation_id": "0x0d11814267f34E804e3503e0f7bC035730c82F4C",
+            "allocation_status": "Active",
+            "name": "DODOEX V2",
+            "rewards_pending": 331.186319630526,
+            "rewards_pending_hourly": 12.630980815197686,
+            "rewards_pending_per_token": 0.00033459585135584203,
+            "rewards_pending_per_token_hourly": 1.2761015563792736e-05,
+            "subgraph_id": "0x5e48ee6773576d45a38934cb19780b5c8c75f8c36e653e234ba5b803746d8f78",
+            "subgraph_signal": 163307.28842906732,
+            "subgraph_signal_ratio": 0.0007873878455247829,
+            "subgraph_stake": 207403872.63690275
+        }
+    ],
+    [
+        "QmRhh7rFt3qxfRMTZvHRNK6jCobX4Gx5TkzWXhZkuj57w8",
+        {
+            "allocated_tokens": 0.1,
+            "allocation_created_epoch": 134,
+            "allocation_created_timestamp": 1619733237,
+            "allocation_id": "0x0CFbd8398A505d5Fd30c8e30fEc5a4c5d119E947",
+            "allocation_status": "Active",
+            "name": "Omen",
+            "rewards_pending": 0.002339587022433414,
+            "rewards_pending_hourly": 1.2697144111816568e-06,
+            "rewards_pending_per_token": 0.023395870224334137,
+            "rewards_pending_per_token_hourly": 1.2697144111816568e-05,
+            "subgraph_id": "0x31f6fb67c823a07a93bae6b022798eebdf86210033c0e97a1402795c0c2fa99b",
+            "subgraph_signal": 116878.71235956028,
+            "subgraph_signal_ratio": 0.0008000837672880476,
+            "subgraph_stake": 146083094.21865997
+        }
+    ],
+    [
+        "QmUVskWrz1ZiQZ76AtyhcfFDEH1ELnRpoyEhVL8p6NFTbR",
+        {
+            "allocated_tokens": 1502372.0,
+            "allocation_created_epoch": 201,
+            "allocation_created_timestamp": 1625779209,
+            "allocation_id": "0x0Ef6aeD882E632C63FC7079b38CE4daeF8359872",
+            "allocation_status": "Active",
+            "name": "Subgraph51",
+            "rewards_pending": 3057.213160497568,
+            "rewards_pending_hourly": 18.735916118651055,
+            "rewards_pending_per_token": 0.00203492421350875,
+            "rewards_pending_per_token_hourly": 1.247089011153766e-05,
+            "subgraph_id": "0x5b83184ead3290c43e0a5524f086595e3ced90af300fbdfcfc07c7b884ebec54",
+            "subgraph_signal": 154027.00490420143,
+            "subgraph_signal_ratio": 0.0007874492724993038,
+            "subgraph_stake": 195602447.39998487
+        }
+    ],
+    [
+        "QmZdsSbRwVD7VVVm5WGxZZC6HYvbjnFb4hcwvQ4fTs5bxA",
+        {
+            "allocated_tokens": 829304.0,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626290787,
+            "allocation_id": "0x17c17Df7Bfe661b40AE651d591fcdf880677d8d0",
+            "allocation_status": "Active",
+            "name": "mStable Protocol",
+            "rewards_pending": 216.21767292847895,
+            "rewards_pending_hourly": 10.256168946342642,
+            "rewards_pending_per_token": 0.000260721849802339,
+            "rewards_pending_per_token_hourly": 1.2367200624068669e-05,
+            "subgraph_id": "0xa7d9d3a173d3d62ce3d05c2d29f3447b04edc248cbcfdb49b205e14247374947",
+            "subgraph_signal": 144459.2422241628,
+            "subgraph_signal_ratio": 0.0007714748915404532,
+            "subgraph_stake": 187250737.2673034
+        }
+    ],
+    [
+        "QmTBxvMF6YnbT1eYeRx9XQpH4WvxTV53vdptCCZFiZSprg",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 181,
+            "allocation_created_timestamp": 1623931050,
+            "allocation_id": "0x1D38D6a080018338BBF472A3282f5eD3dbA74064",
+            "allocation_status": "Active",
+            "name": "Subgraph92",
+            "rewards_pending": 7.831596884961849,
+            "rewards_pending_hourly": 0.01157545807727248,
+            "rewards_pending_per_token": 0.007831596884961848,
+            "rewards_pending_per_token_hourly": 1.157545807727248e-05,
+            "subgraph_id": "0x4810cc7741423cec7e44fc7ec7a479e521453cbf090e74b6186d3a2264588fe5",
+            "subgraph_signal": 130046.83202348604,
+            "subgraph_signal_ratio": 0.0007184890478807191,
+            "subgraph_stake": 181000437.525216
+        }
+    ],
+    [
+        "Qmaz1R8vcv9v3gUfksqiS9JUz7K9G8S5By3JYn8kTiiP5K",
+        {
+            "allocated_tokens": 18621000.0,
+            "allocation_created_epoch": 188,
+            "allocation_created_timestamp": 1624545631,
+            "allocation_id": "0x1F1224e94a3587B85f9E0CEcded5f2620FB5d47d",
+            "allocation_status": "Active",
+            "name": "PoolTogether",
+            "rewards_pending": 108252.57472163519,
+            "rewards_pending_hourly": 214.00015253422694,
+            "rewards_pending_per_token": 0.00581346730689196,
+            "rewards_pending_per_token_hourly": 1.1492409244091453e-05,
+            "subgraph_id": "0xbbde25a2c85f55b53b7698b9476610c3d1202d88870e66502ab0076b7218f98a",
+            "subgraph_signal": 295454.1427666606,
+            "subgraph_signal_ratio": 0.0007714834145337845,
+            "subgraph_stake": 382968884.61977714
+        }
+    ],
+    [
+        "QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF",
+        {
+            "allocated_tokens": 100.0,
+            "allocation_created_epoch": 104,
+            "allocation_created_timestamp": 1617074221,
+            "allocation_id": "0x197A2C2ACFa933CAbD8a17626d3c21c51a7893E5",
+            "allocation_status": "Active",
+            "name": "PoolTogether",
+            "rewards_pending": 2.911122630305435,
+            "rewards_pending_hourly": 0.0011277996520469861,
+            "rewards_pending_per_token": 0.029111226303054353,
+            "rewards_pending_per_token_hourly": 1.127799652046986e-05,
+            "subgraph_id": "0x31edcacc9a53bc8ab4be2eeb0d873409da4c4228cb2d60e4243bd3b4e8af7500",
+            "subgraph_signal": 0.0,
+            "subgraph_signal_ratio": 0.0,
+            "subgraph_stake": 474783497.95
+        }
+    ],
+    [
+        "QmRDGLp6BHwiH9HAE2NYEE3f7LrKuRqziHBv76trT4etgU",
+        {
+            "allocated_tokens": 1000000.0,
+            "allocation_created_epoch": 203,
+            "allocation_created_timestamp": 1625875826,
+            "allocation_id": "0x1448D546465E6f9dB6512B90DcEa5E6c6ac32010",
+            "allocation_status": "Active",
+            "name": "UMA Mainnet Voting",
+            "rewards_pending": 1533.19494533702,
+            "rewards_pending_hourly": 11.244866231878122,
+            "rewards_pending_per_token": 0.0015331949453370201,
+            "rewards_pending_per_token_hourly": 1.1244866231878124e-05,
+            "subgraph_id": "0x2aaeb45afa62af1cc8f6d61decd5249429e0aaed67996238adc2bfd396b5f715",
+            "subgraph_signal": 185488.3411042402,
+            "subgraph_signal_ratio": 0.0007612145486118311,
+            "subgraph_stake": 243674193.35652626
+        }
+    ],
+    [
+        "QmTKXLEdMD6Vq7Nwxo8XAfnHpG6H1TzL1AGwiqLpoae3Pb",
+        {
+            "allocated_tokens": 1000.0,
+            "allocation_created_epoch": 182,
+            "allocation_created_timestamp": 1624036662,
+            "allocation_id": "0x19ae5f253c857afdDAC7112A70fC805CdfFc3bB9",
+            "allocation_status": "Active",
+            "name": "PoolTogether v3_1_0",
+            "rewards_pending": 6.855511394827289,
+            "rewards_pending_hourly": 0.010592079266011138,
+            "rewards_pending_per_token": 0.006855511394827289,
+            "rewards_pending_per_token_hourly": 1.0592079266011137e-05,
+            "subgraph_id": "0x4a008334f8e7ea21be223d15462084f51abcc0e6625f61de806b8456e67e603e",
+            "subgraph_signal": 182648.30551085607,
+            "subgraph_signal_ratio": 0.000639195610909749,
+            "subgraph_stake": 285747120.90231335
+        }
+    ],
+    [
+        "QmeUiEKEDTJ5gPRoN5FcUZn2tp1cBdae5DMbFDiL8UPxrZ",
+        {
+            "allocated_tokens": 1663163.83900219,
+            "allocation_created_epoch": 207,
+            "allocation_created_timestamp": 1626235465,
+            "allocation_id": "0x196201814F63e982b9d13A77b688374EBdd6e0ED",
+            "allocation_status": "Active",
+            "name": "Liquity",
+            "rewards_pending": 635.1848153084285,
+            "rewards_pending_hourly": 17.42593667111084,
+            "rewards_pending_per_token": 0.00038191355560586606,
+            "rewards_pending_per_token_hourly": 1.0477582702595e-05,
+            "subgraph_id": "0xefcb9e49ebac50f2f87251f78c28b730f5cecebfab5b05a799c8888b98ff5ab6",
+            "subgraph_signal": 13038.845435585876,
+            "subgraph_signal_ratio": 0.0006519059984582516,
+            "subgraph_stake": 20001112.83900219
+        }
+    ],
+    [
+        "QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8",
+        {
+            "allocated_tokens": 2000000.0,
+            "allocation_created_epoch": 160,
+            "allocation_created_timestamp": 1622041989,
+            "allocation_id": "0x081ced51554D2f7276a790E825d07942Fde28CAd",
+            "allocation_status": "Active",
+            "name": "Audius Network Mainnet",
+            "rewards_pending": 9364.900628429052,
+            "rewards_pending_hourly": 7.795761986106819,
+            "rewards_pending_per_token": 0.004682450314214526,
+            "rewards_pending_per_token_hourly": 3.89788099305341e-06,
+            "subgraph_id": "0x500a8e47cbdeca7386448ae9e7d52578871b9942ebbef4892469da293bb661f9",
+            "subgraph_signal": 0.0,
+            "subgraph_signal_ratio": 0.0,
+            "subgraph_stake": 7323538.03
+        }
+    ],
+    [
+        "QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG",
+        {
+            "allocated_tokens": 1.0,
+            "allocation_created_epoch": 162,
+            "allocation_created_timestamp": 1622268217,
+            "allocation_id": "0x19eDF2592dEc978223c24ebDf86e419c49c7cFed",
+            "allocation_status": "Active",
+            "name": "RAI Mainnet",
+            "rewards_pending": 0.001640850238072445,
+            "rewards_pending_hourly": 1.4412827892012438e-06,
+            "rewards_pending_per_token": 0.001640850238072445,
+            "rewards_pending_per_token_hourly": 1.4412827892012438e-06,
+            "subgraph_id": "0xc420d79a888eb0e34203bfeca1048d35f9763b9880a94922249096e4c9a191c7",
+            "subgraph_signal": 0.0,
+            "subgraph_signal_ratio": 0.0,
+            "subgraph_stake": 680641.01
+        }
+    ]
+]
