@@ -112,6 +112,7 @@ if __name__ == '__main__':
     pending_per_token_sum = 0
     pending_sum = 0
     allocated_tokens_total = 0
+    pending_hourly_sum = 0
 
     for allocation in allocations:
         allocation_id = to_checksum_address(allocation['id'])
@@ -128,6 +129,7 @@ if __name__ == '__main__':
         allocated_tokens = int(allocation['allocatedTokens']) / 10**18
 
         current_rate = pending_rewards / allocated_tokens / hours_since
+        pending_rewards_hourly = pending_rewards / hours_since
 
         subgraph_signal = int(allocation['subgraphDeployment']['signalledTokens']) / 10**18
         subgraph_stake = int(allocation['subgraphDeployment']['stakedTokens']) / 10**18
@@ -142,7 +144,7 @@ if __name__ == '__main__':
             'allocation_created_epoch': allocation['createdAtEpoch'],
             'allocation_status': allocation['status'],
             'rewards_pending': pending_rewards,
-            'rewards_pending_hourly': pending_rewards / hours_since,
+            'rewards_pending_hourly': pending_rewards_hourly,
             'rewards_pending_per_token': pending_rewards / allocated_tokens,
             'rewards_pending_per_token_hourly': current_rate,
             'subgraph_signal': subgraph_signal,
@@ -156,16 +158,20 @@ if __name__ == '__main__':
             best_subgraph = b58
         
         allocated_tokens_total += allocated_tokens
-        pending_per_token_sum += current_rate
+        pending_per_token_sum += pending_rewards / allocated_tokens
         pending_sum += pending_rewards
+        pending_hourly_sum += pending_rewards_hourly
+
     naive_sum = pending_per_token_sum * allocated_tokens_total
-    optimization = pending_sum / naive_sum
+    optimization = pending_sum / naive_sum * 100
 
     subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_pending_per_token_hourly'], reverse=True)
     subgraphs_dict = {k: v for k, v in subgraphs}
     print('')
     print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({b58}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_pending_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,10)}%.")
     print(f"Indexing with {round(allocated_tokens_total)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(naive_sum, 2)} GRT.")
+    print(f"Per token efficiency: {pending_sum / allocated_tokens_total} GRT per GRT.")
+    print(f"Indexing APY: {round(pending_hourly_sum / allocated_tokens_total * 24 * 365 * 100, 2)}% APY.")
     print('')
     # now write output to a file
     active_allocations = open("active_allocations.json", "w")
