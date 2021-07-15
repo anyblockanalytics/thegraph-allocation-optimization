@@ -28,20 +28,22 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
     """
 
     ALLOCATION_DATA = """
-        query AllocationsByIndexer($input: String) {
-            allocations(where: {status: Active}) {
-                indexingRewards
-                allocatedTokens
-                status
-                id
-                createdAt
-                subgraphDeployment {
-                    signalledTokens
-                    stakedTokens
-                    originalName
+        query AllocationsByIndexer($input: ID!) {
+            indexer(id: $input) {
+                allocations(where: {status: Active}) {
+                    indexingRewards
+                    allocatedTokens
+                    status
                     id
+                    createdAt
+                    subgraphDeployment {
+                        signalledTokens
+                        stakedTokens
+                        originalName
+                        id
+                    }
+                    createdAtEpoch
                 }
-                createdAtEpoch
             }
         }
     """
@@ -103,10 +105,13 @@ if __name__ == '__main__':
     indexer_id = args.indexer_id  # get indexer parameter input
 
     result = getGraphQuery(subgraph_url=API_GATEWAY, indexer_id=indexer_id)
-    allocations = result['allocations']
+    allocations = result['indexer']['allocations']
     subgraphs = {}
 
     rate_best = 0
+    pending_per_token_sum = 0
+    pending_sum = 0
+    allocated_tokens_total = 0
 
     for allocation in allocations:
         allocation_id = to_checksum_address(allocation['id'])
@@ -147,13 +152,21 @@ if __name__ == '__main__':
         subgraphs[b58] = data
 
         if current_rate > rate_best:
+            rate_best = current_rate
             best_subgraph = b58
-
+        
+        allocated_tokens_total += allocated_tokens
+        pending_per_token_sum += current_rate
+        pending_sum += pending_rewards
+    naive_sum = pending_per_token_sum * allocated_tokens_total
+    optimization = pending_sum / naive_sum
 
     subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_pending_per_token_hourly'], reverse=True)
     subgraphs_dict = {k: v for k, v in subgraphs}
+    print('')
     print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({b58}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_pending_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,10)}%.")
-
+    print(f"Indexing with {round(allocated_tokens_total)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(naive_sum, 2)} GRT.")
+    print('')
     # now write output to a file
     active_allocations = open("active_allocations.json", "w")
     # magic happens here to make it pretty-printed
