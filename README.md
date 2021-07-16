@@ -79,8 +79,27 @@ pip install -r requirements.txt
 ```shell
 sudo apt-get install glpk-utils libglpk-dev glpk-doc python-glpk
 ```
-
-6. Now everything should be installed. Start a terminal in the Repository directory and run the script:
+6. (Optional): Populate Blacklist in config.json automatically by querying the subgraph status from the indexer
+   postgres thegraph database. It fetches the current allocated subgraphs and checks if they are in sync
+   and if there are any errors. If the Lag is higher than 10000 or the subgraph has errors, the subgraph
+   id is added to the blacklist in config.json
+      - For Running this script, first create a **.env** file:
+         ```shell
+          nano .env
+         ```
+      - Fill the .env file with the connection data of your postgres database. (A example .env file can be
+        found in this repository ".env_example")
+      - If you are connecting to your database server from your local computer, don't forget to open a 
+      SSH Tunnel in a terminal and keep it open.
+        ```shell
+        ssh -L 127.0.0.1:45432:127.0.0.1:5432 YOUR_DATABASE_HOST_SERVER
+        ```
+    - now you can run the **fetch_failed_subgraphs.py**
+      ```shell
+      python ./fetch_failed_subgraphs.py
+      ```
+   
+7. Now everything should be installed. Start a terminal in the Repository directory and run the script:
 ```shell
 python ./allocation_script.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.9 --threshold 20 --parallel_allocations 4 --no-subgraph-list --blacklist
 ```
@@ -205,7 +224,16 @@ graph indexer rules get all --merged && \graph indexer cost get all
 
 ### fetch_allocations.py and active_allocations.json
 This script can be used to fetch the active allocations within the Graph Protocol subgraph environment. It creates a JSON in active_allocations.json with important subgraph-specific and indexer-specific information. It should be used with the 
---indexer_id parameter
+**--indexer_id** parameter. Includes statistics such as:
+- Hourly Per Token GRT Reward Rate
+- Stake/Signal Ratio on Subgraph
+- Pending Rewards
+- Per Token Efficiency
+- Indexer APY
+
+You need a HTTP RPC PROVIDER to use this script. Provide the credentials as a RPC_URL in the .env file. 
+An example (**.env_example**) is provided. If you need a suitable RPC Provider, 
+check out [anyblockanalytics.com](https://anyblockanalytics.com)
 
 Example:
 ```shell
