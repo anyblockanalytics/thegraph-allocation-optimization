@@ -336,6 +336,18 @@ if __name__ == '__main__':
                            type=int,
                            help='Amount of parallel Allocations per Subgraph. Defaults to 1.',
                            default=2)
+    # dedicate reserve stake that should not be considered in the allocation process
+    my_parser.add_argument('--reserve_stake',
+                           metavar='reserve_stake',
+                           type=int,
+                           help='Amount of reserve_stake. Defaults to 0.',
+                           default=0)
+
+    my_parser.add_argument('--min_allocation',
+                           metavar='min_allocation',
+                           type=int,
+                           help='Amount of reserve_stake. Defaults to 0.',
+                           default=0)
 
     my_parser.add_argument('--subgraph-list', dest='subgraph_list', action='store_true')
     my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
@@ -350,6 +362,8 @@ if __name__ == '__main__':
                            type=str,
                            help='Set the Interval for Optimization and Threshold Calculation (Either "daily", or "weekly")',
                            default="daily")
+
+
     args = my_parser.parse_args()
 
     indexer_id = args.indexer_id  # get indexer parameter input
@@ -359,6 +373,8 @@ if __name__ == '__main__':
     subgraph_list_parameter = args.subgraph_list
     blacklist_parameter = args.blacklist
     threshold_interval = args.threshold_interval
+    reserve_stake = args.reserve_stake
+    min_allocation = args.min_allocation
 
     # initialize logger
     if not os.path.exists("./logs/"):
@@ -412,8 +428,16 @@ if __name__ == '__main__':
         sublist = []
         # print(allocation.get('allocatedTokens'))
         # print(allocation.get('subgraphDeployment').get('originalName'))
+
+        # check if subgraph name is available, else set it to subgraph+index
+        if allocation.get('subgraphDeployment').get('originalName') is None:
+            name = f"Subgraph{indexer_data.get('allocations').index(allocation)}"
+        else:
+            name = allocation.get('subgraphDeployment').get('originalName')
+
         sublist = [allocation.get('subgraphDeployment').get('id'),
-                   allocation.get('subgraphDeployment').get('originalName'), allocation.get('allocatedTokens'),
+                   name,
+                   allocation.get('allocatedTokens'),
                    allocation.get('indexingRewards')]
         allocation_list.append(sublist)
 
@@ -459,11 +483,14 @@ if __name__ == '__main__':
             list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
         df = df[df['id'].isin(list_desired_subgraphs)]
 
+    # Remove Blacklisted Subgraphs
     if blacklist_parameter:
         with open("config.json", "r") as jsonfile:
             blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
         df = df[-df['id'].isin(blacklisted_subgraphs)]
 
+    # Remove Subgraphs with less than 10 Signal
+    df = df[df['signalledTokensTotal'] > 10]
     # print Table with allocations, Subgraph, total Tokens signalled and total tokens staked
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
         print(df.loc[:, df.columns != 'IndexingReward'])
@@ -568,13 +595,13 @@ if __name__ == '__main__':
                      C),  # Indexing Rewards Formula (Daily Rewards)
             sense=pyomo.maximize)  # maximize Indexing Rewards
 
-        model.vol = pyomo.Constraint(expr=indexer_total_stake >= sum(
+        model.vol = pyomo.Constraint(expr=indexer_total_stake-reserve_stake >= sum(
             model.x[c] for c in C))  # Allocation can not be more than total Allocations
         model.bound_x = pyomo.ConstraintList()
 
         for c in C:
             # model.bound_x.add(0 <= model.x[n] <= 15400000000000000000000000 / 10 ** 18)
-            model.bound_x.add(model.x[c] >= 1000.0)  # Allocations per Subgraph should be higher than zero
+            model.bound_x.add(model.x[c] >= min_allocation)  # Allocations per Subgraph should be higher than zero
             model.bound_x.add(model.x[
                                   c] <= max_percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
             # model.bound_x.add(model.x[c] <= int(

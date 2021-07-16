@@ -142,7 +142,13 @@ splits the allocation amount into subsets of the supplied parallel allocation am
 7. **blacklist**: tells the script to ignore the blacklisted subgraphs in config.json. We will try to keep this as up-to-date
 as possible. For the newest information on failed subgraphs, please check the Graph Protocol Discord server.
 8. **threshold_interval**: You can set the threshold calculation basis to either 'daily' or 'weekly' rewards. 
-   (Default is 'daily'). 
+   (Default is 'daily').
+   
+9. **reserve_stake**: Set the reserve stake that should not be used in the optimized allocation.
+   Used for liquidity / backup purposes. Defaults to 0.
+   
+10. **min_allocation**: Set the minimal allocation per subgraph. Defaults to 0.
+
 ## Tech-Stack and Functioning
 
 ### Tech-Stack
