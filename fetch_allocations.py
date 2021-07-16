@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 import os
 from collections import OrderedDict
 
+from web3.types import BlockIdentifier
+
 load_dotenv()
 RPC_URL = os.getenv('RPC_URL')
 API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
@@ -112,13 +114,17 @@ if __name__ == '__main__':
     pending_per_token_sum = 0
     pending_sum = 0
     allocated_tokens_total = 0
-    pending_hourly_sum = 0
+    average_historic_rate_hourly_sum = 0
+    current_rate_sum = 0
+
+    current_block = web3.eth.blockNumber
 
     for allocation in allocations:
         allocation_id = to_checksum_address(allocation['id'])
         subgraph_id = allocation['subgraphDeployment']['id']
         print(allocations.index(allocation), allocation_id)
         pending_rewards = contract.functions.getRewards(allocation_id).call() / 10**18
+        pending_rewards_minus_1_hour = contract.functions.getRewards(allocation_id).call(block_identifier = current_block - 277) / 10**18
 
         name = allocation['subgraphDeployment']['originalName']
         if name is None:
@@ -128,7 +134,11 @@ if __name__ == '__main__':
         hours_since = hours_since.total_seconds() / 3600
         allocated_tokens = int(allocation['allocatedTokens']) / 10**18
 
-        current_rate = pending_rewards / allocated_tokens / hours_since
+        current_rate = pending_rewards - pending_rewards_minus_1_hour
+        current_rate_per_token = current_rate / allocated_tokens
+
+        average_historic_rate_per_token = pending_rewards / allocated_tokens
+        average_historic_rate_per_token_hourly = average_historic_rate_per_token / hours_since
         pending_rewards_hourly = pending_rewards / hours_since
 
         subgraph_signal = int(allocation['subgraphDeployment']['signalledTokens']) / 10**18
@@ -138,41 +148,49 @@ if __name__ == '__main__':
         data = {
             'name': name,
             'subgraph_id': subgraph_id,
+            'subgraph_age_in_blocks': current_block - created_at,
             'allocation_id': allocation_id,
             'allocated_tokens': allocated_tokens,
             'allocation_created_timestamp': created_at,
             'allocation_created_epoch': allocation['createdAtEpoch'],
             'allocation_status': allocation['status'],
             'rewards_pending': pending_rewards,
-            'rewards_pending_hourly': pending_rewards_hourly,
+            'rewards_forecast_hourly': current_rate,
             'rewards_pending_per_token': pending_rewards / allocated_tokens,
-            'rewards_pending_per_token_hourly': current_rate,
+            'rewards_forecast_per_token_hourly': current_rate_per_token,
+            'rewards_pending_historic_per_token_average': average_historic_rate_per_token,
+            'rewards_pending_historic_per_token_hourly_average': average_historic_rate_per_token_hourly,
             'subgraph_signal': subgraph_signal,
             'subgraph_stake': subgraph_stake,
             'subgraph_signal_ratio': subgraph_signal / subgraph_stake
         }
         subgraphs[b58] = data
 
-        if current_rate > rate_best:
-            rate_best = current_rate
+        if current_rate_per_token > rate_best:
+            rate_best = current_rate_per_token
             best_subgraph = b58
         
         allocated_tokens_total += allocated_tokens
         pending_per_token_sum += pending_rewards / allocated_tokens
         pending_sum += pending_rewards
-        pending_hourly_sum += pending_rewards_hourly
+        average_historic_rate_hourly_sum += pending_rewards / hours_since
+        current_rate_sum += current_rate
 
     naive_sum = pending_per_token_sum * allocated_tokens_total
     optimization = pending_sum / naive_sum * 100
+    pending_apy = average_historic_rate_hourly_sum * 24 * 365 * 100 / allocated_tokens_total
+    forecast_apy = current_rate_sum * 24 * 365 * 100 / allocated_tokens_total
 
-    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_pending_per_token_hourly'], reverse=True)
+    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_forecast_per_token_hourly'], reverse=True)
     subgraphs_dict = {k: v for k, v in subgraphs}
+    
     print('')
-    print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({b58}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_pending_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,10)}%.")
+    print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({best_subgraph}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_forecast_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,8)}%. Current allocation: {subgraphs_dict[best_subgraph]['allocated_tokens']}")
     print(f"Indexing with {round(allocated_tokens_total)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(naive_sum, 2)} GRT.")
     print(f"Per token efficiency: {pending_sum / allocated_tokens_total} GRT per GRT.")
-    print(f"Indexing APY: {round(pending_hourly_sum / allocated_tokens_total * 24 * 365 * 100, 2)}% APY.")
+    print(f"Indexing APY: {round(pending_apy, 2)}% APY. Last hour: {round(forecast_apy, 2)}% APY.")
     print('')
+
     # now write output to a file
     active_allocations = open("active_allocations.json", "w")
     # magic happens here to make it pretty-printed
