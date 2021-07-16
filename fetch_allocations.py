@@ -45,6 +45,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
                         id
                     }
                     createdAtEpoch
+                    createdAtBlockNumber
                 }
             }
         }
@@ -148,7 +149,8 @@ if __name__ == '__main__':
         data = {
             'name': name,
             'subgraph_id': subgraph_id,
-            'subgraph_age_in_blocks': current_block - created_at,
+            'subgraph_age_in_blocks': current_block - allocation['createdAtBlockNumber'],
+            'subgraph_age_in_hours': hours_since,
             'allocation_id': allocation_id,
             'allocated_tokens': allocated_tokens,
             'allocation_created_timestamp': created_at,
