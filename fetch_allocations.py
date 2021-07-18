@@ -190,6 +190,7 @@ if __name__ == '__main__':
     print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({best_subgraph}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_forecast_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,8)}%. Current allocation: {subgraphs_dict[best_subgraph]['allocated_tokens']}")
     print(f"Indexing with {round(allocated_tokens_total)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(naive_sum, 2)} GRT.")
     print(f"Per token efficiency: {pending_sum / allocated_tokens_total} GRT per GRT.")
+    print(f"Average earnings of {round(average_historic_rate_hourly_sum,2)} GRT per hour ({round(current_rate_sum,2)} GRT based on last hour).")
     print(f"Indexing APY: {round(pending_apy, 2)}% APY. Last hour: {round(forecast_apy, 2)}% APY.")
     print('')
 
