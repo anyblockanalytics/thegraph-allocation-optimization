@@ -1,11 +1,5 @@
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmQnYvyMHph78WzySWZ6DrFQQfQoxDyFx3y9b5bbb3FdjZ", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
-indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
-
-http -b post http://localhost:8030/graphql \
-query='query poi { proofOfIndexing(\
 subgraph: "QmSGQsLs7Tpm4hGWULFcjVc7suYzZrtLz1M5nGq2SjT1kb", blockNumber: 12902242, \
 blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
@@ -13,12 +7,6 @@ indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
 subgraph: "QmbVGE6Ma2AqzVzKQip6S81dAiSuHeQLny47jzFTLa3DAq", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
-indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
-
-http -b post http://localhost:8030/graphql \
-query='query poi { proofOfIndexing(\
-subgraph: "QmPVD4r9qA5yN6RyFeDHPoiwWm9wEYoHMDQfYvVLTaCnuE", blockNumber: 12902242, \
 blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
@@ -133,6 +121,12 @@ indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
 subgraph: "Qmbp3yDXBKu7R8UZUx4PGo851Yr2fxckcj4yrDxEeZsxNK", blockNumber: 12902242, \
+blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
+
+http -b post http://localhost:8030/graphql \
+query='query poi { proofOfIndexing(\
+subgraph: "QmZLFFChgZu6j4q8twaJn8xF74WgGgZ1WKEG6Cigesr49R", blockNumber: 12902242, \
 blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 

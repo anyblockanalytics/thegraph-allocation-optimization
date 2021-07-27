@@ -48,7 +48,8 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
                     createdAtEpoch
                     createdAtBlockNumber
                 }
-            allocatedTokens
+            stakedTokens
+            delegatedTokens
             }
         }
     """
@@ -148,9 +149,9 @@ if __name__ == '__main__':
 
     result = getGraphQuery(subgraph_url=API_GATEWAY, indexer_id=indexer_id)
     allocations = result['indexer']['allocations']
-    allocated_tokens = int(result['indexer']['allocatedTokens'])/10**18
-    twenty_percent_stake = (allocated_tokens-5000) / 5
-    print(f"Total allocated tokens: {allocated_tokens} GRT with deployable 20% stake amounts of {twenty_percent_stake} GRT.")
+    total_tokens = int(result['indexer']['stakedTokens'])/10**18 + int(result['indexer']['delegatedTokens'])/10**18
+    twenty_percent_stake = (total_tokens-5000) / 5
+    print(f"Total allocated tokens: {total_tokens} GRT with deployable 20% stake amounts of {twenty_percent_stake} GRT.")
 
     subgraphs = {}
     subgraphs_in_danger = []
