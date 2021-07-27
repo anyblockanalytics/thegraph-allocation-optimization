@@ -1,5 +1,6 @@
 import json
 import base58
+from eth_typing.evm import BlockNumber
 import requests
 import argparse
 from datetime import datetime, timedelta
@@ -77,6 +78,43 @@ def initialize_rpc():
 
     return web3
 
+def get_poi_data(subgraph_url):
+    epoch_count = 219
+    query = """
+        query get_epoch_block($input: ID!) {
+            graphNetwork(id: 1) {
+                epochCount
+            }
+            epoch(id: $input) {
+                startBlock
+            }
+        }
+    """
+
+    variables = {'input': epoch_count}
+    request_json = {'query': query}
+    if indexer_id:
+        request_json['variables'] = variables
+    resp = requests.post(subgraph_url, json=request_json)
+    response = json.loads(resp.text)
+
+    epoch_count = response['data']['graphNetwork']['epochCount']
+
+    variables = {'input': epoch_count}
+    request_json = {'query': query}
+    if indexer_id:
+        request_json['variables'] = variables
+    resp = requests.post(subgraph_url, json=request_json)
+    response = json.loads(resp.text)
+
+    start_block = response['data']['epoch']['startBlock']
+
+    start_block_hash = web3.eth.getBlock(start_block)['hash'].hex()
+
+    return start_block, start_block_hash
+
+
+    
 
 if __name__ == '__main__':
 
@@ -85,7 +123,7 @@ if __name__ == '__main__':
     DT_STRING = now.strftime("%d-%m-%Y %H:%M:%S")
     print("Script Execution on: ", DT_STRING)
 
-    print(RPC_URL)
+    print(f"RPC initialized at: {RPC_URL}")
     web3 = initialize_rpc()
     abi = json.loads(ABI_JSON)
     contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
@@ -168,7 +206,7 @@ if __name__ == '__main__':
             'allocation_created_timestamp': created_at,
             'allocation_created_epoch': allocation['createdAtEpoch'],
             'allocation_status': allocation['status'],
-            'rewards_pending_per_deployable_stake': current_rate_all_indexers / (subgraph_stake + twenty_percent_stake),
+            'rewards_predicted_hourly_per_deployable_stake': current_rate_all_indexers / (subgraph_stake + twenty_percent_stake) * twenty_percent_stake,
             'rewards_pending': pending_rewards,
             'rewards_forecast_hourly': current_rate,
             'rewards_pending_per_token': pending_rewards / allocated_tokens,
@@ -204,17 +242,10 @@ if __name__ == '__main__':
     forecast_apy = current_rate_sum * 24 * 365 * 100 / allocated_tokens_total
 
     # subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_forecast_per_token_hourly'], reverse=True)
-    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_pending_per_deployable_stake'], reverse=True)
+    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_predicted_hourly_per_deployable_stake'], reverse=True)
     # subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['allocated_tokens'], reverse=True)
     subgraphs_dict = {k: v for k, v in subgraphs}
     
-    print('')
-    if len(subgraphs_in_danger) > 0:
-        print(f"Your subgraphs are in danger of being closed with 0x0 POI: {subgraphs_in_danger}")
-    print('')
-    if len(subgraphs_to_drop) > 0:
-        print(f"These subgraphs are no longer active: {subgraphs_to_drop}")
-        print(f"Rewards at stake without POI: {rewards_at_stake_from_broken_subgraphs}")
     print('')
     print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({best_subgraph}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_forecast_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,8)}%. Current allocation: {subgraphs_dict[best_subgraph]['allocated_tokens']}")
     print(f"Indexing with {round(allocated_tokens_total)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(naive_sum, 2)} GRT.")
@@ -222,13 +253,39 @@ if __name__ == '__main__':
     print(f"Average earnings of {round(average_historic_rate_hourly_sum,2)} GRT per hour ({round(current_rate_sum,2)} GRT based on last hour).")
     print(f"Indexing APY: {round(pending_apy, 2)}% APY. Last hour: {round(forecast_apy, 2)}% APY.")
     print('')
-
     # now write output to a file
     active_allocations = open("active_allocations.json", "w")
     # magic happens here to make it pretty-printed
     active_allocations.write(json.dumps(subgraphs, indent=4, sort_keys=True))
     active_allocations.close()
-    
     print("Populated active_allocations.json for indexer", indexer_id)
+
+    print('')
+    if len(subgraphs_in_danger) > 0:
+        print(f"WARNING: Your subgraphs are in danger of being closed with 0x0 POI: {subgraphs_in_danger}")
+
+    print('')
+    if len(subgraphs_to_drop) > 0:
+        drops = len(subgraphs_to_drop)
+        print(f"WARNING: {drops} of your allocated subgraphs are no longer active.")
+        print(f"WARNING: {rewards_at_stake_from_broken_subgraphs} GRT at stake without POI.")
+
+        poi_block_number, poi_block_hash = get_poi_data(API_GATEWAY)
+
+        # now write output to a file
+        script_null_subgraphs = open("script_null_subgraphs.txt", "w")
+        for subgraph in subgraphs_to_drop:
+            # magic happens here to make it pretty-printed
+            script_null_subgraphs.write(f"http -b post http://localhost:8030/graphql \\\n")
+            script_null_subgraphs.write("query='query poi { proofOfIndexing(\\\n")
+            script_null_subgraphs.write(f"subgraph: \"{subgraph}\", blockNumber: {poi_block_number}, \\\n")
+            script_null_subgraphs.write(f"blockHash: \"{poi_block_hash}\", \\\n")
+            script_null_subgraphs.write(f"indexer: \"{indexer_id}\")" + "}'\n")
+            script_null_subgraphs.write("\n")
+        script_null_subgraphs.close()
+        
+        print("WARNING: Populated script_null_subgraphs.txt with recent POI closing scripts")
+
+
     DT_STRING = now.strftime("%d-%m-%Y %H:%M:%S")
     print("Script Completion on:", DT_STRING)
