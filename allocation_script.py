@@ -590,7 +590,7 @@ if __name__ == '__main__':
         model.x = pyomo.Var(C, domain=pyomo.NonNegativeReals)
 
         model.rewards = pyomo.Objective(
-            expr=sum((model.x[c] / data[c]['stakedTokensTotal']) * (
+            expr=sum((model.x[c] / (data[c]['stakedTokensTotal'])) * (
                     data[c]['signalledTokensTotal'] / data[c]['SignalledNetwork']) * data[c][reward_interval] for c in
                      C),  # Indexing Rewards Formula (Daily Rewards)
             sense=pyomo.maximize)  # maximize Indexing Rewards
@@ -604,8 +604,7 @@ if __name__ == '__main__':
             model.bound_x.add(model.x[c] >= min_allocation)  # Allocations per Subgraph should be higher than zero
             model.bound_x.add(model.x[
                                   c] <= max_percentage * indexer_total_stake)  # Allocation per Subgraph can't be higher than x % of total Allocations
-            # model.bound_x.add(model.x[c] <= int(
-            # data[c]['stakedTokensTotal']))  # Single Allocation can't be higher than Total Staked Tokens in Subgraph
+            #model.bound_x.add(model.x[c] <= int(data[c]['signalledTokensTotal']))  # Single Allocation can't be higher than Total Signalled Tokens in Subgraph
 
         solver = pyomo.SolverFactory('glpk')
         solver.solve(model, keepfiles=True)
