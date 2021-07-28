@@ -41,6 +41,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
                     createdAt
                     subgraphDeployment {
                         signalledTokens
+                        createdAt
                         stakedTokens
                         originalName
                         id
@@ -48,6 +49,7 @@ def getGraphQuery(subgraph_url, indexer_id, variables=None, ):
                     createdAtEpoch
                     createdAtBlockNumber
                 }
+            allocatedTokens
             stakedTokens
             delegatedTokens
             }
@@ -99,7 +101,8 @@ def get_poi_data(subgraph_url):
     resp = requests.post(subgraph_url, json=request_json)
     response = json.loads(resp.text)
 
-    epoch_count = response['data']['graphNetwork']['epochCount']
+    # epoch_count = response['data']['graphNetwork']['epochCount']
+    epoch_count = 214
 
     variables = {'input': epoch_count}
     request_json = {'query': query}
@@ -144,16 +147,25 @@ if __name__ == '__main__':
                            help='The Graph Indexer Address',
                            default="0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")
 
+    # Deployable stake amount
+    my_parser.add_argument('--slices',
+                           metavar='slices',
+                           type=float,
+                           help='How many subgraphs you would like to spread your stake across',
+                           default="5")
+
     args = my_parser.parse_args()
     indexer_id = args.indexer_id  # get indexer parameter input
+    slices = args.slices # get number of slices input
 
     result = getGraphQuery(subgraph_url=API_GATEWAY, indexer_id=indexer_id)
     allocations = result['indexer']['allocations']
+    allocated_tokens_total = int(result['indexer']['allocatedTokens'])/10**18
     staked_tokens = int(result['indexer']['stakedTokens'])/10**18
     delegated_tokens = int(result['indexer']['delegatedTokens'])/10**18
     total_tokens =  staked_tokens + delegated_tokens
-    twenty_percent_stake = (total_tokens-5000) / 5
-    print(f"Total allocated tokens: {total_tokens} GRT with deployable 20% stake amounts of {twenty_percent_stake} GRT.")
+    sliced_stake = (total_tokens-5000) / slices
+    print(f"Total allocated tokens: {round(total_tokens)} GRT with deployable {round(100 / slices)}% stake amounts of {round(sliced_stake)} GRT.")
 
     subgraphs = {}
     subgraphs_in_danger = []
@@ -162,7 +174,6 @@ if __name__ == '__main__':
     rate_best = 0
     pending_per_token_sum = 0
     pending_sum = 0
-    allocated_tokens_total = 0
     average_historic_rate_hourly_sum = 0
     current_rate_sum = 0
 
@@ -176,6 +187,7 @@ if __name__ == '__main__':
         print(allocations.index(allocation), allocation_id)
         pending_rewards = contract.functions.getRewards(allocation_id).call() / 10**18
         pending_rewards_minus_1_hour = contract.functions.getRewards(allocation_id).call(block_identifier = current_block - 277) / 10**18
+        pending_rewards_minus_5_minutes = contract.functions.getRewards(allocation_id).call(block_identifier = current_block - 23) / 10**18
 
         name = allocation['subgraphDeployment']['originalName']
         if name is None:
@@ -183,9 +195,13 @@ if __name__ == '__main__':
         created_at = allocation['createdAt']
         hours_since = dt.datetime.now() - datetime.fromtimestamp(created_at)
         hours_since = hours_since.total_seconds() / 3600
+        subgraph_created_at = allocation['subgraphDeployment']['createdAt']
+        subgraph_hours_since = dt.datetime.now() - datetime.fromtimestamp(created_at)
+        subgraph_hours_since = subgraph_hours_since.total_seconds() / 3600
         allocated_tokens = int(allocation['allocatedTokens']) / 10**18
 
-        current_rate = pending_rewards - pending_rewards_minus_1_hour
+        # current_rate = pending_rewards - pending_rewards_minus_1_hour
+        current_rate = pending_rewards - pending_rewards_minus_5_minutes
         current_rate_per_token = current_rate / allocated_tokens
 
         average_historic_rate_per_token = pending_rewards / allocated_tokens
@@ -202,18 +218,18 @@ if __name__ == '__main__':
             'name': name,
             'subgraph_id': subgraph_id,
             'subgraph_age_in_blocks': current_block - allocation['createdAtBlockNumber'],
-            'subgraph_age_in_hours': hours_since,
-            'subgraph_age_in_days': hours_since / 24,
+            'subgraph_age_in_hours': subgraph_hours_since,
+            'subgraph_age_in_days': subgraph_hours_since / 24,
             'allocation_id': allocation_id,
             'allocated_tokens': allocated_tokens,
             'allocation_created_timestamp': created_at,
             'allocation_created_epoch': allocation['createdAtEpoch'],
             'allocation_status': allocation['status'],
-            'rewards_predicted_hourly_per_deployable_stake': current_rate_all_indexers / (subgraph_stake + twenty_percent_stake) * twenty_percent_stake,
+            'rewards_predicted_hourly_per_deployable_stake': 12* current_rate_all_indexers / (subgraph_stake + sliced_stake) * sliced_stake,
             'rewards_pending': pending_rewards,
-            'rewards_forecast_hourly': current_rate,
+            'rewards_pending_last_hour': current_rate,
             'rewards_pending_per_token': pending_rewards / allocated_tokens,
-            'rewards_forecast_per_token_hourly': current_rate_per_token,
+            'rewards_pending_last_hour_per_token': current_rate_per_token,
             'rewards_pending_historic_per_token_average': average_historic_rate_per_token,
             'rewards_pending_historic_per_token_hourly_average': average_historic_rate_per_token_hourly,
             'subgraph_signal': subgraph_signal,
@@ -238,23 +254,25 @@ if __name__ == '__main__':
         average_historic_rate_hourly_sum += pending_rewards / hours_since
         current_rate_sum += current_rate
     
-    pending_apy = average_historic_rate_hourly_sum * 24 * 365 * 100 / total_tokens
-    forecast_apy = current_rate_sum * 24 * 365 * 100 / total_tokens
+    pending_apy = average_historic_rate_hourly_sum * 24 * 12 * 365 * 100 / total_tokens
+    forecast_apy = current_rate_sum * 24 * 12 * 365 * 100 / total_tokens
 
     # subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_forecast_per_token_hourly'], reverse=True)
-    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_predicted_hourly_per_deployable_stake'], reverse=True)
+    subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_pending'], reverse=True)
+    # subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['rewards_predicted_hourly_per_deployable_stake'], reverse=True)
     # subgraphs = sorted(subgraphs.items(), key=lambda i: i[1]['allocated_tokens'], reverse=True)
     # Calculate optimization ratio
-    optimized_hourly_rewards = 0
-    for subgraph in subgraphs:
+    optimized_hourly_rewards = 0.1
+    for subgraph in subgraphs[:5]:
         optimized_hourly_rewards += subgraphs[0][1]['rewards_predicted_hourly_per_deployable_stake']
     optimization = current_rate_sum / optimized_hourly_rewards * 100
     # Convert back into dict
     subgraphs_dict = {k: v for k, v in subgraphs}
     
     print('')
-    print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({best_subgraph}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_forecast_per_token_hourly'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,8)}%. Current allocation: {subgraphs_dict[best_subgraph]['allocated_tokens']}")
-    print(f"Indexing with {round(total_tokens)} GRT at {round(optimization,2)}% optimization. Current pending: {round(pending_sum)} GRT. Naive method: {round(pending_sum / optimization, 2)} GRT.")
+    print(f"Best subgraph found at {subgraphs_dict[best_subgraph]['name']} ({best_subgraph}) at an hourly per token rate of {round(subgraphs_dict[best_subgraph]['rewards_pending_last_hour_per_token'],5)} GRT and a signal ratio of {round(subgraphs_dict[best_subgraph]['subgraph_signal_ratio']*100,8)}%. Current allocation: {subgraphs_dict[best_subgraph]['allocated_tokens']}")
+    print(f"Indexing at {round(optimization,2)}% efficiency. Current pending: {round(pending_sum)} GRT. Naive method: {round(pending_sum / optimization * 100, 2)} GRT.")
+    print(f"Indexing with {round(allocated_tokens_total)} GRT out of {round(total_tokens)} GRT ({round(allocated_tokens_total / total_tokens * 100)}%)")
     print(f"Per token efficiency: {pending_sum / total_tokens} GRT per GRT.")
     print(f"Average earnings of {round(average_historic_rate_hourly_sum,2)} GRT per hour ({round(current_rate_sum,2)} GRT based on last hour).")
     print(f"Indexing APY: {round(pending_apy, 2)}% APY. Last hour: {round(forecast_apy, 2)}% APY.")
@@ -274,7 +292,7 @@ if __name__ == '__main__':
     if len(subgraphs_to_drop) > 0:
         drops = len(subgraphs_to_drop)
         print(f"WARNING: {drops} of your allocated subgraphs are no longer active.")
-        print(f"WARNING: {rewards_at_stake_from_broken_subgraphs} GRT at stake without POI.")
+        print(f"WARNING: {round(rewards_at_stake_from_broken_subgraphs)} GRT at stake without POI.")
 
         poi_block_number, poi_block_hash = get_poi_data(API_GATEWAY)
 
