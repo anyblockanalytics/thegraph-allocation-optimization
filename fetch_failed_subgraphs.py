@@ -40,6 +40,8 @@ def connect():
         print(error)
 
     return conn
+
+
 # connect to postgres thegraph database
 pg_client = connect()
 

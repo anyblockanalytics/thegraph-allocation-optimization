@@ -1,138 +1,120 @@
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmSGQsLs7Tpm4hGWULFcjVc7suYzZrtLz1M5nGq2SjT1kb", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmSGQsLs7Tpm4hGWULFcjVc7suYzZrtLz1M5nGq2SjT1kb", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmbVGE6Ma2AqzVzKQip6S81dAiSuHeQLny47jzFTLa3DAq", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmbVGE6Ma2AqzVzKQip6S81dAiSuHeQLny47jzFTLa3DAq", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmUxkM4kkYDyVEcUcBGWrvhj5Y6f2uvUTkPTmPjtm76A6k", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmUxkM4kkYDyVEcUcBGWrvhj5Y6f2uvUTkPTmPjtm76A6k", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmVTUfdp5sJR4uNLq8jM1zR6TLyepejz9gd38YpNT9We5Q", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmVTUfdp5sJR4uNLq8jM1zR6TLyepejz9gd38YpNT9We5Q", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmekqcLE25A51MTpWyWhYqy5vRL25KmZVNRfMCkrStQh8k", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmekqcLE25A51MTpWyWhYqy5vRL25KmZVNRfMCkrStQh8k", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmShykYBEhKUbZQSLdHZ3BGoMCL5aYtEVDYEz7NNLKy2dG", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmShykYBEhKUbZQSLdHZ3BGoMCL5aYtEVDYEz7NNLKy2dG", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmYyjXjcvjihvqsziicVJAAtES9RpvBhhGjYtCSookU6xd", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmcCoXhCZX3NXftj15YLg4FG9AwWANJWK7j1gwLR4JZ6Gt", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmUGRJSXZ3r6WSVUauwxjJm8ELEFDRRUszsNSVcimmBKUq", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "Qmb2JwfqcRqGAaLX4bo99p3xfAZqd8jWQfbjLLESVNBDVs", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmdoCBPnZJHEWdn3KhQ3tTRJyARpZcaehMjnEdW3Ef8XQh", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmfRKox2Ha3c2rqWJMehL9vrAJC6k2RjtyM85241p5G1om", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmcCoXhCZX3NXftj15YLg4FG9AwWANJWK7j1gwLR4JZ6Gt", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmQZ23e5ECyQuqPYWW5TLPvNTPJd4iuz3TYZyMUTZ2kdNN", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "Qmb2JwfqcRqGAaLX4bo99p3xfAZqd8jWQfbjLLESVNBDVs", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmYzjuAQuUhHqTN7VoT73EB3R9jWK3gNjCscTNaXwP1QnA", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "Qmbp3yDXBKu7R8UZUx4PGo851Yr2fxckcj4yrDxEeZsxNK", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmYLnK6HwxTn3qPe2tURFUQYcxa4VVxLLvdbt6hVpBXmzd", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmfRKox2Ha3c2rqWJMehL9vrAJC6k2RjtyM85241p5G1om", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmWMpBEraX2yWhtMu7Q9jH8bDk1oqLBm8V9nBX8oHx2MWU", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmQZ23e5ECyQuqPYWW5TLPvNTPJd4iuz3TYZyMUTZ2kdNN", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "Qmdpkd8yvD4XR3mQMZQmY5nqBQtjEac8gb8RoFFcWan7xE", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmYLnK6HwxTn3qPe2tURFUQYcxa4VVxLLvdbt6hVpBXmzd", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmXcunD4NqPgJCU8yixv6jCbom1CS75RuszGKQmjS5BGUU", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmUGRJSXZ3r6WSVUauwxjJm8ELEFDRRUszsNSVcimmBKUq", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmQEGuJtXiwWni2bsmDDPPor9U1nfQ8s2kbQ6XYCwNjojG", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmWMpBEraX2yWhtMu7Q9jH8bDk1oqLBm8V9nBX8oHx2MWU", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmPTvxu2JquArtLUvhuqMuPzBQMP9zzRBQ1X1Rm32Y3rFu", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "Qmdpkd8yvD4XR3mQMZQmY5nqBQtjEac8gb8RoFFcWan7xE", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmZLFFChgZu6j4q8twaJn8xF74WgGgZ1WKEG6Cigesr49R", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmXcunD4NqPgJCU8yixv6jCbom1CS75RuszGKQmjS5BGUU", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmZz1qRApELxp97cuAHJjDkQwehH9TwBuqmpakt6fQDu5c", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 
 http -b post http://localhost:8030/graphql \
 query='query poi { proofOfIndexing(\
-subgraph: "QmQEGuJtXiwWni2bsmDDPPor9U1nfQ8s2kbQ6XYCwNjojG", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
-indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
-
-http -b post http://localhost:8030/graphql \
-query='query poi { proofOfIndexing(\
-subgraph: "Qmbp3yDXBKu7R8UZUx4PGo851Yr2fxckcj4yrDxEeZsxNK", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
-indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
-
-http -b post http://localhost:8030/graphql \
-query='query poi { proofOfIndexing(\
-subgraph: "QmZLFFChgZu6j4q8twaJn8xF74WgGgZ1WKEG6Cigesr49R", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
-indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
-
-http -b post http://localhost:8030/graphql \
-query='query poi { proofOfIndexing(\
-subgraph: "Qmbp3yDXBKu7R8UZUx4PGo851Yr2fxckcj4yrDxEeZsxNL", blockNumber: 12902242, \
-blockHash: "0x985c628817706e2b14fdba75b47c5794d4484ec4c593dda76719e02291f730fe", \
+subgraph: "QmfWvW1C8EKFGMhe1cDh8jErpFepdarvDXAzBV3hyYK3yu", blockNumber: 12869012, \
+blockHash: "0x1df662e591c83be8bb9eaad6e8ceab881e22349f246b15c5b2d7c52c742955b8", \
 indexer: "0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")}'
 

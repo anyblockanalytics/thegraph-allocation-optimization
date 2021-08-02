@@ -575,6 +575,8 @@ if __name__ == '__main__':
     logger.info("Optimize Allocations:")
     logger.info(30 * '=')
 
+    # set sliced stake
+    sliced_stake = (indexer_total_stake-reserve_stake) * max_percentage
     # Run the Optimization for Daily/Weekly/Yearly Indexing Rewards
     for reward_interval in ['indexingRewardDay', 'indexingRewardWeek', 'indexingRewardYear']:
         print('\nOptimize Allocations for Interval: {} and Percentage per Allocation: {}'.format(reward_interval,
@@ -590,7 +592,7 @@ if __name__ == '__main__':
         model.x = pyomo.Var(C, domain=pyomo.NonNegativeReals)
 
         model.rewards = pyomo.Objective(
-            expr=sum((model.x[c] / (data[c]['stakedTokensTotal'])) * (
+            expr=sum((model.x[c] / (data[c]['stakedTokensTotal'] + sliced_stake)) * (
                     data[c]['signalledTokensTotal'] / data[c]['SignalledNetwork']) * data[c][reward_interval] for c in
                      C),  # Indexing Rewards Formula (Daily Rewards)
             sense=pyomo.maximize)  # maximize Indexing Rewards

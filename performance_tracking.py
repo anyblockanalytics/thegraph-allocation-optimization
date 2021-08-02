@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 import os
 import time
 from collections import OrderedDict
+import pandas as pd
 
 from web3.types import BlockIdentifier
 
@@ -41,13 +42,19 @@ def getActiveAllocations(subgraph_url, indexer_id, variables=None):
                     createdAt
                     createdAtBlockNumber
                     subgraphDeployment {
+                        createdAt
                         signalledTokens
                         stakedTokens
                         originalName
                         id
                     }
                     createdAtEpoch
+                    createdAtBlockNumber
+
                 }
+            allocatedTokens
+            stakedTokens
+            delegatedTokens
             }
         }
     """
@@ -162,6 +169,11 @@ if __name__ == '__main__':
     allocations = result['indexer']['allocations']
     subgraphs = {}
 
+    allocated_tokens_total = int(result['indexer']['allocatedTokens']) / 10 ** 18
+    staked_tokens = int(result['indexer']['stakedTokens']) / 10 ** 18
+    delegated_tokens = int(result['indexer']['delegatedTokens']) / 10 ** 18
+    total_tokens = staked_tokens + delegated_tokens
+
     rate_best = 0
     pending_per_token_sum = 0
     pending_sum = 0
@@ -170,6 +182,7 @@ if __name__ == '__main__':
     current_rate_sum = 0
 
     current_block = web3.eth.blockNumber
+    temp_reward_list = list()  # create a temp_reward_list to append all hourly rewards and blockheight and rate
 
     for allocation in allocations:
         allocation_id = to_checksum_address(allocation['id'])
@@ -177,19 +190,56 @@ if __name__ == '__main__':
         print(allocations.index(allocation), allocation_id)
 
         subgraph_creation_block = allocation['createdAtBlockNumber']
-        #pending_rewards = contract.functions.getRewards(allocation_id).call() / 10**18
-        #pending_rewards_minus_1_hour = contract.functions.getRewards(allocation_id).call(block_identifier = current_block - 277) / 10**18
-
-        temp_reward_list = list() # create a temp_reward_list to append all hourly rewards and blockheight
-        for block in range(subgraph_creation_block,current_block+1, 277): # each hour has 277 ± Blocks)
-            time.sleep(0.3)
-            reward_hourly = contract.functions.getRewards(allocation_id).call(block_identifier=block) / 10 ** 18
-            temp_reward_list.append([block, reward_hourly])
-
         name = allocation['subgraphDeployment']['originalName']
         if name is None:
             name = f'Subgraph{allocations.index(allocation)}'
         created_at = allocation['createdAt']
         hours_since = dt.datetime.now() - datetime.fromtimestamp(created_at)
         hours_since = hours_since.total_seconds() / 3600
-        allocated_tokens = int(allocation['allocatedTokens']) / 10**18
+
+        subgraph_created_at = allocation['subgraphDeployment']['createdAt']
+        subgraph_hours_since = dt.datetime.now() - datetime.fromtimestamp(created_at)
+        subgraph_hours_since = subgraph_hours_since.total_seconds() / 3600
+        allocated_tokens = int(allocation['allocatedTokens']) / 10 ** 18
+
+        subgraph_signal = int(allocation['subgraphDeployment']['signalledTokens']) / 10 ** 18
+        subgraph_stake = int(allocation['subgraphDeployment']['stakedTokens']) / 10 ** 18
+
+        b58 = base58.b58encode(bytearray.fromhex('1220' + subgraph_id[2:])).decode("utf-8")
+
+        accumulated_reward_minus_6_hour = 0  # Initialize a delta reward between current and previous hour reward
+
+        for block in range(subgraph_creation_block, current_block + 1, 1662):  # each hour has 277 ± Blocks, we want 6 hour intervalls)
+            accumulated_reward = contract.functions.getRewards(allocation_id).call(block_identifier=block) / 10 ** 18
+
+            earnings_rate_hour = (accumulated_reward - accumulated_reward_minus_6_hour)/6  # calculate the difference between the accumulated reward and the reward from last hour
+            earning_rate_hour_per_token = earnings_rate_hour / allocated_tokens
+            accumulated_reward_minus_6_hour = accumulated_reward
+
+            earnings_rate_all_indexers = earnings_rate_hour / allocated_tokens * subgraph_stake
+
+            temp_reward_list.append({'name': name,
+                                     'subgraph_id': subgraph_id,
+                                     "b58_hash": b58,
+                                     "blockheight": block,
+                                     'subgraph_age_in_blocks': current_block - allocation['createdAtBlockNumber'],
+                                     'subgraph_age_in_hours': subgraph_hours_since,
+                                     'subgraph_age_in_days': subgraph_hours_since / 24,
+                                     'allocation_id': allocation_id,
+                                     'allocated_tokens': allocated_tokens,
+                                     'allocation_created_timestamp': created_at,
+                                     'allocation_created_epoch': allocation['createdAtEpoch'],
+                                     'allocation_status': allocation['status'],
+                                     'subgraph_signal': subgraph_signal,
+                                     'subgraph_stake': subgraph_stake,
+                                     'subgraph_signal_ratio': subgraph_signal / subgraph_stake,
+                                     "timestamp": web3.eth.get_block(block).get('timestamp'),
+                                     "accumulated_reward": accumulated_reward,
+                                     "earning_rate_hour": earnings_rate_hour,
+                                     "earning_rate_hour_per_token": earning_rate_hour_per_token,
+                                     "earning_rate_all_indexers": earnings_rate_all_indexers})
+
+    df_allocation_performance = pd.DataFrame(temp_reward_list)
+    df_allocation_performance.to_csv('performance_tracking.csv')
+
+    print(df_allocation_performance)
