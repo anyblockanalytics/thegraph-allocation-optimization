@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from web3 import Web3
+import time
 
 # Load .env File with Configuration
 load_dotenv()
@@ -63,15 +64,14 @@ def getPoiQuery(indexerId, subgraphId, blockNumber, blockHash):
         POI
     """
 
-    # os.popen
-    stream = str("http -b post http://localhost:8030/graphql query='query poi {proofOfIndexing( \
+    stream = os.popen("http -b post http://localhost:8030/graphql query='query poi {proofOfIndexing( \
      subgraph:" + '"' + str(subgraphId) + '"' + ", blockNumber:" + str(blockNumber) + ", \
      blockHash:" + '"' + str(blockHash) + '"' + ', \
      indexer:' + '"' + str(indexerId) + '"' + ")}'")
-    # output = stream.read()
-    # output
+    output = stream.read()
+    output
 
-    return stream
+    return output
 
 
 def getStartBlockEpoch(subgraph_url, epoch):
@@ -166,16 +166,13 @@ def getValidPoi(indexerId, subgraphIpfsHash, start_epoch):
     list
         With subgraphIpfsHash, epoch of POI, startBlock of Epoch, start Hash of Block, POI
     """
-    # get the startBlock and startBlockHash for the starting Epoch of the Allocation
-    startEpochBlock, startEpochHash = getStartBlockEpoch(API_GATEWAY, start_epoch)
-
-    # get the currentEpoch startBlock and startBlockhash for the CurrentEpoch
-    endEpochBlock, endEpochHash = getStartBlockEpoch(API_GATEWAY, getCurrentEpoch(API_GATEWAY))
-
     # get startblock and startHash for all Epochs between Start and End Epoch
     listEpochs = list()
     for epoch in range(getCurrentEpoch(API_GATEWAY), start_epoch - 1, -1):
         startBlock, startHash = getStartBlockEpoch(API_GATEWAY, epoch)
+
+        # sleep so that the connection is not reset by peer
+        time.sleep(0.01)
         poi = json.loads(getPoiQuery(indexerId, subgraphIpfsHash, blockNumber=startBlock, blockHash=startHash))
         # if no valid POI, return 0x000... POI
         allocationPOI = [subgraphIpfsHash, epoch, startBlock, startHash,
