@@ -148,6 +148,7 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
             subgraphList.append(version['subgraphDeployment']['ipfsHash'])
     return subgraphList
 
+
 def fillBlackListFromBlacklistedDevs():
     """Get's the blacklistede developers from the config.json file. Adds all Subgraphs that are
     deployed by the blacklisted developer to the blacklist (config.json['blacklist'])
@@ -179,7 +180,7 @@ def fillBlackListFromBlacklistedDevs():
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
     with open("config.json", "w") as f:
-        f.write(json.dumps(config,indent=4, sort_keys=True))
+        f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
 
@@ -212,15 +213,15 @@ def getInactiveSubgraphs():
             """
     request_json = {'query': query}
 
-
     resp = requests.post(API_GATEWAY, json=request_json)
-    subgraphs = json.loads(resp.text)['data']
+    subgraphs = json.loads(resp.text)['data']['subgraphs']
 
     inactive_subgraph_list = list()
     for subgraph in subgraphs:
         for version in subgraph['versions']:
             inactive_subgraph_list.append(version['subgraphDeployment']['ipfsHash'])
     return inactive_subgraph_list
+
 
 def fillBlackListFromInactiveSubgraphs():
     """Get's the inactive subgraphs. Adds all Subgraphs that are
@@ -234,7 +235,6 @@ def fillBlackListFromInactiveSubgraphs():
     # open config.json and get blacklisted array
     with open("config.json", "r") as jsonfile:
         config = json.load(jsonfile)
-
 
     # gets the List of Blacklisted Subgraphs from config.json
     blacklisted_subgraphs = config.get('blacklist')
@@ -252,5 +252,159 @@ def fillBlackListFromInactiveSubgraphs():
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
     with open("config.json", "w") as f:
-        f.write(json.dumps(config,indent=4, sort_keys=True))
+        f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
+
+
+def getAllSubgraphDeployments():
+    """Get's all Subgraph Hashes
+
+    Returns
+    -------
+
+    list
+        [SubgraphHash1, ...]
+
+    """
+    load_dotenv()
+
+    API_GATEWAY = os.getenv('API_GATEWAY')
+    query = """
+        {
+          subgraphDeployments {
+            originalName
+            id
+            ipfsHash
+          }
+        }
+        """
+    request_json = {'query': query}
+
+    resp = requests.post(API_GATEWAY, json=request_json)
+    data = json.loads(resp.text)
+    subgraph_deployments = data['data']['subgraphDeployments']
+
+    # create list with subgraph IpfsHashes
+    list_subgraph_hashes = list()
+    for subgraph in subgraph_deployments:
+        list_subgraph_hashes.append(subgraph['ipfsHash'])
+
+    return list_subgraph_hashes
+
+
+def checkSubgraphStatus(subgraph_id, variables=None, ):
+    """Checks Subgraph Health Status for Subgraph
+
+    Returns
+    -------
+
+    Dict with subgraph, sync status, health, and possible fatalErrors
+
+
+    """
+
+    API_GATEWAY = "https://api.thegraph.com/index-node/graphql"
+
+    query = """
+            query subgraphStatus($input:[String]!){
+          indexingStatuses(subgraphs: $input) {
+            subgraph
+            synced
+            health
+            fatalError {
+              handler
+              message
+              deterministic
+              block {
+                hash
+                number
+              }
+            }
+            node
+          }
+        }
+        """
+    variables = {'input': subgraph_id}
+
+    request_json = {'query': query}
+    if subgraph_id:
+        request_json['variables'] = variables
+    resp = requests.post(API_GATEWAY, json=request_json)
+    data = json.loads(resp.text)
+    subgraph_health = data['data']['indexingStatuses']
+
+    return subgraph_health
+
+def isSubgraphHealthy(subgraph_id):
+    subgraph_health = checkSubgraphStatus([subgraph_id])
+    for status in subgraph_health:
+        sync = status['synced']
+        healthy = status['health']
+
+        if status['fatalError']:
+            error = True
+        else:
+            error = False
+
+    # if status can not be found (depreciated subgraph) return False
+    if not subgraph_health:
+        return False
+
+    # if subgraph not synced, return False
+    elif not sync:
+        return False
+
+    # if subgraph not healthy, return False
+    elif healthy == "failed":
+        return False
+    # if subgraph has errors, return False
+
+    elif error:
+        return False
+
+    # if fatalError exists return False
+    else:
+        return True
+
+def fillBlackListFromSubgraphHealthStatus():
+
+
+    # open config.json and get blacklisted array
+    with open("config.json", "r") as jsonfile:
+        config = json.load(jsonfile)
+
+    # gets the List of Blacklisted Subgraphs from config.json
+    blacklisted_subgraphs = config.get('blacklist')
+
+    subgraph_list = getAllSubgraphDeployments()
+
+    # iterate through each subgraph
+    for subgraph in subgraph_list:
+        # check if subgraph is healthy
+        subgraph_healthy = isSubgraphHealthy(subgraph)
+
+        # if it is not healthy
+        if not subgraph_healthy:
+            # check if it is already in blacklist
+            if subgraph not in blacklisted_subgraphs:
+
+                # if it is not, append to it.
+                blacklisted_subgraphs.append(subgraph)  # append subgraph id to blacklist
+                print(f"Blacklisted unhealthy Subgraphs: {subgraph}")
+
+    config['blacklist'] = blacklisted_subgraphs
+
+    # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
+    with open("config.json", "w") as f:
+        f.write(json.dumps(config, indent=4, sort_keys=True))
+        f.close()
+
+
+def createBlacklist(database=False):
+    if database:
+        fillBlacklistFromDatabaseBySyncAndError()
+    fillBlackListFromBlacklistedDevs()
+    fillBlackListFromInactiveSubgraphs()
+    fillBlackListFromSubgraphHealthStatus()
+
+createBlacklist()
