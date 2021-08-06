@@ -423,32 +423,34 @@ if __name__ == '__main__':
 
     logger.info('Indexer Statistics: \
                 \n INDEXER TOTAL ALLOCATIONS: %s \n', indexer_total_allocations)
+    if indexer_data.get('allocations'):
+        for allocation in indexer_data.get('allocations'):
+            sublist = []
+            # print(allocation.get('allocatedTokens'))
+            # print(allocation.get('subgraphDeployment').get('originalName'))
 
-    for allocation in indexer_data.get('allocations'):
-        sublist = []
-        # print(allocation.get('allocatedTokens'))
-        # print(allocation.get('subgraphDeployment').get('originalName'))
+            # check if subgraph name is available, else set it to subgraph+index
+            if allocation.get('subgraphDeployment').get('originalName') is None:
+                name = f"Subgraph{indexer_data.get('allocations').index(allocation)}"
+            else:
+                name = allocation.get('subgraphDeployment').get('originalName')
 
-        # check if subgraph name is available, else set it to subgraph+index
-        if allocation.get('subgraphDeployment').get('originalName') is None:
-            name = f"Subgraph{indexer_data.get('allocations').index(allocation)}"
-        else:
-            name = allocation.get('subgraphDeployment').get('originalName')
+            sublist = [allocation.get('subgraphDeployment').get('id'),
+                       name,
+                       allocation.get('allocatedTokens'),
+                       allocation.get('indexingRewards')]
+            allocation_list.append(sublist)
 
-        sublist = [allocation.get('subgraphDeployment').get('id'),
-                   name,
-                   allocation.get('allocatedTokens'),
-                   allocation.get('indexingRewards')]
-        allocation_list.append(sublist)
+            df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
+            df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
+            df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
 
-        df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
-        df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
-        df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
-
-        df = df.groupby(by=[df.Address, df.Name]).agg({
-            'Allocation': 'sum',
-            'IndexingReward': 'sum'
-        }).reset_index()
+            df = df.groupby(by=[df.Address, df.Name]).agg({
+                'Allocation': 'sum',
+                'IndexingReward': 'sum'
+            }).reset_index()
+    else:
+        df = pd.DataFrame( columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
 
     # Grab all Subgraphs with 'Name' , 'signalledTokens' and 'stakedTokens'
     # create Subgraph Dataframe (df_subgraphs).
@@ -490,7 +492,7 @@ if __name__ == '__main__':
         df = df[-df['id'].isin(blacklisted_subgraphs)]
 
     # Remove Subgraphs with less than 10 Signal
-    df = df[df['signalledTokensTotal'] > 10]
+    df = df[df['signalledTokensTotal'] > 100]
     # print Table with allocations, Subgraph, total Tokens signalled and total tokens staked
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
         print(df.loc[:, df.columns != 'IndexingReward'])

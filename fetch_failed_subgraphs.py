@@ -2,13 +2,15 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 import json
+import requests
 
-# Load ENV File with Postgres Credentials
-load_dotenv()
 
-# establish a postgres connection
-def connect():
+def connectIndexerDatabase():
     """ Connect to the PostgreSQL database server """
+
+    # Load ENV File with Postgres Credentials
+    load_dotenv()
+
     conn = None
     try:
         # read connection parameters
@@ -42,51 +44,213 @@ def connect():
     return conn
 
 
-# connect to postgres thegraph database
-pg_client = connect()
+def getIndexedSubgraphsFromDatabase():
+    # connect to postgres thegraph database
+    pg_client = connectIndexerDatabase()
 
-# open config.json and get blacklisted array
-with open("config.json", "r") as jsonfile:
-    config = json.load(jsonfile)
-blacklisted_subgraphs = config.get('blacklist')
+    # query for a list of subgraphs that are indexed, sorting by Failed and Lag
+    cur = pg_client.cursor()
+    query = '''
+    SELECT 
+    	d.deployment AS "deployment",
+    	d.synced AS "synced",
+    	d.failed AS "failed",
+    	a.node_id AS "node",
+    	(network.head_block_number - d.latest_ethereum_block_number) AS "lag"
+    FROM
+    	subgraphs.subgraph_deployment AS d,
+    	subgraphs.subgraph_deployment_assignment AS a,
+    	public.ethereum_networks AS network
+    WHERE a.id = d.id
+    AND network.name = 'mainnet'
+    AND a.node_id != 'removed'
+    ORDER BY "lag" DESC, "deployment" DESC
+    '''
 
-# query for a list of subgraphs that are indexed, sorting by Failed and Lag
-cur = pg_client.cursor()
-query = '''
-SELECT 
-	d.deployment AS "deployment",
-	d.synced AS "synced",
-	d.failed AS "failed",
-	a.node_id AS "node",
-	(network.head_block_number - d.latest_ethereum_block_number) AS "lag"
-FROM
-	subgraphs.subgraph_deployment AS d,
-	subgraphs.subgraph_deployment_assignment AS a,
-	public.ethereum_networks AS network
-WHERE a.id = d.id
-AND network.name = 'mainnet'
-AND a.node_id != 'removed'
-ORDER BY "lag" DESC, "deployment" DESC
-'''
-
-cur.execute(query)
-rows = cur.fetchall()
-
-for row in rows:
-    #print(f'Subgraph: {row[0]}, Synced: {row[1]}, Failed: {row[2]}, Node: {row[3]}, Lag: {row[4]}')
-
-    # If Failed == True or Lag > 1000 append to blacklisted_subgraphs
-    if row[2] == True or row[4] > 10000:
-        print(row)
-        blacklisted_subgraphs.append(row[0]) # append subgraph id to blacklist
-
-    else:
-        # remove all synced and not failed occurences from blacklist
-        blacklisted_subgraphs = [subgraph for subgraph in blacklisted_subgraphs if subgraph != row[0]]
+    cur.execute(query)
+    rows = cur.fetchall()
+    return rows
 
 
-config['blacklist'] = blacklisted_subgraphs
-# rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-with open("config.json", "w") as f:
-    f.write(json.dumps(config))
-    f.close()
+def fillBlacklistFromDatabaseBySyncAndError():
+    rows = getIndexedSubgraphsFromDatabase()
+
+    # open config.json and get blacklisted array
+    with open("config.json", "r") as jsonfile:
+        config = json.load(jsonfile)
+    blacklisted_subgraphs = config.get('blacklist')
+
+    for row in rows:
+        # print(f'Subgraph: {row[0]}, Synced: {row[1]}, Failed: {row[2]}, Node: {row[3]}, Lag: {row[4]}')
+
+        # If Failed == True or Lag > 1000 append to blacklisted_subgraphs
+        if row[2] == True or row[4] > 10000:
+            print(row)
+            blacklisted_subgraphs.append(row[0])  # append subgraph id to blacklist
+
+        else:
+            # remove all synced and not failed occurences from blacklist
+            blacklisted_subgraphs = [subgraph for subgraph in blacklisted_subgraphs if subgraph != row[0]]
+
+    config['blacklist'] = blacklisted_subgraphs
+
+    # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
+    with open("config.json", "w") as f:
+        f.write(json.dumps(config))
+        f.close()
+
+
+def getSubgraphsFromDeveloper(developer_id, variables=None, ):
+    """Get's the deployed Subgraphs with the Hashes for a specific Subgraph Developer.
+
+    Returns
+    -------
+    List
+        [SubgraphIpfsHash, ...]
+    """
+    # Load .env File with Configuration
+    load_dotenv()
+
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
+    query = """
+            query subgraphDeveloperSubgraphs($input: ID!){
+              graphAccount(id: $input) {
+                id
+                subgraphs {
+                  active
+                  createdAt
+                  id
+                  displayName
+                  versions {
+                    version
+                    subgraphDeployment {
+                      id
+                      ipfsHash
+                    }
+                  }
+                }
+              }
+            }
+  
+            """
+    variables = {'input': developer_id}
+    request_json = {'query': query}
+    if developer_id:
+        request_json['variables'] = variables
+
+    resp = requests.post(API_GATEWAY, json=request_json)
+    subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
+
+    subgraphList = list()
+    for subgraph in subgraphs:
+        for version in subgraph['versions']:
+            subgraphList.append(version['subgraphDeployment']['ipfsHash'])
+    return subgraphList
+
+def fillBlackListFromBlacklistedDevs():
+    """Get's the blacklistede developers from the config.json file. Adds all Subgraphs that are
+    deployed by the blacklisted developer to the blacklist (config.json['blacklist'])
+
+    Returns
+    -------
+    print
+        (Blacklisted Developer: Blacklisted Subgraphs)
+    """
+    # open config.json and get blacklisted array
+    with open("config.json", "r") as jsonfile:
+        config = json.load(jsonfile)
+
+    # Get List of Blacklisted Developers from config.json
+    blacklisted_devs = config.get('blacklisted_devs')
+
+    # gets the List of Blacklisted Subgraphs from config.json
+    blacklisted_subgraphs = config.get('blacklist')
+
+    # iterate through each blacklisted developer and append the subgraph IpfsHash to the blacklist
+    for dev in blacklisted_devs:
+        blacklisted_subgraphs_from_dev = getSubgraphsFromDeveloper(dev)
+        for subgraph in blacklisted_subgraphs_from_dev:
+            if subgraph not in blacklisted_subgraphs:
+                blacklisted_subgraphs.append(subgraph)  # append subgraph id to blacklist
+        print(f"Blacklisted Developer {dev} and Subgraphs: {blacklisted_subgraphs_from_dev}")
+
+    config['blacklist'] = blacklisted_subgraphs
+
+    # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
+    with open("config.json", "w") as f:
+        f.write(json.dumps(config,indent=4, sort_keys=True))
+        f.close()
+
+
+def getInactiveSubgraphs():
+    """Get's all inactive subgraphs with their Hash
+
+    Returns
+    -------
+    List
+        [SubgraphIpfsHash, ...]
+    """
+    # Load .env File with Configuration
+    load_dotenv()
+
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
+    query = """
+            query inactivesubgraphs {
+              subgraphs(where: {active: false}) {
+                versions {
+                  subgraphDeployment {
+                    id
+                    ipfsHash
+                    originalName
+                  }
+                }
+              }
+            }
+
+            """
+    request_json = {'query': query}
+
+
+    resp = requests.post(API_GATEWAY, json=request_json)
+    subgraphs = json.loads(resp.text)['data']
+
+    inactive_subgraph_list = list()
+    for subgraph in subgraphs:
+        for version in subgraph['versions']:
+            inactive_subgraph_list.append(version['subgraphDeployment']['ipfsHash'])
+    return inactive_subgraph_list
+
+def fillBlackListFromInactiveSubgraphs():
+    """Get's the inactive subgraphs. Adds all Subgraphs that are
+    inactive to the blacklist (config.json['blacklist'])
+
+    Returns
+    -------
+    print
+        (Blacklisted Subgraphs)
+    """
+    # open config.json and get blacklisted array
+    with open("config.json", "r") as jsonfile:
+        config = json.load(jsonfile)
+
+
+    # gets the List of Blacklisted Subgraphs from config.json
+    blacklisted_subgraphs = config.get('blacklist')
+
+    inactive_subgraph_list = getInactiveSubgraphs()
+
+    # iterate through each inactive subgraph and append the subgraph IpfsHash to the blacklist
+    for subgraph in inactive_subgraph_list:
+        if subgraph not in blacklisted_subgraphs:
+            blacklisted_subgraphs.append(subgraph)  # append subgraph id to blacklist
+
+    print(f"Blacklisted inactive Subgraphs: {inactive_subgraph_list}")
+
+    config['blacklist'] = blacklisted_subgraphs
+
+    # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
+    with open("config.json", "w") as f:
+        f.write(json.dumps(config,indent=4, sort_keys=True))
+        f.close()

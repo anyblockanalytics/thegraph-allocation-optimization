@@ -158,7 +158,7 @@ def getActiveAllocations(subgraph_url, indexer_id, variables=None, ):
     return allocations
 
 
-def getValidPoi(indexerId, subgraphIpfsHash, start_epoch):
+def getValidPoi(indexerId, subgraphHash, start_epoch):
     """Get's the POI for an Allocation on one subgraph for a Indexer.
 
     Returns
@@ -173,16 +173,19 @@ def getValidPoi(indexerId, subgraphIpfsHash, start_epoch):
 
         # sleep so that the connection is not reset by peer
         time.sleep(0.01)
+
+        subgraphIpfsHash = base58.b58encode(bytearray.fromhex('1220' + subgraphHash[2:])).decode("utf-8")
+
         poi = json.loads(getPoiQuery(indexerId, subgraphIpfsHash, blockNumber=startBlock, blockHash=startHash))
         # if no valid POI, return 0x000... POI
-        allocationPOI = [subgraphIpfsHash, epoch, startBlock, startHash,
+        allocationPOI = [subgraphHash, epoch, startBlock, startHash,
                          "0x0000000000000000000000000000000000000000000000000000000000000000"]
 
         # if valid POI is found, return it with epoch, block etc.
         if poi['data']['proofOfIndexing'] is not None:
             print(
-                f"Subgraph: {subgraphIpfsHash}, Epoch: {epoch}, startBlock: {startBlock}, startHash: {startHash}, poi: {poi['data']['proofOfIndexing']}")
-            allocationPOI = [subgraphIpfsHash, epoch, startBlock, startHash, poi['data']['proofOfIndexing']]
+                f"Subgraph: {subgraphHash}, Epoch: {epoch}, startBlock: {startBlock}, startHash: {startHash}, poi: {poi['data']['proofOfIndexing']}")
+            allocationPOI = [subgraphHash, epoch, startBlock, startHash, poi['data']['proofOfIndexing']]
             break
     return allocationPOI
 
@@ -198,29 +201,29 @@ def getAllAllocationPois(indexerId):
     print("Current Epoch: " + str(getCurrentEpoch(API_GATEWAY)))
 
     # Grab all Active Allocations
-    allocations = getActiveAllocations(subgraph_url=API_GATEWAY, indexer_id=ANYBLOCK_ANALYTICS_ID)['allocations']
+    allocations = getActiveAllocations(subgraph_url=API_GATEWAY, indexer_id=indexerId)['allocations']
 
     # List of POIs to be returned
     allocationPoiList = list()
     allocationPoiDict = dict()
+    shortAllocationPoiDict = dict()
 
     for allocation in allocations:
         allocationCreatedAtEpoch = allocation['createdAtEpoch']
         allocationId = allocation['id']
         allocationSubgraphName = allocation['subgraphDeployment']['originalName']
-        allocationSubgraphIpfsHash = allocation['subgraphDeployment']['ipfsHash']
+        allocationSubgraphHash = allocation['subgraphDeployment']['id']
         # If depreciated and no name is available
         if allocationSubgraphName is None:
             allocationSubgraphName = f'Subgraph{allocations.index(allocation)}'
 
-        allocationPoi = getValidPoi(indexerId, subgraphIpfsHash=allocationSubgraphIpfsHash,
+        allocationPoi = getValidPoi(indexerId, subgraphHash=allocationSubgraphHash,
                                     start_epoch=allocationCreatedAtEpoch)
 
         allocationPoi.extend([allocationId, allocationSubgraphName])
         allocationPoiList.append(allocationPoi)
 
         data = {
-            'subgraphIpfsHash': allocationPoi[0],
             'epoch': allocationPoi[1],
             'startBlock': allocationPoi[2],
             'startHash': allocationPoi[3],
@@ -228,14 +231,22 @@ def getAllAllocationPois(indexerId):
             'allocationId': allocationPoi[5],
             'allocationSubgraphName': allocationPoi[6],
         }
-        allocationPoiDict[allocationPoi[0]]: data
+        allocationPoiDict[allocationPoi[0]] = data
+        shortAllocationPoiDict[allocationPoi[0]] = allocationPoi[4]
 
-    # now write output to a file
+    # now write output to a file (Long Version)
     activeAllocationPois = open("active_allocation_pois.json", "w")
 
     # magic happens here to make it pretty-printed
     activeAllocationPois.write(json.dumps(allocationPoiDict, indent=4, sort_keys=True))
     activeAllocationPois.close()
+
+    # now write output to a file (Short Version
+    shortActiveAllocationPois = open("active_allocation_pois_short.json", "w")
+
+    # magic happens here to make it pretty-printed
+    shortActiveAllocationPois.write(json.dumps(shortAllocationPoiDict, indent=4, sort_keys=True))
+    shortActiveAllocationPois.close()
 
     return allocationPoiList
 
