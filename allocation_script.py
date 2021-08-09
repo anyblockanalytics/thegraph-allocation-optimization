@@ -26,6 +26,8 @@ import os
 import base58
 import json
 from pycoingecko import CoinGeckoAPI
+import sys
+from subgraph_health_checks import checkMetaSubgraphHealth
 
 # Gateway to Graph Meta Subgraph
 API_GATEWAY = "https://gateway.network.thegraph.com/network"
@@ -299,6 +301,10 @@ if __name__ == '__main__':
     now = datetime.now()
     DT_STRING = now.strftime("%d%m%Y_%H:%M:%S")
     print("Script Execution on: ", DT_STRING)
+
+    if not checkMetaSubgraphHealth():
+        sys.exit('Meta Subgraph is down, aborting Optimization')
+
 
     # initialize argument parser
     my_parser = argparse.ArgumentParser(description='The Graph Allocation script for determining the optimal Allocations \

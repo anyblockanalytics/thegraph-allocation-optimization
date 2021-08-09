@@ -293,7 +293,7 @@ def getAllSubgraphDeployments():
 
 
 def checkSubgraphStatus(subgraph_id, variables=None, ):
-    """Checks Subgraph Health Status for Subgraph
+    """Grabs Subgraph Health Status Data for Subgraph
 
     Returns
     -------
@@ -336,6 +336,15 @@ def checkSubgraphStatus(subgraph_id, variables=None, ):
     return subgraph_health
 
 def isSubgraphHealthy(subgraph_id):
+    """Checks Subgraph Health Status for Subgraph. Returns either
+    True = Healthy, or False = Unhealthy
+
+    Returns
+    -------
+
+    Bool (True / False)
+
+    """
     subgraph_health = checkSubgraphStatus([subgraph_id])
     for status in subgraph_health:
         sync = status['synced']
@@ -362,11 +371,13 @@ def isSubgraphHealthy(subgraph_id):
     elif error:
         return False
 
-    # if fatalError exists return False
     else:
         return True
 
 def fillBlackListFromSubgraphHealthStatus():
+    """Fills Blacklist based on Subgraph Healt status for all SubgraphDeployments
+
+    """
 
 
     # open config.json and get blacklisted array
@@ -399,12 +410,28 @@ def fillBlackListFromSubgraphHealthStatus():
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
+def checkMetaSubgraphHealth():
+    """Checks Subgraph Health Status for Meta Subgraph for Mainnet (necessary to be healthy for reallocating)
+
+    Returns
+    -------
+
+    Bool: True / False (Healthy if True, Broken if False)
+
+    """
+    meta_subgraph_health = isSubgraphHealthy("QmVbZAsN4NUxLDFS66JjmjUDWiYQVBAXPDQk26DGnLeRqz")
+    return meta_subgraph_health
 
 def createBlacklist(database=False):
+    """creates Blacklist of Subgraphs from previous Subgraph Checks.
+
+    Parameters:
+        database: Boolean, if true checks postgres node database for not in sync / error Subgraphs
+    """
     if database:
         fillBlacklistFromDatabaseBySyncAndError()
     fillBlackListFromBlacklistedDevs()
     fillBlackListFromInactiveSubgraphs()
     fillBlackListFromSubgraphHealthStatus()
 
-createBlacklist()
+#createBlacklist()

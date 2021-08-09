@@ -96,7 +96,7 @@ sudo apt-get install glpk-utils libglpk-dev glpk-doc python-glpk
         ```
     - now you can run the **fetch_failed_subgraphs.py**
       ```shell
-      python ./fetch_failed_subgraphs.py
+      python ./subgraph_health_checks.py
       ```
    
 7. Now everything should be installed. Start a terminal in the Repository directory and run the script:
