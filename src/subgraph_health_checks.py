@@ -9,7 +9,7 @@ def connectIndexerDatabase():
     """ Connect to the PostgreSQL database server """
 
     # Load ENV File with Postgres Credentials
-    load_dotenv()
+    load_dotenv("../.env")
 
     conn = None
     try:
@@ -76,7 +76,7 @@ def fillBlacklistFromDatabaseBySyncAndError():
     rows = getIndexedSubgraphsFromDatabase()
 
     # open config.json and get blacklisted array
-    with open("config.json", "r") as jsonfile:
+    with open("../config.json", "r") as jsonfile:
         config = json.load(jsonfile)
     blacklisted_subgraphs = config.get('blacklist')
 
@@ -95,7 +95,7 @@ def fillBlacklistFromDatabaseBySyncAndError():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("config.json", "w") as f:
+    with open("../config.json", "w") as f:
         f.write(json.dumps(config))
         f.close()
 
@@ -109,7 +109,8 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
         [SubgraphIpfsHash, ...]
     """
     # Load .env File with Configuration
-    load_dotenv()
+    load_dotenv("../.env")
+
 
     API_GATEWAY = os.getenv('API_GATEWAY')
 
@@ -159,7 +160,7 @@ def fillBlackListFromBlacklistedDevs():
         (Blacklisted Developer: Blacklisted Subgraphs)
     """
     # open config.json and get blacklisted array
-    with open("config.json", "r") as jsonfile:
+    with open("../config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # Get List of Blacklisted Developers from config.json
@@ -179,7 +180,7 @@ def fillBlackListFromBlacklistedDevs():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("config.json", "w") as f:
+    with open("../config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
@@ -193,7 +194,8 @@ def getInactiveSubgraphs():
         [SubgraphIpfsHash, ...]
     """
     # Load .env File with Configuration
-    load_dotenv()
+    load_dotenv("../.env")
+
 
     API_GATEWAY = os.getenv('API_GATEWAY')
 
@@ -233,7 +235,7 @@ def fillBlackListFromInactiveSubgraphs():
         (Blacklisted Subgraphs)
     """
     # open config.json and get blacklisted array
-    with open("config.json", "r") as jsonfile:
+    with open("../config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # gets the List of Blacklisted Subgraphs from config.json
@@ -251,7 +253,7 @@ def fillBlackListFromInactiveSubgraphs():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("config.json", "w") as f:
+    with open("../config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
@@ -266,7 +268,8 @@ def getAllSubgraphDeployments():
         [SubgraphHash1, ...]
 
     """
-    load_dotenv()
+    load_dotenv("../.env")
+
 
     API_GATEWAY = os.getenv('API_GATEWAY')
     query = """
@@ -381,7 +384,7 @@ def fillBlackListFromSubgraphHealthStatus():
 
 
     # open config.json and get blacklisted array
-    with open("config.json", "r") as jsonfile:
+    with open("../config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # gets the List of Blacklisted Subgraphs from config.json
@@ -406,7 +409,7 @@ def fillBlackListFromSubgraphHealthStatus():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("config.json", "w") as f:
+    with open("../config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 

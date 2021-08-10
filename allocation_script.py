@@ -27,7 +27,7 @@ import base58
 import json
 from pycoingecko import CoinGeckoAPI
 import sys
-from subgraph_health_checks import checkMetaSubgraphHealth
+from src.subgraph_health_checks import checkMetaSubgraphHealth
 
 # Gateway to Graph Meta Subgraph
 API_GATEWAY = "https://gateway.network.thegraph.com/network"

@@ -1,36 +1,20 @@
 import json
 import base58
-from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
 import requests
-from web3 import Web3
 import time
+from src.helpers import initialize_rpc
 
-# Load .env File with Configuration
-load_dotenv()
 
-API_GATEWAY = os.getenv('API_GATEWAY')
-RPC_URL = os.getenv('RPC_URL')
+
 
 # Indexer ID
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
 
 
-def initialize_rpc():
-    """Initializes RPC client.
 
-    Returns
-    -------
-    object
-        web3 instance
-    """
-    web3 = Web3(Web3.HTTPProvider(RPC_URL))
-
-    return web3
-
-
-def getCurrentEpoch(subgraph_url):
+def getCurrentEpoch():
     """Get's the current active Epoche from the Mainnet Subgraph.
 
     Returns
@@ -38,6 +22,10 @@ def getCurrentEpoch(subgraph_url):
     int
         Current Active Epoch
     """
+    # Load .env File with Configuration
+    load_dotenv("../.env")
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
     query = """
             {
               graphNetworks {
@@ -47,7 +35,7 @@ def getCurrentEpoch(subgraph_url):
             }
             """
     request_json = {'query': query}
-    resp = requests.post(subgraph_url, json=request_json)
+    resp = requests.post(API_GATEWAY, json=request_json)
     response = json.loads(resp.text)
 
     current_epoch = response['data']['graphNetworks'][0]['currentEpoch']
@@ -74,7 +62,7 @@ def getPoiQuery(indexerId, subgraphId, blockNumber, blockHash):
     return output
 
 
-def getStartBlockEpoch(subgraph_url, epoch):
+def getStartBlockEpoch(epoch):
     """Get's the startBlock for an Epoch from the Mainnet Subgraph.
        And then it get's the Block Hash via RPC Calls.
 
@@ -83,6 +71,9 @@ def getStartBlockEpoch(subgraph_url, epoch):
     int,int
         StartBlock of Epoche, StartBlock BlockHash
     """
+    load_dotenv("../.env")
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
     query = """
          query get_epoch_block($input: ID!) {
               epoch(id: $input) {
@@ -96,7 +87,7 @@ def getStartBlockEpoch(subgraph_url, epoch):
     variables = {'input': epoch}
     request_json['variables'] = variables
 
-    resp = requests.post(subgraph_url, json=request_json)
+    resp = requests.post(API_GATEWAY, json=request_json)
     response = json.loads(resp.text)
 
     startBlock = response['data']['epoch']['startBlock']
@@ -108,7 +99,7 @@ def getStartBlockEpoch(subgraph_url, epoch):
     return startBlock, startBlockHash
 
 
-def getActiveAllocations(subgraph_url, indexer_id, variables=None, ):
+def getActiveAllocations(indexer_id, variables=None, ):
     """Get's the currently active Allocations for a specific Indexer from the Mainnet Subgraph.
        Dumps the results into a dictionary.
 
@@ -117,6 +108,8 @@ def getActiveAllocations(subgraph_url, indexer_id, variables=None, ):
     dict
         Active Allocations for Indexer
     """
+    load_dotenv("../.env")
+    API_GATEWAY = os.getenv('API_GATEWAY')
 
     query = """
         query AllocationsByIndexer($input: ID!) {
@@ -150,7 +143,7 @@ def getActiveAllocations(subgraph_url, indexer_id, variables=None, ):
     request_json = {'query': query}
     if indexer_id:
         request_json['variables'] = variables
-    resp = requests.post(subgraph_url, json=request_json)
+    resp = requests.post(API_GATEWAY, json=request_json)
     response = json.loads(resp.text)
 
     allocations = response['data']['indexer']
@@ -168,8 +161,8 @@ def getValidPoi(indexerId, subgraphHash, start_epoch):
     """
     # get startblock and startHash for all Epochs between Start and End Epoch
     listEpochs = list()
-    for epoch in range(getCurrentEpoch(API_GATEWAY), start_epoch - 1, -1):
-        startBlock, startHash = getStartBlockEpoch(API_GATEWAY, epoch)
+    for epoch in range(getCurrentEpoch(), start_epoch - 1, -1):
+        startBlock, startHash = getStartBlockEpoch(epoch)
 
         # sleep so that the connection is not reset by peer
         time.sleep(0.01)
@@ -198,10 +191,10 @@ def getAllAllocationPois(indexerId):
     list
         With subgraphIpfsHash, epoch of POI, startBlock of Epoch, start Hash of Block, POI, allocationId, allocationSubgraphName
     """
-    print("Current Epoch: " + str(getCurrentEpoch(API_GATEWAY)))
+    print("Current Epoch: " + str(getCurrentEpoch()))
 
     # Grab all Active Allocations
-    allocations = getActiveAllocations(subgraph_url=API_GATEWAY, indexer_id=indexerId)['allocations']
+    allocations = getActiveAllocations(indexer_id=indexerId)['allocations']
 
     # List of POIs to be returned
     allocationPoiList = list()
@@ -235,14 +228,14 @@ def getAllAllocationPois(indexerId):
         shortAllocationPoiDict[allocationPoi[0]] = allocationPoi[4]
 
     # now write output to a file (Long Version)
-    activeAllocationPois = open("active_allocation_pois.json", "w")
+    activeAllocationPois = open("../data/active_allocation_pois.json", "w")
 
     # magic happens here to make it pretty-printed
     activeAllocationPois.write(json.dumps(allocationPoiDict, indent=4, sort_keys=True))
     activeAllocationPois.close()
 
     # now write output to a file (Short Version
-    shortActiveAllocationPois = open("active_allocation_pois_short.json", "w")
+    shortActiveAllocationPois = open("../data/active_allocation_pois_short.json", "w")
 
     # magic happens here to make it pretty-printed
     shortActiveAllocationPois.write(json.dumps(shortAllocationPoiDict, indent=4, sort_keys=True))
@@ -251,5 +244,5 @@ def getAllAllocationPois(indexerId):
     return allocationPoiList
 
 
-pois = getAllAllocationPois(ANYBLOCK_ANALYTICS_ID)
-print(pois)
+#pois = getAllAllocationPois(ANYBLOCK_ANALYTICS_ID)
+#print(pois)
