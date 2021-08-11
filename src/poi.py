@@ -4,43 +4,10 @@ from dotenv import load_dotenv
 import os
 import requests
 import time
-from src.helpers import initialize_rpc
-
-
-
+from src.queries import getCurrentEpoch, getStartBlockEpoch, getActiveAllocations
 
 # Indexer ID
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
-
-
-
-def getCurrentEpoch():
-    """Get's the current active Epoche from the Mainnet Subgraph.
-
-    Returns
-    -------
-    int
-        Current Active Epoch
-    """
-    # Load .env File with Configuration
-    load_dotenv("../.env")
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
-    query = """
-            {
-              graphNetworks {
-                currentEpoch
-              }
-            
-            }
-            """
-    request_json = {'query': query}
-    resp = requests.post(API_GATEWAY, json=request_json)
-    response = json.loads(resp.text)
-
-    current_epoch = response['data']['graphNetworks'][0]['currentEpoch']
-
-    return current_epoch
 
 
 def getPoiQuery(indexerId, subgraphId, blockNumber, blockHash):
@@ -60,95 +27,6 @@ def getPoiQuery(indexerId, subgraphId, blockNumber, blockHash):
     output
 
     return output
-
-
-def getStartBlockEpoch(epoch):
-    """Get's the startBlock for an Epoch from the Mainnet Subgraph.
-       And then it get's the Block Hash via RPC Calls.
-
-    Returns
-    -------
-    int,int
-        StartBlock of Epoche, StartBlock BlockHash
-    """
-    load_dotenv("../.env")
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
-    query = """
-         query get_epoch_block($input: ID!) {
-              epoch(id: $input) {
-                startBlock
-              }
-            }
-
-            """
-    request_json = {'query': query}
-
-    variables = {'input': epoch}
-    request_json['variables'] = variables
-
-    resp = requests.post(API_GATEWAY, json=request_json)
-    response = json.loads(resp.text)
-
-    startBlock = response['data']['epoch']['startBlock']
-
-    # get Block-Hash from BlockHeight
-    web3 = initialize_rpc()
-    startBlockHash = web3.eth.getBlock(startBlock)['hash'].hex()
-
-    return startBlock, startBlockHash
-
-
-def getActiveAllocations(indexer_id, variables=None, ):
-    """Get's the currently active Allocations for a specific Indexer from the Mainnet Subgraph.
-       Dumps the results into a dictionary.
-
-    Returns
-    -------
-    dict
-        Active Allocations for Indexer
-    """
-    load_dotenv("../.env")
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
-    query = """
-        query AllocationsByIndexer($input: ID!) {
-            indexer(id: $input) {
-                allocations(where: {status: Active}) {
-                    indexingRewards
-                    allocatedTokens
-                    status
-                    id
-                    createdAt
-                    subgraphDeployment {
-                        signalledTokens
-                        createdAt
-                        stakedTokens
-                        originalName
-                        id
-                        ipfsHash
-
-                    }
-                    createdAtEpoch
-                    createdAtBlockNumber
-                }
-            allocatedTokens
-            stakedTokens
-            delegatedTokens
-            }
-        }
-    """
-    variables = {'input': indexer_id}
-
-    request_json = {'query': query}
-    if indexer_id:
-        request_json['variables'] = variables
-    resp = requests.post(API_GATEWAY, json=request_json)
-    response = json.loads(resp.text)
-
-    allocations = response['data']['indexer']
-
-    return allocations
 
 
 def getValidPoi(indexerId, subgraphHash, start_epoch):
@@ -243,6 +121,5 @@ def getAllAllocationPois(indexerId):
 
     return allocationPoiList
 
-
-#pois = getAllAllocationPois(ANYBLOCK_ANALYTICS_ID)
-#print(pois)
+# pois = getAllAllocationPois(ANYBLOCK_ANALYTICS_ID)
+# print(pois)

@@ -1,47 +1,6 @@
-import psycopg2
-from dotenv import load_dotenv
-import os
 import json
-import requests
-
-
-def connectIndexerDatabase():
-    """ Connect to the PostgreSQL database server """
-
-    # Load ENV File with Postgres Credentials
-    load_dotenv("../.env")
-
-    conn = None
-    try:
-        # read connection parameters
-        RPC_URL = os.getenv('RPC_URL')
-
-        # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
-        conn = psycopg2.connect(
-            host=os.getenv('HOST'),
-            port=os.getenv('PORT'),
-            database=os.getenv('DATABASE'),
-            user=os.getenv('DATABASE_USER'),
-            password=os.getenv('PASSWORD'))
-
-        # create a cursor
-        cur = conn.cursor()
-
-        # execute a statement
-        print('PostgreSQL database version:')
-        cur.execute('SELECT version()')
-
-        # display the PostgreSQL database server version
-        db_version = cur.fetchone()
-        print(db_version)
-
-        # close the communication with the PostgreSQL
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    return conn
+from helpers import connectIndexerDatabase
+from queries import getSubgraphsFromDeveloper, getInactiveSubgraphs, getAllSubgraphDeployments, checkSubgraphStatus
 
 
 def getIndexedSubgraphsFromDatabase():
@@ -100,56 +59,6 @@ def fillBlacklistFromDatabaseBySyncAndError():
         f.close()
 
 
-def getSubgraphsFromDeveloper(developer_id, variables=None, ):
-    """Get's the deployed Subgraphs with the Hashes for a specific Subgraph Developer.
-
-    Returns
-    -------
-    List
-        [SubgraphIpfsHash, ...]
-    """
-    # Load .env File with Configuration
-    load_dotenv("../.env")
-
-
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
-    query = """
-            query subgraphDeveloperSubgraphs($input: ID!){
-              graphAccount(id: $input) {
-                id
-                subgraphs {
-                  active
-                  createdAt
-                  id
-                  displayName
-                  versions {
-                    version
-                    subgraphDeployment {
-                      id
-                      ipfsHash
-                    }
-                  }
-                }
-              }
-            }
-  
-            """
-    variables = {'input': developer_id}
-    request_json = {'query': query}
-    if developer_id:
-        request_json['variables'] = variables
-
-    resp = requests.post(API_GATEWAY, json=request_json)
-    subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
-
-    subgraphList = list()
-    for subgraph in subgraphs:
-        for version in subgraph['versions']:
-            subgraphList.append(version['subgraphDeployment']['ipfsHash'])
-    return subgraphList
-
-
 def fillBlackListFromBlacklistedDevs():
     """Get's the blacklistede developers from the config.json file. Adds all Subgraphs that are
     deployed by the blacklisted developer to the blacklist (config.json['blacklist'])
@@ -185,46 +94,6 @@ def fillBlackListFromBlacklistedDevs():
         f.close()
 
 
-def getInactiveSubgraphs():
-    """Get's all inactive subgraphs with their Hash
-
-    Returns
-    -------
-    List
-        [SubgraphIpfsHash, ...]
-    """
-    # Load .env File with Configuration
-    load_dotenv("../.env")
-
-
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
-    query = """
-            query inactivesubgraphs {
-              subgraphs(where: {active: false}) {
-                versions {
-                  subgraphDeployment {
-                    id
-                    ipfsHash
-                    originalName
-                  }
-                }
-              }
-            }
-
-            """
-    request_json = {'query': query}
-
-    resp = requests.post(API_GATEWAY, json=request_json)
-    subgraphs = json.loads(resp.text)['data']['subgraphs']
-
-    inactive_subgraph_list = list()
-    for subgraph in subgraphs:
-        for version in subgraph['versions']:
-            inactive_subgraph_list.append(version['subgraphDeployment']['ipfsHash'])
-    return inactive_subgraph_list
-
-
 def fillBlackListFromInactiveSubgraphs():
     """Get's the inactive subgraphs. Adds all Subgraphs that are
     inactive to the blacklist (config.json['blacklist'])
@@ -258,85 +127,6 @@ def fillBlackListFromInactiveSubgraphs():
         f.close()
 
 
-def getAllSubgraphDeployments():
-    """Get's all Subgraph Hashes
-
-    Returns
-    -------
-
-    list
-        [SubgraphHash1, ...]
-
-    """
-    load_dotenv("../.env")
-
-
-    API_GATEWAY = os.getenv('API_GATEWAY')
-    query = """
-        {
-          subgraphDeployments {
-            originalName
-            id
-            ipfsHash
-          }
-        }
-        """
-    request_json = {'query': query}
-
-    resp = requests.post(API_GATEWAY, json=request_json)
-    data = json.loads(resp.text)
-    subgraph_deployments = data['data']['subgraphDeployments']
-
-    # create list with subgraph IpfsHashes
-    list_subgraph_hashes = list()
-    for subgraph in subgraph_deployments:
-        list_subgraph_hashes.append(subgraph['ipfsHash'])
-
-    return list_subgraph_hashes
-
-
-def checkSubgraphStatus(subgraph_id, variables=None, ):
-    """Grabs Subgraph Health Status Data for Subgraph
-
-    Returns
-    -------
-
-    Dict with subgraph, sync status, health, and possible fatalErrors
-
-
-    """
-
-    API_GATEWAY = "https://api.thegraph.com/index-node/graphql"
-
-    query = """
-            query subgraphStatus($input:[String]!){
-          indexingStatuses(subgraphs: $input) {
-            subgraph
-            synced
-            health
-            fatalError {
-              handler
-              message
-              deterministic
-              block {
-                hash
-                number
-              }
-            }
-            node
-          }
-        }
-        """
-    variables = {'input': subgraph_id}
-
-    request_json = {'query': query}
-    if subgraph_id:
-        request_json['variables'] = variables
-    resp = requests.post(API_GATEWAY, json=request_json)
-    data = json.loads(resp.text)
-    subgraph_health = data['data']['indexingStatuses']
-
-    return subgraph_health
 
 def isSubgraphHealthy(subgraph_id):
     """Checks Subgraph Health Status for Subgraph. Returns either
@@ -377,11 +167,11 @@ def isSubgraphHealthy(subgraph_id):
     else:
         return True
 
+
 def fillBlackListFromSubgraphHealthStatus():
     """Fills Blacklist based on Subgraph Healt status for all SubgraphDeployments
 
     """
-
 
     # open config.json and get blacklisted array
     with open("../config.json", "r") as jsonfile:
@@ -401,7 +191,6 @@ def fillBlackListFromSubgraphHealthStatus():
         if not subgraph_healthy:
             # check if it is already in blacklist
             if subgraph not in blacklisted_subgraphs:
-
                 # if it is not, append to it.
                 blacklisted_subgraphs.append(subgraph)  # append subgraph id to blacklist
                 print(f"Blacklisted unhealthy Subgraphs: {subgraph}")
@@ -412,6 +201,7 @@ def fillBlackListFromSubgraphHealthStatus():
     with open("../config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
+
 
 def checkMetaSubgraphHealth():
     """Checks Subgraph Health Status for Meta Subgraph for Mainnet (necessary to be healthy for reallocating)
@@ -425,6 +215,7 @@ def checkMetaSubgraphHealth():
     meta_subgraph_health = isSubgraphHealthy("QmVbZAsN4NUxLDFS66JjmjUDWiYQVBAXPDQk26DGnLeRqz")
     return meta_subgraph_health
 
+
 def createBlacklist(database=False):
     """creates Blacklist of Subgraphs from previous Subgraph Checks.
 
@@ -437,4 +228,4 @@ def createBlacklist(database=False):
     fillBlackListFromInactiveSubgraphs()
     fillBlackListFromSubgraphHealthStatus()
 
-#createBlacklist()
+# createBlacklist()
