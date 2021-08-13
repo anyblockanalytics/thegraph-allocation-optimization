@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import os
 import psycopg2
 import json
+import redis
+import sys
+
 
 load_dotenv()
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
@@ -81,3 +84,36 @@ def initializeRewardManagerContract():
     web3 = initialize_rpc()
     contract = web3.eth.contract(address=os.getenv('REWARD_MANAGER'), abi=json.loads(REWARD_MANAGER_ABI))
     return contract
+
+def conntectRedis() -> redis.client.Redis:
+    try:
+        client = redis.Redis(
+            host="127.0.0.1",
+            port=6379,
+            password="ubuntu",
+            db=0,
+            socket_timeout=5,
+        )
+        ping = client.ping()
+        if ping is True:
+            return client
+    except redis.AuthenticationError:
+        print("AuthenticationError")
+        sys.exit(1)
+
+
+
+def get_routes_from_cache(key: str) -> str:
+    """Get data from redis."""
+    client = conntectRedis()
+    val = client.get(key)
+    print(val)
+    return val
+
+
+def set_routes_to_cache(key: str, value: str) -> bool:
+    """Set data to redis."""
+    client = conntectRedis()
+
+    state = client.set(key, value=value, )
+    return state

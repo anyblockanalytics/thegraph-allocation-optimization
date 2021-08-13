@@ -27,7 +27,7 @@ import base58
 import json
 from pycoingecko import CoinGeckoAPI
 import sys
-from src.subgraph_health_checks import checkMetaSubgraphHealth
+from subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
 
 # Gateway to Graph Meta Subgraph
 API_GATEWAY = "https://gateway.network.thegraph.com/network"
@@ -184,7 +184,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     INDEXER_ID = indexer_id.lower()
     INVALID_SUBGRAPHS = set()
     if blacklist_parameter:
-        with open("config.json", "r") as jsonfile:
+        with open("../config.json", "r") as jsonfile:
             INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
     PARALLEL_ALLOCATIONS = parallel_allocations
 
@@ -254,7 +254,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     print(f"Dynamic Allocation: {dynamic_allocation / 10 ** 18:,.2f}")
     print('=' * 40)
     print()
-    script_file = open("script.txt", "w+")
+    script_file = open("../script.txt", "w+")
     # print(
     #    "graph indexer rules set global allocationAmount 10.0 parallelAllocations 2 minStake 500.0 decisionBasis rules && \\")
     for subgraph in subgraphs:
@@ -284,7 +284,7 @@ def allocation_script(indexer_id, FIXED_ALLOCATION):
     script_file.close()
 
     # Disable rule -> this is required to "reset" allocations
-    script_never = open("script_never.txt", "w+")
+    script_never = open("../script_never.txt", "w+")
 
     for subgraph in subgraphs:
         script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
@@ -301,10 +301,11 @@ if __name__ == '__main__':
     now = datetime.now()
     DT_STRING = now.strftime("%d%m%Y_%H:%M:%S")
     print("Script Execution on: ", DT_STRING)
-
+    """
     if not checkMetaSubgraphHealth():
         sys.exit('Meta Subgraph is down, aborting Optimization')
-
+    """
+    createBlacklist()
 
     # initialize argument parser
     my_parser = argparse.ArgumentParser(description='The Graph Allocation script for determining the optimal Allocations \
@@ -383,13 +384,13 @@ if __name__ == '__main__':
     min_allocation = args.min_allocation
 
     # initialize logger
-    if not os.path.exists("./logs/"):
-        os.makedirs("./logs/")
-    if not os.path.exists("./logs/data/"):
-        os.makedirs("./logs/data/")
-    logger = setup_logger('logger', './logs/' + DT_STRING + '.log')
+    if not os.path.exists("../logs/"):
+        os.makedirs("../logs/")
+    if not os.path.exists("../logs/data/"):
+        os.makedirs("../logs/data/")
+    logger = setup_logger('logger', '../logs/' + DT_STRING + '.log')
     data_logger = setup_logger('data_logger',
-                               './logs/data/' + DT_STRING + '.log')  # logging different parameter optimizations
+                               '../logs/data/' + DT_STRING + '.log')  # logging different parameter optimizations
 
     logger.info('Execution of Optimization Script started at: %s \n', DT_STRING)
 
@@ -487,13 +488,13 @@ if __name__ == '__main__':
     # Manuell select List of Subgraphs from config.py
     # (only indexed or desired subgraphs should be included into the optimization)
     if subgraph_list_parameter:
-        with open("config.json", "r") as jsonfile:
+        with open("../config.json", "r") as jsonfile:
             list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
         df = df[df['id'].isin(list_desired_subgraphs)]
 
     # Remove Blacklisted Subgraphs
     if blacklist_parameter:
-        with open("config.json", "r") as jsonfile:
+        with open("../config.json", "r") as jsonfile:
             blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
         df = df[-df['id'].isin(blacklisted_subgraphs)]
 

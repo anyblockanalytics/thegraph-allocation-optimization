@@ -43,3 +43,6 @@ varint==1.0.2
 web3==5.17.0
 websockets==8.1
 wheel==0.36.2
+redis
+httpx
+plotly-express

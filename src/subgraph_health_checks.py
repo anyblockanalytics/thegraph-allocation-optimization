@@ -212,7 +212,9 @@ def checkMetaSubgraphHealth():
     Bool: True / False (Healthy if True, Broken if False)
 
     """
-    meta_subgraph_health = isSubgraphHealthy("QmVbZAsN4NUxLDFS66JjmjUDWiYQVBAXPDQk26DGnLeRqz")
+    #Qmf5XXWA8zhHbdvWqtPcR3jFkmb5FLR4MAefEYx8E3pHfr
+    # old? : QmVbZAsN4NUxLDFS66JjmjUDWiYQVBAXPDQk26DGnLeRqz
+    meta_subgraph_health = isSubgraphHealthy("Qmf5XXWA8zhHbdvWqtPcR3jFkmb5FLR4MAefEYx8E3pHfr")
     return meta_subgraph_health
 
 

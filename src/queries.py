@@ -2,7 +2,7 @@ import json
 from dotenv import load_dotenv
 import os
 import requests
-from src.helpers import initialize_rpc
+from helpers import initialize_rpc
 
 
 def getCurrentBlock():
