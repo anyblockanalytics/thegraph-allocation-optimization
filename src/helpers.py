@@ -6,7 +6,9 @@ import psycopg2
 import json
 import redis
 import sys
-
+import datetime as dt
+from datetime import datetime
+import argparse
 
 load_dotenv()
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
@@ -85,6 +87,8 @@ def initializeRewardManagerContract():
     contract = web3.eth.contract(address=os.getenv('REWARD_MANAGER'), abi=json.loads(REWARD_MANAGER_ABI))
     return contract
 
+# REDIS Functions
+
 def conntectRedis() -> redis.client.Redis:
     try:
         client = redis.Redis(
@@ -117,3 +121,114 @@ def set_routes_to_cache(key: str, value: str) -> bool:
 
     state = client.set(key, value=value, )
     return state
+
+def getLastKeyFromDate(subgraph_ipfs_hash,date):
+    """ Helper Function: Iterates Backwards from given Datetime (Year-Month-Day-Hour) until it finds the latest
+        Key Datetime,and then returns the key
+
+    """
+
+    # initialize redis client
+    redis = conntectRedis()
+
+    date_now = date
+    # start_date = start_date.strftime("%d-%m-%Y-%H")
+
+    # set boolean variable (Key not Found for given Datetime)
+    keys_not_found = True
+
+    # Iterate in hourly intervals
+    delta = dt.timedelta(hours=1)
+
+    while keys_not_found:
+        # Iterate through all Keys where the key includes the previously defined date_now string in key
+        for key in redis.scan_iter(str(date_now.strftime("%Y-%m-%d")) + "-" + subgraph_ipfs_hash + "*"):
+            # if key is found, set boolean to False, break loop and return the latest key
+            print(key)
+            date_start = str(date_now.strftime("%Y-%m-%d"))
+            keys_not_found = False
+            break
+        # else go one hour back and try again
+        if keys_not_found:
+            date_now -= delta
+
+    return key
+
+# MATH Functions
+
+def percentageIncrease(start_value, final_value):
+    """ Helper Function: Calculates the Percentage Increase between two values
+
+    returns
+    --------
+        int : percentage increase rounded to two decimals
+
+    """
+    increase = ((final_value - start_value) / start_value) * 100
+    return round(increase, 2)
+
+
+def initializeParser():
+    # initialize argument parser
+    my_parser = argparse.ArgumentParser(description='The Graph Allocation script for determining the optimal Allocations \
+                                                    across different Subgraphs. outputs a script.txt which an be used \
+                                                    to allocate the results of the allocation script. The created Log Files\
+                                                    logs the run, with network information and if the threshold was reached.\
+                                                    Different Parameters can be supplied.')
+
+    # Add the arguments
+    # Indexer Address
+    my_parser.add_argument('--indexer_id',
+                           metavar='indexer_id',
+                           type=str,
+                           help='The Graph Indexer Address',
+                           default="0x453b5e165cf98ff60167ccd3560ebf8d436ca86c")
+
+    # Max Percentage Allocation per Subgraph
+    my_parser.add_argument('--max_percentage',
+                           metavar='max_percentage',
+                           type=float,
+                           help='Max Percentage in relation to total allocations an Allocation for a subgraph is allowed \
+                           to have. Supplied as a value between 0-1 ',
+                           default=1.0)
+
+    # Max Percentage Allocation per Subgraph
+    my_parser.add_argument('--threshold',
+                           metavar='threshold',
+                           type=float,
+                           help='Threshold for Updating the Allocations. How much more Indexing Rewards (in %) have to be \
+                                gained by the optimization to change the script. Supplied as a value between 0-100 ',
+                           default=10.0)
+    # amount of parallel allocations per Subgraph
+    my_parser.add_argument('--parallel_allocations',
+                           metavar='parallel_allocations',
+                           type=int,
+                           help='Amount of parallel Allocations per Subgraph. Defaults to 1.',
+                           default=2)
+    # dedicate reserve stake that should not be considered in the allocation process
+    my_parser.add_argument('--reserve_stake',
+                           metavar='reserve_stake',
+                           type=int,
+                           help='Amount of reserve_stake. Defaults to 0.',
+                           default=0)
+
+    my_parser.add_argument('--min_allocation',
+                           metavar='min_allocation',
+                           type=int,
+                           help='Amount of reserve_stake. Defaults to 0.',
+                           default=0)
+
+    my_parser.add_argument('--subgraph-list', dest='subgraph_list', action='store_true')
+    my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
+    my_parser.add_argument('--blacklist', dest='blacklist', action='store_true')
+    my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
+    my_parser.set_defaults(subgraph_list=False)
+
+    my_parser.add_argument('--threshold_interval',
+                           metavar='threshold_interval',
+                           type=str,
+                           help='Set the Interval for Optimization and Threshold Calculation (Either "daily", or "weekly")',
+                           default="daily")
+    return my_parser

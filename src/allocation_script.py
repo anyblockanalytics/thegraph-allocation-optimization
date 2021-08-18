@@ -26,12 +26,12 @@ import os
 import base58
 import json
 from pycoingecko import CoinGeckoAPI
-import sys
 from subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
+from queries import getGasPrice
 
 # Gateway to Graph Meta Subgraph
 API_GATEWAY = "https://gateway.network.thegraph.com/network"
-#API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+API_GATEWAY = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
 
 # Get the current (fast) Gas Price from anyblock api endpoint
 gas_price_resp = requests.get("https://api.anyblock.tools/latest-minimum-gasprice/",
@@ -39,7 +39,7 @@ gas_price_resp = requests.get("https://api.anyblock.tools/latest-minimum-gaspric
 GAS_PRICE = gas_price_resp.get('fast')
 
 # AVG Gas Usage for allocation close and allocate
-ALLOCATION_GAS = 250000
+ALLOCATION_GAS = 270000
 
 # ETH-USD
 cg = CoinGeckoAPI()
