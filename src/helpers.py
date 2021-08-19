@@ -9,6 +9,7 @@ import sys
 import datetime as dt
 from datetime import datetime
 import argparse
+import base58
 
 load_dotenv()
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
@@ -87,6 +88,7 @@ def initializeRewardManagerContract():
     contract = web3.eth.contract(address=os.getenv('REWARD_MANAGER'), abi=json.loads(REWARD_MANAGER_ABI))
     return contract
 
+
 # REDIS Functions
 
 def conntectRedis() -> redis.client.Redis:
@@ -106,7 +108,6 @@ def conntectRedis() -> redis.client.Redis:
         sys.exit(1)
 
 
-
 def get_routes_from_cache(key: str) -> str:
     """Get data from redis."""
     client = conntectRedis()
@@ -122,7 +123,8 @@ def set_routes_to_cache(key: str, value: str) -> bool:
     state = client.set(key, value=value, )
     return state
 
-def getLastKeyFromDate(subgraph_ipfs_hash,date):
+
+def getLastKeyFromDate(subgraph_ipfs_hash, date):
     """ Helper Function: Iterates Backwards from given Datetime (Year-Month-Day-Hour) until it finds the latest
         Key Datetime,and then returns the key
 
@@ -153,6 +155,7 @@ def getLastKeyFromDate(subgraph_ipfs_hash,date):
             date_now -= delta
 
     return key
+
 
 # MATH Functions
 
@@ -211,20 +214,31 @@ def initializeParser():
                            type=int,
                            help='Amount of reserve_stake. Defaults to 0.',
                            default=0)
-
+    # set min allocation per subgraph
     my_parser.add_argument('--min_allocation',
                            metavar='min_allocation',
                            type=int,
                            help='Amount of reserve_stake. Defaults to 0.',
                            default=0)
-
+    # remove subgraphs with less than X allocations
+    my_parser.add_argument('--min_allocated_grt_subgraph',
+                           metavar='min_allocated_grt_subgraph',
+                           type=int,
+                           help='Amount of GRT allocated to subgraph to consider for Optimization else remove. Defaults to 100.',
+                           default=100)
+    # remove subgraphs with less than X signal
+    my_parser.add_argument('--min_signalled_grt_subgraph',
+                           metavar='min_signalled_grt_subgraph',
+                           type=int,
+                           help='Amount of GRT signaled to subgraph to consider for Optimization else remove. Defaults to 100.',
+                           default=100)
     my_parser.add_argument('--subgraph-list', dest='subgraph_list', action='store_true')
     my_parser.add_argument('--no-subgraph-list', dest='subgraph_list', action='store_false')
     my_parser.set_defaults(subgraph_list=False)
 
     my_parser.add_argument('--blacklist', dest='blacklist', action='store_true')
     my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
-    my_parser.set_defaults(subgraph_list=False)
+    my_parser.set_defaults(blacklist=False)
 
     my_parser.add_argument('--threshold_interval',
                            metavar='threshold_interval',
@@ -232,3 +246,8 @@ def initializeParser():
                            help='Set the Interval for Optimization and Threshold Calculation (Either "daily", or "weekly")',
                            default="daily")
     return my_parser
+
+
+def getSubgraphIpfsHash(subgraph_id):
+    subgraph_ipfs_hash = base58.b58encode(bytearray.fromhex('1220' + subgraph_id[2:])).decode("utf-8")
+    return subgraph_ipfs_hash

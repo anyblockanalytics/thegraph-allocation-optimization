@@ -305,7 +305,7 @@ if __name__ == '__main__':
     if not checkMetaSubgraphHealth():
         sys.exit('Meta Subgraph is down, aborting Optimization')
     """
-    createBlacklist()
+    #createBlacklist()
 
     # initialize argument parser
     my_parser = argparse.ArgumentParser(description='The Graph Allocation script for determining the optimal Allocations \
@@ -432,7 +432,6 @@ if __name__ == '__main__':
                 \n INDEXER TOTAL ALLOCATIONS: %s \n', indexer_total_allocations)
     if indexer_data.get('allocations'):
         for allocation in indexer_data.get('allocations'):
-            sublist = []
             # print(allocation.get('allocatedTokens'))
             # print(allocation.get('subgraphDeployment').get('originalName'))
 
@@ -480,10 +479,10 @@ if __name__ == '__main__':
     df_subgraphs['stakedTokensTotal'] = df_subgraphs['stakedTokensTotal'].astype(float) / 10 ** 18
 
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Name
-    # df = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('Address')
+    df_log = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('id')
     df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
     df.fillna(0, inplace=True)
-    # df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
+    df_test = pd.merge(df, df_subgraphs, how='left', on='Address').set_index(['Name_x', 'Address'])
 
     # Manuell select List of Subgraphs from config.py
     # (only indexed or desired subgraphs should be included into the optimization)
@@ -586,7 +585,7 @@ if __name__ == '__main__':
 
     # set sliced stake
     sliced_stake = (indexer_total_stake-reserve_stake) * max_percentage
-    # Run the Optimization for Daily/Weekly/Yearly Indexing Rewards
+    # Run the Optimization for Hourly/Daily/Weekly/Yearly Indexing Rewards
     for reward_interval in ['indexingRewardDay', 'indexingRewardWeek', 'indexingRewardYear']:
         print('\nOptimize Allocations for Interval: {} and Percentage per Allocation: {}'.format(reward_interval,
                                                                                                  max_percentage))

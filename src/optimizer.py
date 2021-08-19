@@ -1,21 +1,21 @@
 from queries import getGasPrice
 from subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
 from queries import getFiatPrice, getDataAllocationOptimizer
-from helpers import ANYBLOCK_ANALYTICS_ID, initializeParser
-from dotenv import load_dotenv
+from helpers import getSubgraphIpfsHash, ANYBLOCK_ANALYTICS_ID, percentageIncrease
 from script_creation import createAllocationScript
 import os
 from datetime import datetime
 import json
+import pandas as pd
+import base58
+import pyomo.environ as pyomo
 
-load_dotenv()
-API_GATEWAY = os.getenv('API_GATEWAY')
 
-createAllocationScript(indexer_id, fixed_allocations=, blacklist_parameter=, parallel_allocations=)
-
+# createAllocationScript(indexer_id, fixed_allocations=, blacklist_parameter=, parallel_allocations=)
 
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
-                        subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0):
+                        subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
+                        min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100):
     """ Runs the main optimization process.
 
     parameters
@@ -33,7 +33,23 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
     # datetime object containing current date and time
     current_datetime = datetime.now()
-    current_datetime = current_datetime.strftime("%Y%m%d %H:%M")
+    current_datetime = current_datetime.strftime("%Y-%m-%d-%H:%M")
+
+    # create dict with necessary data for current run
+    optimizer_results = {current_datetime: {}}
+    optimizer_results[current_datetime]['datetime'] = current_datetime
+
+    ## save parameter configuration for current run
+    optimizer_results[current_datetime]['parameters'] = {}
+    optimizer_results[current_datetime]['parameters']['indexer_id'] = indexer_id
+    optimizer_results[current_datetime]['parameters']['blacklist'] = blacklist_parameter
+    optimizer_results[current_datetime]['parameters']['parallel_allocations'] = parallel_allocations
+    optimizer_results[current_datetime]['parameters']['max_percentage'] = max_percentage
+    optimizer_results[current_datetime]['parameters']['threshold'] = threshold
+    optimizer_results[current_datetime]['parameters']['subgraph_list_parameter'] = subgraph_list_parameter
+    optimizer_results[current_datetime]['parameters']['threshold_interval'] = threshold_interval
+    optimizer_results[current_datetime]['parameters']['reserve_stake'] = reserve_stake
+    optimizer_results[current_datetime]['parameters']['min_allocation'] = min_allocation
 
     print("Script Execution on: ", current_datetime)
 
@@ -56,6 +72,14 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     allocation_gas_usage = 270000
     gas_price_gwei = getGasPrice(speed='fast')
 
+    # save price data for current run
+    optimizer_results[current_datetime]['price_data'] = {}
+    optimizer_results[current_datetime]['price_data']['gas_price_gwei'] = gas_price_gwei
+    optimizer_results[current_datetime]['price_data']['allocation_gas_usage'] = allocation_gas_usage
+    optimizer_results[current_datetime]['price_data']['ETH-USD'] = eth_usd
+    optimizer_results[current_datetime]['price_data']['GRT-USD'] = grt_usd
+    optimizer_results[current_datetime]['price_data']['GRT-ETH'] = grt_eth
+
     # get all relevant data from mainnet subgraph
     data = getDataAllocationOptimizer(indexer_id=indexer_id)
 
@@ -71,19 +95,6 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     yearly_inflation = (grt_issuance * 10 ** -18)
     yearly_inflation_percentage = yearly_inflation ** (365 * 24 * 60 * 60 / 13)
 
-    # create dict with necessary data for current run
-    optimizer_results = {current_datetime: {}}
-    optimizer_results[current_datetime]['datetime'] = current_datetime
-
-    # save price data for current run
-    optimizer_results[current_datetime]['price_data'] = {}
-    optimizer_results[current_datetime]['price_data']['gas_price_gwei'] = gas_price_gwei
-    optimizer_results[current_datetime]['price_data']['allocation_gas_usage'] = allocation_gas_usage
-    optimizer_results[current_datetime]['price_data']['ETH-USD'] = eth_usd
-    optimizer_results[current_datetime]['price_data']['GRT-USD'] = grt_usd
-    optimizer_results[current_datetime]['price_data']['GRT-ETH'] = grt_eth
-
-
     # save network data for current run
     optimizer_results[current_datetime]['network_data'] = {}
     optimizer_results[current_datetime]['network_data']["total_indexing_rewards"] = total_indexing_rewards
@@ -93,20 +104,342 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['network_data']["grt_issuance"] = grt_issuance
     optimizer_results[current_datetime]['network_data']["yearly_inflation_percentage"] = yearly_inflation_percentage
 
-    ## save parameter configuration for current run
-    optimizer_results[current_datetime]['parameters'] = {}
-    optimizer_results[current_datetime]['parameters']['indexer_id'] = indexer_id
-    optimizer_results[current_datetime]['parameters']['blacklist'] = blacklist_parameter
-    optimizer_results[current_datetime]['parameters']['parallel_allocations'] = parallel_allocations
-    optimizer_results[current_datetime]['parameters']['max_percentage'] = max_percentage
-    optimizer_results[current_datetime]['parameters']['threshold'] = threshold
-    optimizer_results[current_datetime]['parameters']['subgraph_list_parameter'] = subgraph_list_parameter
-    optimizer_results[current_datetime]['parameters']['threshold_interval'] = threshold_interval
-    optimizer_results[current_datetime]['parameters']['reserve_stake'] = reserve_stake
-    optimizer_results[current_datetime]['parameters']['min_allocation'] = min_allocation
+    # get indexer statistics (Total Stake, Total Allocated Tokens ...)
+    indexer_data = data['indexer']
+    indexer_total_stake = int(indexer_data.get('tokenCapacity')) * 10 ** -18
+    indexer_total_allocated_tokens = int(indexer_data.get('allocatedTokens')) * 10 ** -18
+
+    # save indexer global data
+    optimizer_results[current_datetime]['indexer'] = {}
+    optimizer_results[current_datetime]['indexer']["indexer_total_stake"] = indexer_total_stake
+    optimizer_results[current_datetime]['indexer']["indexer_total_allocated_tokens"] = indexer_total_allocated_tokens
+
+    # get all allocations for indexer
+    allocation_list = []
+
+    # check if indexer has allocations
+    if indexer_data.get('allocations'):
+        for allocation in indexer_data.get('allocations'):
+
+            # check if subgraph name is available, else set it to subgraph+index+ipfshash
+            if allocation.get('subgraphDeployment').get('originalName') is None:
+                name = f"Subgraph{indexer_data.get('allocations').index(allocation)}-{getSubgraphIpfsHash(allocation.get('subgraphDeployment').get('id'))}"
+            else:
+                name = allocation.get('subgraphDeployment').get('originalName')
+            # append list of allocation with Id, Name, Allocated Tokens and Rewards to allocation_list
+            sublist = [allocation.get('subgraphDeployment').get('id'),
+                       name,
+                       allocation.get('allocatedTokens'),
+                       allocation.get('indexingRewards')]
+            allocation_list.append(sublist)
+
+            # create df from allocations
+            df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
+            df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
+            df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
+
+            # aggregate possible parallel allocations
+            df = df.groupby(by=[df.Address, df.Name]).agg({
+                'Allocation': 'sum',
+                'IndexingReward': 'sum'
+            }).reset_index()
+    # If no Allocation available, create empty DataFrame with Columns
+    else:
+        df = pd.DataFrame(columns=['Address', 'Name', 'Allocation', 'IndexingReward'])
+
+    # Now Grab all subgraphs with "Name","ID","IPFS-Hash", "stakedTokens" and "SignalledTokens"
+    subgraph_data = data['subgraphDeployments']
+    subgraph_list = []
+
+    # iterate through Subgraphs and append all relevant data to a sublist.
+    for subgraph in subgraph_data:
+        subgraph_name = subgraph.get('originalName')
+        if subgraph_name is None:
+            subgraph_name = f"Subgraph {subgraph_data.index(subgraph)}-{getSubgraphIpfsHash(allocation.get('subgraphDeployment').get('id'))}"
+        sublist = []
+        sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
+                   subgraph.get('stakedTokens'),
+                   base58.b58encode(bytearray.fromhex('1220' + subgraph.get('id')[2:])).decode("utf-8")]
+        subgraph_list.append(sublist)
+
+    # create DataFrame from Subgraph
+    df_subgraphs = pd.DataFrame(subgraph_list,
+                                columns=['Address', 'Name', 'signalledTokensTotal', 'stakedTokensTotal', 'id'])
+
+    # get GRT Values with correct Decimals
+    df_subgraphs['signalledTokensTotal'] = df_subgraphs['signalledTokensTotal'].astype(float) / 10 ** 18
+    df_subgraphs['stakedTokensTotal'] = df_subgraphs['stakedTokensTotal'].astype(float) / 10 ** 18
+
+    # Merge Allocation Indexer Data with Subgraph Data by Address for Json-Log (Only keep Subgraphs with active allocation)
+    df_log = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('id')
+
+    # Merge Allocation Indexer Data with Subgraph Data by Subgraph Address
+    df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
+    df.fillna(0, inplace=True)
+
+    # Check if Subgraph List Parameter ist Supplied. Only optimize on selected Subgraphs if Parameter provided
+    if subgraph_list_parameter:
+        with open("../config.json", "r") as jsonfile:
+            list_desired_subgraphs = json.load(jsonfile).get('indexed_subgraphs')
+        df = df[df['id'].isin(list_desired_subgraphs)]
+
+    # Check if Blacklist Parameter is Supplied. Only optimize on non blacklisted Subgraphs if Parameter Provided
+    if blacklist_parameter:
+        with open("../config.json", "r") as jsonfile:
+            blacklisted_subgraphs = json.load(jsonfile).get('blacklist')
+        df = df[-df['id'].isin(blacklisted_subgraphs)]
+
+    # Check for min_signalled_grt_subgraph and min_allocated_grt_subgraph
+    # And remove Subgraphs that don't meet criteria
+    df = df[df['signalledTokensTotal'] > min_signalled_grt_subgraph]
+    df = df[df['stakedTokensTotal'] > min_allocated_grt_subgraph]
+    # remove rows (subgraphs) where signalledTokensTotal and stakedTokensTotal are zero
+    df = df[(df.signalledTokensTotal != 0) & (df.stakedTokensTotal != 0)]
+
+    # Calculate  Indexing Reward with current Allocations
+    # Formula for all indexing rewards
+    # indexing_reward = sun(((allocations / 10 ** 18) / (int(subgraph_total_stake) / 10 ** 18)) * (
+    #            int(subgraph_total_signals) / int(total_tokens_signalled)) * int(total_indexing_rewards))
+
+    indexing_reward_year = 0.03 * total_supply  # Calculate Allocated Indexing Reward Yearly
+    indexing_reward_day = indexing_reward_year / 365  # Daily
+    indexing_reward_week = indexing_reward_year / 52.1429  # Weekly
+    indexing_reward_hour = indexing_reward_year / 8760  # hourly
+
+    # Calculate Indexing Reward per Subgraph hourly / daily / weekly / yearly For Json Log
+    df_log['indexing_reward_hourly'] = (df_log['Allocation'] / df_log['stakedTokensTotal']) * \
+                                       (df_log['signalledTokensTotal'] / total_tokens_signalled) * (
+                                           int(indexing_reward_hour))
+    df_log['indexing_reward_daily'] = (df_log['Allocation'] / df_log['stakedTokensTotal']) * \
+                                      (df_log['signalledTokensTotal'] / total_tokens_signalled) * (
+                                          int(indexing_reward_day))
+    df_log['indexing_reward_weekly'] = (df_log['Allocation'] / df_log['stakedTokensTotal']) * \
+                                       (df_log['signalledTokensTotal'] / total_tokens_signalled) * (
+                                           int(indexing_reward_week))
+    df_log['indexing_reward_yearly'] = (df_log['Allocation'] / df_log['stakedTokensTotal']) * \
+                                       (df_log['signalledTokensTotal'] / total_tokens_signalled) * (
+                                           int(indexing_reward_year))
+
+    # Create Dictionary to convert to Json for Logging of Allocation Data
+    allocation_dict_log = df_log.to_dict(orient='index')
+    optimizer_results[current_datetime]['current_allocations'] = allocation_dict_log
+
+    # Print current rewards and allocations
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+        print(df_log.loc[:, df_log.columns != 'IndexingReward'])
+
+    # Print sum of all Allocation Rewards
+    print("\nTOTAL Indexind Reward Hourly/Daily/Weekly/Yearly")
+    print("Hourly: " + str(df_log['indexing_reward_hourly'].sum()))
+    print("Daily: " + str(df_log['indexing_reward_daily'].sum()))
+    print("Weekly: " + str(df_log['indexing_reward_weekly'].sum()))
+    print("Yearly: " + str(df_log['indexing_reward_yearly'].sum()))
+
+    # Add total Rewards Hourly/Daily/Weekly/Yearly
+    optimizer_results[current_datetime]['current_rewards'] = {}
+    optimizer_results[current_datetime]['current_rewards']['indexing_reward_hourly'] = df_log[
+        'indexing_reward_hourly'].sum()
+    optimizer_results[current_datetime]['current_rewards']['indexing_reward_daily'] = df_log[
+        'indexing_reward_daily'].sum()
+    optimizer_results[current_datetime]['current_rewards']['indexing_reward_weekly'] = df_log[
+        'indexing_reward_weekly'].sum()
+    optimizer_results[current_datetime]['current_rewards']['indexing_reward_yearly'] = df_log[
+        'indexing_reward_yearly'].sum()
+
+    # Start Optimization with Pyomo
+    print("\n")
+    print('Optimize Allocations:')
+    print(70 * "=")
+
+    # Start of Optimization, create nested Dictionary from obtained data
+    n = len(df)  # amount of subgraphs
+    set_J = range(0, n)
+
+    # nested dictionary stored in data, key is SubgraphName,Address,ID
+    data = {(df.reset_index()['Name_y'].values[j], df.reset_index()['Address'].values[j], df['id'].values[j]): {
+        'Allocation': df['Allocation'].values[j],
+        'signalledTokensTotal': df['signalledTokensTotal'].values[j],
+        'stakedTokensTotal': df['stakedTokensTotal'].values[j],
+        'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
+        'indexingRewardYear': indexing_reward_year,
+        'indexingRewardWeek': indexing_reward_week,
+        'indexingRewardDay': indexing_reward_day,
+        'indexingRewardHour': indexing_reward_hour,
+        'id': df['id'].values[j]} for j in set_J}
+
+    """ 
+    Possibility to add random/test Subgraph Data
+    data['test_subgraph'] = {'Allocation': 2322000.0,
+                                             'signalledTokensTotal': 108735.55395641184,
+                                             'stakedTokensTotal': 2772706893.400638,
+                                             'SignalledNetwork': int(total_tokens_signalled) / 10 ** 18,
+                                             'indexingRewardYear': indexing_reward_year,
+                                             'indexingRewardWeek': indexing_reward_week,
+                                             'indexingRewardDay': indexing_reward_day,
+                                             'indexingRewardHour': indexing_reward_hour,
+
+    """
+    # set sliced stake (how many allocations there should be) -> grt per allocation max
+    sliced_stake = (indexer_total_stake - reserve_stake) * max_percentage
+
+    optimizer_results[current_datetime]['optimizer'] = {}
+    optimizer_results[current_datetime]['optimizer']['grt_per_allocation'] = sliced_stake
+    optimizer_results[current_datetime]['optimizer']['allocations_total'] = 1 / max_percentage
+    optimizer_results[current_datetime]['optimizer']['stake_to_allocate'] = indexer_total_stake - reserve_stake
+
+    # Run the Optimization for Hourly/Daily/Weekly/Yearly Indexing Rewards
+    for reward_interval in ['indexingRewardHour', 'indexingRewardDay', 'indexingRewardWeek', 'indexingRewardYear']:
+        print('\nOptimize Allocations for Interval: {} and Max Percentage of Stake per Allocation: {}\n'.format(
+            reward_interval,
+            max_percentage))
+        print(70 * "=")
+
+        # Initialize Pyomo Variables
+        C = data.keys()  # Name of Subgraphs
+        model = pyomo.ConcreteModel()
+
+        S = len(data)  # amount subgraphs
+        model.Subgraphs = range(S)
+
+        # The Variable (Allocations) that should be changed to optimize rewards
+        model.x = pyomo.Var(C, domain=pyomo.NonNegativeReals)
+
+        # formula and model
+        model.rewards = pyomo.Objective(
+            expr=sum((model.x[c] / (data[c]['stakedTokensTotal'] + sliced_stake)) * (
+                    data[c]['signalledTokensTotal'] / data[c]['SignalledNetwork']) * data[c][reward_interval] for c in
+                     C),  # Indexing Rewards Formula (Daily Rewards)
+            sense=pyomo.maximize)  # maximize Indexing Rewards
+
+        # set constraint that allocations shouldn't be higher than total stake- reserce stake
+        model.vol = pyomo.Constraint(expr=indexer_total_stake - reserve_stake >= sum(
+            model.x[c] for c in C))
+        model.bound_x = pyomo.ConstraintList()
+
+        # iterate through subgraphs and set constraints
+        for c in C:
+            # Allocations per Subgraph should be higher than min_allocation
+            model.bound_x.add(model.x[c] >= min_allocation)
+            # Allocation per Subgraph can't be higher than x % of total Allocations
+            model.bound_x.add(model.x[c] <= max_percentage * indexer_total_stake)
+
+        # set solver to glpk -> In Future this could be changeable
+        solver = pyomo.SolverFactory('glpk')
+        solver.solve(model, keepfiles=True)
+
+        # list of optimized allocations, formated as key(id): allocation_amount / parallel_allocations * 10** 18
+        # passed to createAllocationScript
+        FIXED_ALLOCATION = dict()
+
+        # create sub dictionary for interval run (hourly/daily...)
+        optimizer_results[current_datetime]['optimizer'][reward_interval] = {}
+        optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'] = {}
+        # iterate through results and print subgraph/ipfsHash/id and Allocation Amount
+        for c in C:
+            # if allocation higher than 0, print subgraph with allocation amount
+            if model.x[c]() > 0:
+                print('  ', c, ':', model.x[c](), 'allocations')
+                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]] = {}
+                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                    'allocation_amount'] = model.x[c]()
+                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                    'name'] = c[0]
+                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                    'address'] = c[1]
+            FIXED_ALLOCATION[data[c]['id']] = model.x[c]() / parallel_allocations * 10 ** 18
+
+        # print total Allocation GRT and Rewards per Interval
+        print()
+        print('  ', 'Optimizer for Interval = ', reward_interval)
+        print('  ', 'Allocations Total = ', model.vol(), 'GRT')
+        print('  ', 'Reward = GRT', model.rewards() / 10 ** 18)
+
+        optimizer_results[current_datetime]['optimizer'][reward_interval][
+            'calculated_reward'] = model.rewards() / 10 ** 18
+
+        if reward_interval == 'indexingRewardWeek':
+            optimized_reward_weekly = model.rewards() / 10 ** 18
+
+        if reward_interval == 'indexingRewardDay':
+            optimized_reward_daily = model.rewards() / 10 ** 18
+
+    # NOW STARTS THE THRESHOLD CALCULATION
+    # set interval and calculate threshold based on daily, or weekly rewards
+    if threshold_interval == 'weekly':
+        # Threshold Calculation
+
+        starting_value = df_log['indexing_reward_weekly'].sum()  # rewards per week before optimization
+        final_value = optimized_reward_weekly  # after optimization
+    else:
+        starting_value = df_log['indexing_reward_daily'].sum()  # rewards per week before optimization
+        final_value = optimized_reward_daily  # after optimization
+
+    # Amount of Allocations
+    amount_allocations = [allocation for allocation in FIXED_ALLOCATION.values() if allocation > 0]
+    # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
+    gas_costs_eth = (gas_price_gwei * allocation_gas_usage) / 1000000000
+    allocation_costs_eth = len(amount_allocations) * (
+                gas_costs_eth * parallel_allocations * 2)  # multiply by 2 for close/new-allocation
+    allocation_costs_fiat = eth_usd * allocation_costs_eth
+    allocation_costs_grt = allocation_costs_eth * (1 / grt_eth)
+
+    optimizer_results[current_datetime]['optimizer']['gas_costs_allocating_eth'] = gas_costs_eth
+    optimizer_results[current_datetime]['optimizer'][
+        'gas_costs_parallel_allocation_new_close_eth'] = allocation_costs_eth
+    optimizer_results[current_datetime]['optimizer'][
+        'gas_costs_parallel_allocation_new_close_usd'] = allocation_costs_fiat
+    optimizer_results[current_datetime]['optimizer'][
+        'gas_costs_parallel_allocation_new_close_grt'] = allocation_costs_grt
+
+    # calculate difference in rewards currently vs optimized
+    final_value = final_value - allocation_costs_grt
+    diff_rewards = percentageIncrease(starting_value, final_value)  # Percentage increase in Rewards
+    diff_rewards_fiat = round(((final_value - starting_value) * grt_usd), 2)  # Fiat increase in Rewards
+    diff_rewards_grt = round((final_value - starting_value), 2)
+
+    optimizer_results[current_datetime]['optimizer'][
+        'increase_rewards_percentage'] = diff_rewards
+    optimizer_results[current_datetime]['optimizer'][
+        'increase_rewards_fiat'] = diff_rewards_fiat
+    optimizer_results[current_datetime]['optimizer'][
+        'increase_rewards_grt'] = diff_rewards_grt
+
+    # is the threshold reached?
+    if diff_rewards >= threshold:
+        print(
+            '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
+             Allocation script CREATED IN ./script.txt created\n' % (
+                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                allocation_costs_fiat, starting_value, final_value))
+        optimizer_results[current_datetime]['optimizer'][
+            'threshold_reached'] = True
+        createAllocationScript(indexer_id=indexer_id, fixed_allocations=FIXED_ALLOCATION,
+                               blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations)
+    # if not reached
+    if diff_rewards < threshold:
+        print(
+            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                allocation_costs_fiat, starting_value, final_value))
+        optimizer_results[current_datetime]['optimizer'][
+            'threshold_reached'] = False
 
     # write results to json:
-    optimizer_results_json = open("../data/optimizer_log.json")
-    # magic happens here to make it pretty-printed
-    optimizer_results_json.write(json.dumps(optimizer_results, indent=4, sort_keys=True))
-    optimizer_results_json.close()
+    a = []
+    if not os.path.isfile("../data/optimizer_log.json"):
+        a.append(optimizer_results)
+        with open("../data/optimizer_log.json", mode='w') as f:
+            f.write(json.dumps(a, indent=2))
+    else:
+        with open("../data/optimizer_log.json") as feedsjson:
+            feeds = json.load(feedsjson)
+
+        feeds.append(optimizer_results)
+        with open("../data/optimizer_log.json", mode='w') as f:
+            f.write(json.dumps(feeds, indent=2))
+
+
+if __name__ == '__main__':
+    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=False)

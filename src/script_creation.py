@@ -25,6 +25,8 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     if blacklist_parameter:
         with open("../config.json", "r") as jsonfile:
             INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
+    else:
+        INVALID_SUBGRAPHS = False
     parallel_allocations = parallel_allocations
 
     # get the amount of GRT that should be allocated from the optimizer
@@ -66,10 +68,11 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
 
     for subgraph_deployment in subgraph_data:
         subgraph = base58.b58encode(bytearray.fromhex('1220' + subgraph_deployment['id'][2:])).decode("utf-8")
-        if subgraph in INVALID_SUBGRAPHS:
-            #print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
-            invalid_subgraphs.add(subgraph)
-            pass
+        if INVALID_SUBGRAPHS:
+            if subgraph in INVALID_SUBGRAPHS:
+                #print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
+                invalid_subgraphs.add(subgraph)
+                pass
         else:
             if subgraph in fixed_allocations.keys():
                 print(
@@ -134,3 +137,4 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     script_never.write("graph indexer rules get all --merged && \\\n")
     script_never.write("graph indexer cost get all")
     script_never.close()
+
