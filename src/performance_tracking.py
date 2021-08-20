@@ -419,7 +419,7 @@ def visualizeRewardActiveAllocationAllSubgraphsCombined():
 
 
 # calculateRewardsActiveAllocation("0x004eba9b12ece7f88edcdc4cabf471709f218c7c")
-# calculateRewardsAllActiveAllocations(ANYBLOCK_ANALYTICS_ID, initial_run=False)
+calculateRewardsAllActiveAllocations(ANYBLOCK_ANALYTICS_ID, initial_run=False)
 # visualizeRewardActiveAllocationSpecificSubgraph("QmPXtp2UdoDsoryngUEMTsy1nPbVMuVrgozCMwyZjXUS8N")
 #visualizeRewardActiveAllocationAllSubgraphsDetailed()
 visualizeRewardActiveAllocationAllSubgraphsCombined()

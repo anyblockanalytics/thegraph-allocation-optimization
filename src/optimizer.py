@@ -155,7 +155,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     for subgraph in subgraph_data:
         subgraph_name = subgraph.get('originalName')
         if subgraph_name is None:
-            subgraph_name = f"Subgraph {subgraph_data.index(subgraph)}-{getSubgraphIpfsHash(allocation.get('subgraphDeployment').get('id'))}"
+            subgraph_name = f"Subgraph {subgraph_data.index(subgraph)}-{getSubgraphIpfsHash(subgraph.get('id'))}"
         sublist = []
         sublist = [subgraph.get('id'), subgraph_name, subgraph.get('signalledTokens'),
                    subgraph.get('stakedTokens'),
@@ -338,7 +338,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         for c in C:
             # if allocation higher than 0, print subgraph with allocation amount
             if model.x[c]() > 0:
-                print('  ', c, ':', model.x[c](), 'allocations')
+                print('  ', c, ':', model.x[c](), 'allocations, Signal/Allocation Ratio: ',
+                      str(data[c]['signalledTokensTotal'] / (data[c]['stakedTokensTotal'] + sliced_stake)))
                 optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]] = {}
                 optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
                     'allocation_amount'] = model.x[c]()
@@ -346,6 +347,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                     'name'] = c[0]
                 optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
                     'address'] = c[1]
+                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                    'signal_stake_ratio'] = data[c]['signalledTokensTotal'] / (data[c]['stakedTokensTotal'] + sliced_stake)
             FIXED_ALLOCATION[data[c]['id']] = model.x[c]() / parallel_allocations * 10 ** 18
 
         # print total Allocation GRT and Rewards per Interval
@@ -379,7 +382,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # costs for transactions  = (close_allocation and new_allocation) * parallel_allocations
     gas_costs_eth = (gas_price_gwei * allocation_gas_usage) / 1000000000
     allocation_costs_eth = len(amount_allocations) * (
-                gas_costs_eth * parallel_allocations * 2)  # multiply by 2 for close/new-allocation
+            gas_costs_eth * parallel_allocations * 2)  # multiply by 2 for close/new-allocation
     allocation_costs_fiat = eth_usd * allocation_costs_eth
     allocation_costs_grt = allocation_costs_eth * (1 / grt_eth)
 
@@ -442,4 +445,4 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
 
 if __name__ == '__main__':
-    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=False)
+    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="daily", reserve_stake=500)

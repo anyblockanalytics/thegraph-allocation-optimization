@@ -167,6 +167,8 @@ def percentageIncrease(start_value, final_value):
         int : percentage increase rounded to two decimals
 
     """
+    if start_value == 0:
+        start_value = 1
     increase = ((final_value - start_value) / start_value) * 100
     return round(increase, 2)
 

@@ -73,6 +73,12 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
                 #print(f"    Skipping invalid Subgraph: {subgraph_deployment['originalName']} ({subgraph})")
                 invalid_subgraphs.add(subgraph)
                 pass
+            if subgraph in fixed_allocations.keys():
+                print(
+                    f"{subgraph_deployment['originalName']} ({subgraph}) Total Stake: {int(subgraph_deployment['stakedTokens']) / 10 ** 18:,.2f} Total Signal: {int(subgraph_deployment['signalledTokens']) / 10 ** 18:,.2f} , Ratio: {(int(subgraph_deployment['stakedTokens']) / 10 ** 18) / ((int(subgraph_deployment['signalledTokens']) + 1) / 10 ** 18)}")
+            subgraphs.add(subgraph)
+            total_signal += int(subgraph_deployment['signalledTokens'])
+            total_stake += int(subgraph_deployment['stakedTokens'])
         else:
             if subgraph in fixed_allocations.keys():
                 print(
