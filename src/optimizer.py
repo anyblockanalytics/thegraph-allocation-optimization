@@ -3,6 +3,7 @@ from subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
 from queries import getFiatPrice, getDataAllocationOptimizer
 from helpers import getSubgraphIpfsHash, ANYBLOCK_ANALYTICS_ID, percentageIncrease
 from script_creation import createAllocationScript
+from alerting import alert_to_slack
 import os
 from datetime import datetime
 import json
@@ -50,6 +51,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['threshold_interval'] = threshold_interval
     optimizer_results[current_datetime]['parameters']['reserve_stake'] = reserve_stake
     optimizer_results[current_datetime]['parameters']['min_allocation'] = min_allocation
+    optimizer_results[current_datetime]['parameters']['min_signalled_grt_subgraph'] = min_signalled_grt_subgraph
+    optimizer_results[current_datetime]['parameters']['min_allocated_grt_subgraph'] = min_allocated_grt_subgraph
 
     print("Script Execution on: ", current_datetime)
 
@@ -409,6 +412,9 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
     # is the threshold reached?
     if diff_rewards >= threshold:
+        # alerting to slack
+        alert_to_slack('threshold_reached', threshold, threshold_interval, starting_value, final_value,
+                       diff_rewards_grt)
         print(
             '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
              subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
@@ -421,6 +427,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                                blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations)
     # if not reached
     if diff_rewards < threshold:
+        # alerting
+        alert_to_slack('threshold_not_reached', threshold, threshold_interval, starting_value, final_value,
+                       diff_rewards_grt)
+
         print(
             '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
              subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
@@ -445,4 +455,4 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
 
 if __name__ == '__main__':
-    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="daily", reserve_stake=500)
+    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="weekly", reserve_stake=500, threshold = 15)
