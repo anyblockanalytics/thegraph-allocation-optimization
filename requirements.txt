@@ -46,3 +46,4 @@ wheel==0.36.2
 redis
 httpx
 plotly-express
+streamlit

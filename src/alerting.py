@@ -2,12 +2,13 @@ import requests
 from dotenv import load_dotenv
 import os
 
+# Script for Alerting in Slack
+# Load Webhook URL and Channel from .env file
 load_dotenv()
 SLACK_WEBHOOK_URL = os.getenv('SLACK_WEBHOOK_URL')
 SLACK_CHANNEL = os.getenv('SLACK_CHANNEL')
 
-
-
+# ä Alert Map
 alert_map = {
     "emoji": {
         "threshold_reached": ":large_green_circle:",
@@ -28,9 +29,7 @@ alert_map = {
 }
 
 
-def alert_to_slack(status,threshold, threshold_interval,current_rewards, optimization_rewards,difference):
-
-
+def alert_to_slack(status, threshold, threshold_interval, current_rewards, optimization_rewards, difference):
     data = {
         "text": "The Graph Optimization Alert Manager",
         "username": "Notifications",
@@ -40,12 +39,12 @@ def alert_to_slack(status,threshold, threshold_interval,current_rewards, optimiz
                 "text": "{emoji} [*{state}*] ({threshold}%) Threshold Interval: {threshold_interval}\n {message}".format(
                     emoji=alert_map["emoji"][status],
                     state=alert_map["text"][status],
-                    threshold = threshold,
-                    threshold_interval = threshold_interval,
+                    threshold=threshold,
+                    threshold_interval=threshold_interval,
                     message=alert_map["message"][
                                 status] + '\nCurrent GRT Rewards: ' +
-                                str(current_rewards) + '\nGRT Rewards after Optimization: ' + str(optimization_rewards) +
-                                '\n Difference in Rewards: ' + str(difference) + " GRT"
+                            str(current_rewards) + '\nGRT Rewards after Optimization: ' + str(optimization_rewards) +
+                            '\n Difference in Rewards: ' + str(difference) + " GRT"
                 ),
                 "color": alert_map["color"][status],
                 "attachment_type": "default",
@@ -54,4 +53,3 @@ def alert_to_slack(status,threshold, threshold_interval,current_rewards, optimiz
     }
     r = requests.post(SLACK_WEBHOOK_URL, json=data)
     return r.status_code
-
