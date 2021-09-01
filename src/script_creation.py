@@ -23,7 +23,7 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
 
     # get blacklisted subgraphs if wanted
     if blacklist_parameter:
-        with open("../config.json", "r") as jsonfile:
+        with open("./config.json", "r") as jsonfile:
             INVALID_SUBGRAPHS = json.load(jsonfile).get('blacklist')
     else:
         INVALID_SUBGRAPHS = False
@@ -106,7 +106,7 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     print(f"Dynamic Allocation: {dynamic_allocation / 10 ** 18:,.2f}")
     print('=' * 40)
     print()
-    script_file = open("../script.txt", "w+")
+    script_file = open("./script.txt", "w+")
     # print(
     #    "graph indexer rules set global allocationAmount 10.0 parallelAllocations 2 minStake 500.0 decisionBasis rules && \\")
     for subgraph in subgraphs:
@@ -133,7 +133,7 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     script_file.close()
 
     # Disable rule -> this is required to "reset" allocations
-    script_never = open("../script_never.txt", "w+")
+    script_never = open("./script_never.txt", "w+")
 
     for subgraph in subgraphs:
         if subgraph not in fixed_allocations.keys():
@@ -143,4 +143,5 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     script_never.write("graph indexer rules get all --merged && \\\n")
     script_never.write("graph indexer cost get all")
     script_never.close()
+    return
 

@@ -10,6 +10,8 @@ import datetime as dt
 from datetime import datetime
 import argparse
 import base58
+from itertools import zip_longest
+
 
 load_dotenv()
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
@@ -124,7 +126,7 @@ def set_routes_to_cache(key: str, value: str) -> bool:
     return state
 
 
-def getLastKeyFromDate(subgraph_ipfs_hash, date):
+def getLastKeyFromDate(subgraph_ipfs_hash, date, allocation_id):
     """ Helper Function: Iterates Backwards from given Datetime (Year-Month-Day-Hour) until it finds the latest
         Key Datetime,and then returns the key
 
@@ -142,9 +144,16 @@ def getLastKeyFromDate(subgraph_ipfs_hash, date):
     # Iterate in hourly intervals
     delta = dt.timedelta(hours=1)
 
+    # if no key is found, return none
+    temp_key_list = list()
+    for key in redis.scan_iter("*" + "-" + subgraph_ipfs_hash + "-" + allocation_id):
+        temp_key_list.append(key)
+    if len(temp_key_list) < 1:
+        return None
+
     while keys_not_found:
         # Iterate through all Keys where the key includes the previously defined date_now string in key
-        for key in redis.scan_iter(str(date_now.strftime("%Y-%m-%d")) + "-" + subgraph_ipfs_hash + "*"):
+        for key in redis.scan_iter(str(date_now.strftime("%Y-%m-%d")) + "-" + subgraph_ipfs_hash + "-" + allocation_id):
             # if key is found, set boolean to False, break loop and return the latest key
             print(key)
             date_start = str(date_now.strftime("%Y-%m-%d"))
@@ -242,14 +251,29 @@ def initializeParser():
     my_parser.add_argument('--no-blacklist', dest='blacklist', action='store_false')
     my_parser.set_defaults(blacklist=False)
 
+    my_parser.add_argument('--slack_alerting', dest='slack_alerting', action='store_true')
+    my_parser.add_argument('--no-slack_alerting', dest='slack_alerting', action='store_false')
+    my_parser.set_defaults(slack_alerting=False)
+
     my_parser.add_argument('--threshold_interval',
                            metavar='threshold_interval',
                            type=str,
                            help='Set the Interval for Optimization and Threshold Calculation (Either "daily", or "weekly")',
                            default="daily")
+    my_parser.add_argument('--app',
+                           metavar='app',
+                           type=str,
+                           help='Set the app execution (Either "script", or "web")',
+                           default="script")
     return my_parser
 
 
 def getSubgraphIpfsHash(subgraph_id):
     subgraph_ipfs_hash = base58.b58encode(bytearray.fromhex('1220' + subgraph_id[2:])).decode("utf-8")
     return subgraph_ipfs_hash
+
+def grouper(iterable, n, fillvalue=None):
+    "Collect data into fixed-length chunks or blocks"
+    # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx"
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)

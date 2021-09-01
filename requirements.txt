@@ -47,3 +47,4 @@ redis
 httpx
 plotly-express
 streamlit
+millify

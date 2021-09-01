@@ -2,8 +2,9 @@ import json
 from dotenv import load_dotenv
 import os
 import requests
-from helpers import initialize_rpc
+from src.helpers import initialize_rpc
 from pycoingecko import CoinGeckoAPI
+
 
 def getFiatPrice(pairs):
     """Get's the Currency Pairs from Coingecko.
@@ -32,6 +33,7 @@ def getFiatPrice(pairs):
         grt_eth = grt_eth_resp.get('the-graph').get('eth')
         return grt_eth
 
+
 def getGasPrice(speed='fast'):
     """Get's the Gas Price for the latest 200 Blocks in GWEI.Can Choose
        From Transaction Speed. Divided in Percentiles (30/60/90/100).
@@ -48,6 +50,7 @@ def getGasPrice(speed='fast'):
                                   headers={'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}).json()
     gasprice = gas_price_resp.get(speed)
     return gasprice
+
 
 def getCurrentBlock():
     """Get's the current block.
@@ -497,6 +500,58 @@ def checkSubgraphStatus(subgraph_id, variables=None, ):
 
     return subgraph_health
 
+
+def getSpecificSubgraphData(subgraph_ipfs_hash, variables=None, ):
+    """Grabs Subgraph Detail Information for Streamlit Dashboard
+
+    Returns
+    -------
+
+    Dict with subgraph, sync status, health, and possible fatalErrors
+
+
+    """
+    load_dotenv()
+
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
+    query = """
+    query subgraphSpecificData($input:String!){
+    subgraphDeployments(where: {ipfsHash: $input}) {
+        stakedTokens
+        signalledTokens
+        signalAmount
+        schemaIpfsHash
+        originalName
+        ipfsHash
+        indexingRewardAmount
+        id
+        createdAt
+        versions {
+          subgraph {
+            codeRepository
+            description
+            displayName
+            id
+            image
+            website
+          }
+        }
+      }
+    }
+    """
+    variables = {'input': subgraph_ipfs_hash}
+
+    request_json = {'query': query}
+    if subgraph_ipfs_hash:
+        request_json['variables'] = variables
+    resp = requests.post(API_GATEWAY, json=request_json)
+    data = json.loads(resp.text)
+    subgraph_data = data['data']['subgraphDeployments']
+
+    return subgraph_data
+
+
 def getDataAllocationOptimizer(indexer_id, variables=None, ):
     """
     Grabs all relevant Data from the Mainnet Meta Subgraph which are used for the
@@ -562,4 +617,3 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
     data = data['data']
 
     return data
-

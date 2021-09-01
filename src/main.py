@@ -1,6 +1,6 @@
-from helpers import initializeParser
-from optimizer import optimizeAllocations
-from helpers import ANYBLOCK_ANALYTICS_ID
+from src.helpers import initializeParser
+from src.optimizer import optimizeAllocations
+
 if __name__ == '__main__':
     """
     main.py script to execute for command line interface. Runs the optimizeAllocations function
@@ -13,4 +13,5 @@ if __name__ == '__main__':
                         threshold=args.threshold, subgraph_list_parameter=args.subgraph_list,
                         threshold_interval=args.threshold_interval, reserve_stake=args.reserve_stake,
                         min_allocation=args.min_allocation, min_allocated_grt_subgraph=args.min_allocated_grt_subgraph,
-                        min_signalled_grt_subgraph=args.min_signalled_grt_subgraph)
+                        min_signalled_grt_subgraph=args.min_signalled_grt_subgraph, app=args.app,
+                        slack_alerting=args.slack_alerting)

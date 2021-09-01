@@ -1,22 +1,22 @@
-from queries import getGasPrice
-from subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
-from queries import getFiatPrice, getDataAllocationOptimizer
-from helpers import getSubgraphIpfsHash, ANYBLOCK_ANALYTICS_ID, percentageIncrease
-from script_creation import createAllocationScript
-from alerting import alert_to_slack
+
+from src.subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
+from src.queries import getFiatPrice, getDataAllocationOptimizer,getGasPrice
+from src.helpers import getSubgraphIpfsHash, ANYBLOCK_ANALYTICS_ID, percentageIncrease
+from src.script_creation import createAllocationScript
+from src.alerting import alert_to_slack
 import os
 from datetime import datetime
 import json
 import pandas as pd
 import base58
 import pyomo.environ as pyomo
-
+import streamlit as st
 
 # createAllocationScript(indexer_id, fixed_allocations=, blacklist_parameter=, parallel_allocations=)
 
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
                         subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
-                        min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100):
+                        min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100, app="script",slack_alerting = False):
     """ Runs the main optimization process.
 
     parameters
@@ -53,13 +53,18 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['min_allocation'] = min_allocation
     optimizer_results[current_datetime]['parameters']['min_signalled_grt_subgraph'] = min_signalled_grt_subgraph
     optimizer_results[current_datetime]['parameters']['min_allocated_grt_subgraph'] = min_allocated_grt_subgraph
+    optimizer_results[current_datetime]['parameters']['app'] = app
+    optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
 
     print("Script Execution on: ", current_datetime)
 
     # check for metaSubgraphHealth
     if not checkMetaSubgraphHealth():
         print('ATTENTION: MAINNET SUBGRAPH IS DOWN, INDEXER AGENT WONT WORK CORRECTLY')
-        input("Press Enter to continue...")
+        if app == 'web':
+            st.warning("Attention: Mainnet Subgraph is down! Indexer Agent won't work correctly")
+        else:
+            input("Press Enter to continue...")
 
     # update blacklist / create blacklist if desired
     if blacklist_parameter:
@@ -231,12 +236,14 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
         print(df_log.loc[:, df_log.columns != 'IndexingReward'])
 
+
     # Print sum of all Allocation Rewards
     print("\nTOTAL Indexind Reward Hourly/Daily/Weekly/Yearly")
     print("Hourly: " + str(df_log['indexing_reward_hourly'].sum()))
     print("Daily: " + str(df_log['indexing_reward_daily'].sum()))
     print("Weekly: " + str(df_log['indexing_reward_weekly'].sum()))
     print("Yearly: " + str(df_log['indexing_reward_yearly'].sum()))
+
 
     # Add total Rewards Hourly/Daily/Weekly/Yearly
     optimizer_results[current_datetime]['current_rewards'] = {}
@@ -290,6 +297,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['optimizer']['allocations_total'] = 1 / max_percentage
     optimizer_results[current_datetime]['optimizer']['stake_to_allocate'] = indexer_total_stake - reserve_stake
 
+    # create  dictionary for optimizer run
+    optimizer_results[current_datetime]['optimizer']['optimized_allocations'] = {}
     # Run the Optimization for Hourly/Daily/Weekly/Yearly Indexing Rewards
     for reward_interval in ['indexingRewardHour', 'indexingRewardDay', 'indexingRewardWeek', 'indexingRewardYear']:
         print('\nOptimize Allocations for Interval: {} and Max Percentage of Stake per Allocation: {}\n'.format(
@@ -334,34 +343,32 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         # passed to createAllocationScript
         FIXED_ALLOCATION = dict()
 
-        # create sub dictionary for interval run (hourly/daily...)
-        optimizer_results[current_datetime]['optimizer'][reward_interval] = {}
-        optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'] = {}
+
         # iterate through results and print subgraph/ipfsHash/id and Allocation Amount
         for c in C:
             # if allocation higher than 0, print subgraph with allocation amount
             if model.x[c]() > 0:
                 print('  ', c, ':', model.x[c](), 'allocations, Signal/Allocation Ratio: ',
                       str(data[c]['signalledTokensTotal'] / (data[c]['stakedTokensTotal'] + sliced_stake)))
-                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]] = {}
-                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]] = {}
+                optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]][
                     'allocation_amount'] = model.x[c]()
-                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]][
                     'name'] = c[0]
-                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]][
                     'address'] = c[1]
-                optimizer_results[current_datetime]['optimizer'][reward_interval]['optimized_allocations'][c[-1]][
+                optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]][
                     'signal_stake_ratio'] = data[c]['signalledTokensTotal'] / (data[c]['stakedTokensTotal'] + sliced_stake)
-            FIXED_ALLOCATION[data[c]['id']] = model.x[c]() / parallel_allocations * 10 ** 18
 
+            FIXED_ALLOCATION[data[c]['id']] = model.x[c]() / parallel_allocations * 10 ** 18
+        optimizer_results[current_datetime]['optimizer']['optimized_allocations'][reward_interval] = model.rewards() / 10 ** 18
         # print total Allocation GRT and Rewards per Interval
         print()
         print('  ', 'Optimizer for Interval = ', reward_interval)
         print('  ', 'Allocations Total = ', model.vol(), 'GRT')
         print('  ', 'Reward = GRT', model.rewards() / 10 ** 18)
 
-        optimizer_results[current_datetime]['optimizer'][reward_interval][
-            'calculated_reward'] = model.rewards() / 10 ** 18
+
 
         if reward_interval == 'indexingRewardWeek':
             optimized_reward_weekly = model.rewards() / 10 ** 18
@@ -413,8 +420,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # is the threshold reached?
     if diff_rewards >= threshold:
         # alerting to slack
-        alert_to_slack('threshold_reached', threshold, threshold_interval, starting_value, final_value,
-                       diff_rewards_grt)
+        if slack_alerting:
+            alert_to_slack('threshold_reached', threshold, threshold_interval, starting_value, final_value,
+                           diff_rewards_grt)
+
         print(
             '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
              subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
@@ -427,9 +436,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                                blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations)
     # if not reached
     if diff_rewards < threshold:
+        if slack_alerting:
         # alerting
-        alert_to_slack('threshold_not_reached', threshold, threshold_interval, starting_value, final_value,
-                       diff_rewards_grt)
+            alert_to_slack('threshold_not_reached', threshold, threshold_interval, starting_value, final_value,
+                           diff_rewards_grt)
 
         print(
             '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
@@ -441,18 +451,19 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
     # write results to json:
     a = []
-    if not os.path.isfile("../data/optimizer_log.json"):
+    if not os.path.isfile("./data/optimizer_log.json"):
         a.append(optimizer_results)
-        with open("../data/optimizer_log.json", mode='w') as f:
+        with open("./data/optimizer_log.json", mode='w') as f:
             f.write(json.dumps(a, indent=2))
     else:
-        with open("../data/optimizer_log.json") as feedsjson:
+        with open("./data/optimizer_log.json") as feedsjson:
             feeds = json.load(feedsjson)
 
         feeds.append(optimizer_results)
-        with open("../data/optimizer_log.json", mode='w') as f:
+        with open("./data/optimizer_log.json", mode='w') as f:
             f.write(json.dumps(feeds, indent=2))
 
+    return optimizer_results
 
 if __name__ == '__main__':
     optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="weekly", reserve_stake=500, threshold = 15)

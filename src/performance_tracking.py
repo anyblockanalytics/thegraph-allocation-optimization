@@ -2,13 +2,15 @@ from datetime import datetime
 from eth_utils import to_checksum_address
 import datetime as dt
 import json
-from src.queries import getAllAllocations, getActiveAllocations, getClosedAllocations, getAllocationDataById, getCurrentBlock
+from src.queries import getAllAllocations, getActiveAllocations, getClosedAllocations, getAllocationDataById, \
+    getCurrentBlock
 from src.helpers import initialize_rpc, initializeRewardManagerContract, ANYBLOCK_ANALYTICS_ID, conntectRedis, \
     get_routes_from_cache, set_routes_to_cache, getLastKeyFromDate
 import pandas as pd
 import plotly.express as px
 
-def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False ):
+
+def calculateRewardsActiveAllocation(allocation_id, interval=1, initial_run=False):
     """Calculates the pending rewards in given interval for active allocation and dumps results with more metrics into
     the redis cache.
 
@@ -81,7 +83,8 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False
 
     if initial_run:
 
-        for block in range(current_block if not closed_allocation else allocation_closing_block, allocation_creation_block - 1, -(24 * 270)):
+        for block in range(current_block if not closed_allocation else allocation_closing_block,
+                           allocation_creation_block - 1, -(24 * 270)):
             datetime_block = datetime.utcfromtimestamp(web3.eth.get_block(block).get('timestamp')).strftime(
                 '%Y-%m-%d')
 
@@ -99,10 +102,9 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False
             else:
                 try:
                     accumulated_reward = reward_manager_contract.functions.getRewards(allocation_id).call(
-                    block_identifier=block) / 10 ** 18
+                        block_identifier=block) / 10 ** 18
                 except:
                     accumulated_reward = 0
-
 
                 # calculate the difference between the accumulated reward and the reward from last interval and calc
                 # the hourly rewards
@@ -155,18 +157,25 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False
             last_date_key = datetime.utcfromtimestamp(web3.eth.get_block(allocation_closing_block).get('timestamp'))
         else:
             last_date_key = datetime.now()
-        latest_key = getLastKeyFromDate(subgraph_ipfs_hash= subgraph_ipfs_hash, date=last_date_key)
-        latest_data = json.loads(get_routes_from_cache(key=latest_key))
+        # get latest key, if non is found return None
+        latest_key = getLastKeyFromDate(subgraph_ipfs_hash=subgraph_ipfs_hash, date=last_date_key,
+                                        allocation_id=allocation_id)
 
-        # iterate through latest key for latest date and get the block number
-        for key_2, value in latest_data[(latest_key.decode('ascii'))].items():
-            if "0x" in key_2:
-                latest_block_with_data = value['block_height']
-                break
+        if latest_key:
+            latest_data = json.loads(get_routes_from_cache(key=latest_key))
+            # iterate through latest key for latest date and get the block number
+            for key_2, value in latest_data[(latest_key.decode('ascii'))].items():
+                if "0x" in key_2:
+                    latest_block_with_data = value['block_height']
+                    break
+        # if no key is found, set latest_block_with_data to allocation_creation_block
+        if not latest_key:
+            latest_block_with_data = allocation_creation_block
 
-        for block in range(current_block if not closed_allocation else allocation_closing_block, latest_block_with_data - 1, -(24 * 270)):
-            if closed_allocation:
-                break
+        for block in range(current_block if not closed_allocation else allocation_closing_block,latest_block_with_data - 1, -(24 * 270)):
+            if (closed_allocation):
+                    if latest_block_with_data == allocation_closing_block:
+                        break
             datetime_block = datetime.utcfromtimestamp(web3.eth.get_block(block).get('timestamp')).strftime('%Y-%m-%d')
 
             # First it looks for the data in redis cache
@@ -183,11 +192,9 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False
             else:
                 try:
                     accumulated_reward = reward_manager_contract.functions.getRewards(allocation_id).call(
-                    block_identifier=block) / 10 ** 18
+                        block_identifier=block) / 10 ** 18
                 except web3.exceptions.ContractLogicError:
                     accumulated_reward = 0
-
-
 
                 # calculate the difference between the accumulated reward and the reward from last interval and calc
                 # the hourly rewards
@@ -216,12 +223,14 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1,initial_run=False
                 data[allocation_redis_key_hour][allocation_id]['block_height'] = block
                 data[allocation_redis_key_hour][allocation_id]['allocated_tokens'] = allocated_tokens
                 data[allocation_redis_key_hour][allocation_id]['allocation_created_timestamp'] = allocation_created_at
-                data[allocation_redis_key_hour][allocation_id]['allocation_created_epoch'] = allocation['createdAtEpoch']
+                data[allocation_redis_key_hour][allocation_id]['allocation_created_epoch'] = allocation[
+                    'createdAtEpoch']
                 data[allocation_redis_key_hour][allocation_id]['allocation_status'] = "Closed"
                 data[allocation_redis_key_hour][allocation_id]['timestamp'] = web3.eth.get_block(block).get('timestamp')
                 data[allocation_redis_key_hour][allocation_id]['accumulated_reward'] = accumulated_reward
                 data[allocation_redis_key_hour][allocation_id]['reward_rate_hour'] = reward_rate_hour
-                data[allocation_redis_key_hour][allocation_id]['reward_rate_hour_per_token'] = reward_rate_hour_per_token
+                data[allocation_redis_key_hour][allocation_id][
+                    'reward_rate_hour_per_token'] = reward_rate_hour_per_token
 
                 data["cache"] = False
                 data = json.dumps(data)
@@ -246,13 +255,13 @@ def calculateRewardsAllActiveAllocations(indexer_id, interval=1, initial_run=Fal
     active_allocations = active_allocations['allocations']
 
     # grab all allocations
-    all_allocations = getAllAllocations(indexer_id = indexer_id)
+    all_allocations = getAllAllocations(indexer_id=indexer_id)
     all_allocations = all_allocations['totalAllocations']
     allocation_id_temp_list = list()
 
     # append all active allocations to a temp list with allocation ID
     for allocation in active_allocations:
-        #calculateRewardsActiveAllocation(allocation_id=allocation['id'], interval=1)
+        # calculateRewardsActiveAllocation(allocation_id=allocation['id'], interval=1)
         allocation_id_temp_list.append(to_checksum_address(allocation['id']))
 
     # iterate through all allocations and calculate rewards
@@ -262,7 +271,7 @@ def calculateRewardsAllActiveAllocations(indexer_id, interval=1, initial_run=Fal
     # iterate through all keys and check if allocation id is in key, if yes it is an active allocation
     # if it is an active allocation, set status of allocation_status to "Active"
     for key in redis.scan_iter():
-        if key.decode('ascii').split("-")[-1]  in allocation_id_temp_list:
+        if key.decode('ascii').split("-")[-1] in allocation_id_temp_list:
             data = get_routes_from_cache(key=key)
             data = json.loads(data)
             for key_2, value in data[(key.decode('ascii'))].items():
@@ -270,7 +279,6 @@ def calculateRewardsAllActiveAllocations(indexer_id, interval=1, initial_run=Fal
                     data[(key.decode('ascii'))][key_2]['allocation_status'] = "Active"
             data = json.dumps(data)
             state = set_routes_to_cache(key=key, value=data)
-
 
 
 def getRewardsActiveAllocationsSpecificSubgraph(subgraph_hash="QmPXtp2UdoDsoryngUEMTsy1nPbVMuVrgozCMwyZjXUS8N"):
@@ -388,7 +396,7 @@ def visualizeRewardActiveAllocationAllSubgraphsDetailed():
                   hover_name="subgraph_hash")
 
     fig.show()
-    fig = px.line(df, x='datetime', y=[ "accumulated_reward"],
+    fig = px.line(df, x='datetime', y=["accumulated_reward"],
                   color="subgraph_name", title='Rewards per Hour and Accumulated Rewards for Subgraphs',
                   hover_name="subgraph_hash")
 
@@ -419,7 +427,7 @@ def visualizeRewardActiveAllocationAllSubgraphsCombined():
 
 
 # calculateRewardsActiveAllocation("0x004eba9b12ece7f88edcdc4cabf471709f218c7c")
-calculateRewardsAllActiveAllocations(ANYBLOCK_ANALYTICS_ID, initial_run=False)
-# visualizeRewardActiveAllocationSpecificSubgraph("QmPXtp2UdoDsoryngUEMTsy1nPbVMuVrgozCMwyZjXUS8N")
-#visualizeRewardActiveAllocationAllSubgraphsDetailed()
-visualizeRewardActiveAllocationAllSubgraphsCombined()
+# calculateRewardsAllActiveAllocations(ANYBLOCK_ANALYTICS_ID, initial_run=False)
+visualizeRewardActiveAllocationSpecificSubgraph("QmT2McMyDQe5eVQJDESAXGygGU3yguwdREaLvq7ahGZiQ1")
+# visualizeRewardActiveAllocationAllSubgraphsDetailed()
+# visualizeRewardActiveAllocationAllSubgraphsCombined()

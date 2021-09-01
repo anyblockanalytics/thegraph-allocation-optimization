@@ -1,6 +1,6 @@
 import json
-from helpers import connectIndexerDatabase
-from queries import getSubgraphsFromDeveloper, getInactiveSubgraphs, getAllSubgraphDeployments, checkSubgraphStatus
+from src.helpers import connectIndexerDatabase
+from src.queries import getSubgraphsFromDeveloper, getInactiveSubgraphs, getAllSubgraphDeployments, checkSubgraphStatus
 
 
 def getIndexedSubgraphsFromDatabase():
@@ -69,7 +69,7 @@ def fillBlackListFromBlacklistedDevs():
         (Blacklisted Developer: Blacklisted Subgraphs)
     """
     # open config.json and get blacklisted array
-    with open("../config.json", "r") as jsonfile:
+    with open("./config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # Get List of Blacklisted Developers from config.json
@@ -104,7 +104,7 @@ def fillBlackListFromInactiveSubgraphs():
         (Blacklisted Subgraphs)
     """
     # open config.json and get blacklisted array
-    with open("../config.json", "r") as jsonfile:
+    with open("./config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # gets the List of Blacklisted Subgraphs from config.json
@@ -122,7 +122,7 @@ def fillBlackListFromInactiveSubgraphs():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("../config.json", "w") as f:
+    with open("./config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
@@ -174,7 +174,7 @@ def fillBlackListFromSubgraphHealthStatus():
     """
 
     # open config.json and get blacklisted array
-    with open("../config.json", "r") as jsonfile:
+    with open("./config.json", "r") as jsonfile:
         config = json.load(jsonfile)
 
     # gets the List of Blacklisted Subgraphs from config.json
@@ -198,7 +198,7 @@ def fillBlackListFromSubgraphHealthStatus():
     config['blacklist'] = blacklisted_subgraphs
 
     # rewrite config.json file, keeps entrys that are already in there and are not changed by the conditions above
-    with open("../config.json", "w") as f:
+    with open("./config.json", "w") as f:
         f.write(json.dumps(config, indent=4, sort_keys=True))
         f.close()
 
