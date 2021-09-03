@@ -1,7 +1,8 @@
 import json
 import requests
 import base58
-
+import os
+from dotenv import load_dotenv
 def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=True, parallel_allocations=1):
     """ Creates the script.txt file for reallocating based on the inputs of the optimizer
     script.
@@ -21,6 +22,10 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     """
     indexer_id = indexer_id.lower()
 
+    load_dotenv()
+
+    API_GATEWAY = os.getenv('API_GATEWAY')
+
     # get blacklisted subgraphs if wanted
     if blacklist_parameter:
         with open("./config.json", "r") as jsonfile:
@@ -34,7 +39,7 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
 
     # get relevant indexer data
     indexer_data = requests.post(
-        'https://gateway.network.thegraph.com/network',
+        API_GATEWAY,
         data='{"query":"{ indexer(id:\\"' + indexer_id + '\\") { account { defaultName { name } } stakedTokens delegatedTokens allocatedTokens tokenCapacity } }"}',
         headers={'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
     ).json()['data']['indexer']

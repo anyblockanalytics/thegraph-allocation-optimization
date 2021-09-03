@@ -1,12 +1,23 @@
+import pandas as pd
 import streamlit as st
 from src.optimizer import optimizeAllocations
 from src.queries import getFiatPrice, getSpecificSubgraphData
-from src.helpers import grouper
+from src.helpers import grouper, load_lottieurl
 from millify import millify
 from datetime import datetime
+from streamlit_lottie import st_lottie
+import plotly.express as px
 
 
 def createOptimizerOutput(parameters):
+    """
+        Create Output from Optimizer. Supply parameters from Sidebar.
+        Run Optimization script with parameters and return optimizer outputs.
+    """
+    st.subheader('Allocation Run: ' + str(datetime.now()))
+    # show loading animation while processing optimization
+    #lottie_loading_url = "https://assets1.lottiefiles.com/packages/lf20_x62chJ.json"
+    #lottie_loading_json = load_lottieurl(lottie_loading_url)
     if parameters.get('submitted'):
         with st.spinner('Optimization Script running. Wait for it...'):
             optimizer_data = optimizeAllocations(indexer_id=parameters.get('indexer_id'),
@@ -27,7 +38,7 @@ def createOptimizerOutput(parameters):
                                                  )
 
         optimizer_key = None
-        st.subheader('Allocation Run: ' + str(datetime.now()))
+
         for key in optimizer_data:
             st.text("Allocation Optimization for Indexer: " + optimizer_data[key]['parameters']['indexer_id'])
             optimizer_key = key
@@ -46,12 +57,10 @@ def createOptimizerOutput(parameters):
                     millify(optimizer_data[key]['current_rewards']['indexing_reward_yearly'], precision=2))
 
         # create Table for current_allocations -> optimizer_data[key]['current_allocations']
+        createCurrentAllocationOutput(optimizer_data, optimizer_key)
 
-        if optimizer_data[optimizer_key]['optimizer']['threshold_reached'] == False:
-            st.error("Threshold not reached. Do not re-allocate! :warning:")
-        if optimizer_data[optimizer_key]['optimizer']['threshold_reached'] == True:
-            st.success("Threshold reached! :sunglasses:")
-
+        # Threshold Warning / Error / Succcess
+        createThresholdOutput(optimizer_data, optimizer_key)
         st.write('Rewards (in GRT) after Optimization')
 
         # Rewards after Optimization
@@ -90,13 +99,14 @@ def createOptimizerOutput(parameters):
         createBoxWithAllocationInformation(optimized_allocations_data)
 
         # Output Allocation and clearing Script
-        col1, col2 = st.columns(2)
-        with open('./script.txt') as f:
-            contents = f.read()
-        col1.text_area("Allocation Script", value=contents, height=500)
-        with open('./script_never.txt') as f:
-            contents = f.read()
-        col2.text_area("Deallocation Script", value=contents, height=500)
+        with st.expander("Allocation Commands:"):
+            col1, col2 = st.columns(2)
+            with open('./script.txt') as f:
+                contents = f.read()
+            col1.text_area("Allocation Script", value=contents, height=500)
+            with open('./script_never.txt') as f:
+                contents = f.read()
+            col2.text_area("Deallocation Script", value=contents, height=500)
 
 
 def createBoxWithAllocationInformation(optimized_allocations_data):
@@ -125,26 +135,26 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
                 for subgraph in subgraph1_data:
                     st.markdown(
                         f'<div style="border-style:outset; border-color: #0000ff">'
-                        f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;text-align: center">'
+                        f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
                         f'{subgraph.get("originalName")}</p>'
-                        f'<p style="color:#33ff33;font-size:16px;border-radius:2%;text-align: center">'
+                        f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
                         f'{subgraph.get("ipfsHash")}</p>'
                         f'<p style="text-align: center">'
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
                         f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
                         f'</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
                         f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18),precision=2))}</p>'
-                        f'<hr color= "white">'
-                        f'<p style="color: white;font-size:16px;text-align: justify; padding: 10px">'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
+                        f'<hr color= "black">'
+                        f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
                         f'{"Description: " + subgraph.get("versions")[0].get("subgraph").get("description") if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
                         f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
@@ -162,26 +172,26 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
                 for subgraph in subgraph2_data:
                     st.markdown(
                         f'<div style="border-style:outset; border-color: #0000ff">'
-                        f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:0%;text-align: center">'
+                        f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
                         f'{subgraph.get("originalName")}</p>'
-                        f'<p style="color:#33ff33;font-size:16px;border-radius:0%;text-align: center">'
+                        f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
                         f'{subgraph.get("ipfsHash")}</p>'
                         f'<p style="text-align: center">'
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
                         f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
                         f'</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
                         f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18,precision=2))}</p>'
-                        f'<p style="color: white;font-size:20px;text-align: center">'
-                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18),precision=2))}</p>'
-                        f'<hr color= "white">'
-                        f'<p style="color: white;font-size:16px;text-align: justify; padding: 10px">'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
+                        f'<p style="color: black;font-size:20px;text-align: center">'
+                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
+                        f'<hr color= "black">'
+                        f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
                         f'{"Description: " + subgraph.get("versions")[0].get("subgraph").get("description") if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
                         f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
@@ -196,5 +206,130 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
 
     st.text("")
 
-def createThresholdOutput():
-    pass
+
+def createThresholdOutput(optimizer_data, optimizer_key):
+    """
+        Creates an Error Box if Threshold is not reached with dedicated Optimization information.
+        Creates an Success Box if Threshold is Reached.
+    """
+    st.subheader("Optimization:")
+    if optimizer_data[optimizer_key]['optimizer']['threshold_reached'] == False:
+        st.error("Threshold of " + str(optimizer_data[optimizer_key]['parameters']["threshold"])
+                 + "% **not reached**. Do not re-allocate! ⛔️" + "\n Change in " +
+                 optimizer_data[optimizer_key]['parameters']["threshold_interval"] +
+                 " Rewards of " + str(optimizer_data[optimizer_key]['optimizer']["increase_rewards_percentage"]) + "%" +
+                 " (" + str(optimizer_data[optimizer_key]['optimizer']["increase_rewards_fiat"]) + " in USD, " +
+                 str(optimizer_data[optimizer_key]['optimizer']["increase_rewards_grt"]) +
+                 " in GRT ) after substracting Transaction Costs. Transaction Costs " +
+                 str(millify(optimizer_data[optimizer_key]['optimizer']["gas_costs_parallel_allocation_new_close_usd"],
+                             precision=2)) +
+                 " in USD ($)." + " Before: " +
+                 str(millify(optimizer_data[optimizer_key]['optimizer']['optimized_allocations'][
+                                 'indexingRewardHour'] - optimizer_data[optimizer_key]['current_rewards'][
+                                 'indexing_reward_daily']
+                             , precision=2)) + " GRT"
+                                               " After: " + str(
+            millify(optimizer_data[optimizer_key]['optimizer']['optimized_allocations']['indexingRewardDay']
+                    , precision=2)) + " GRT")
+    if optimizer_data[optimizer_key]['optimizer']['threshold_reached'] == True:
+        st.success("Threshold of " + str(optimizer_data[optimizer_key]['parameters']["threshold"])
+                   + "% **reached**. Reallocate! " "🤑" + " Change in " +
+                   optimizer_data[optimizer_key]['parameters']["threshold_interval"] +
+                   " Rewards of " + str(
+            optimizer_data[optimizer_key]['optimizer']["increase_rewards_percentage"]) + "%" +
+                   " (" + str(optimizer_data[optimizer_key]['optimizer']["increase_rewards_fiat"]) + " in USD, " +
+                   str(optimizer_data[optimizer_key]['optimizer']["increase_rewards_grt"]) +
+                   " in GRT ) after substracting Transaction Costs. Transaction Costs " +
+                   str(millify(
+                       optimizer_data[optimizer_key]['optimizer']["gas_costs_parallel_allocation_new_close_usd"],
+                       precision=2)) +
+                   " in USD ($)." + " Before: " +
+                   str(millify(optimizer_data[optimizer_key]['optimizer']['optimized_allocations'][
+                                   'indexingRewardHour'] - optimizer_data[optimizer_key]['current_rewards'][
+                                   'indexing_reward_daily']
+                               , precision=2)) + " GRT"
+                                                 " After: " + str(
+            millify(optimizer_data[optimizer_key]['optimizer']['optimized_allocations']['indexingRewardDay']
+                    , precision=2)) + " GRT")
+
+
+def createCurrentAllocationOutput(optimizer_data, optimizer_key):
+    """
+        Creates Table / Pie Chart from Optimizer Current Run. First creates a DataFrame from Json File.
+
+        parameters:
+            optimzier_data = Data for current optimization run
+            optimizer_key = key for current run
+        returns:
+            DataFrame Table
+            Plotly Pie Chart
+    """
+    # create Table for current_allocations -> optimizer_data[key]['current_allocations']
+    temp_list = []
+    for key in optimizer_data[optimizer_key]['current_allocations']:
+        temp_list.append({
+            'ipfs_hash': key,
+            'subgraph_name': optimizer_data[optimizer_key]['current_allocations'][key].get('Name_x'),
+            'allocated_tokens': optimizer_data[optimizer_key]['current_allocations'][key].get('Allocation'),
+            'pending_rewards': optimizer_data[optimizer_key]['current_allocations'][key].get('pending_rewards'),
+            'indexing_reward_hour': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'indexing_reward_hourly'),
+            'indexing_reward_day': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'indexing_reward_daily'),
+            'indexing_reward_weekly': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'indexing_reward_weekly'),
+            'indexing_reward_yearly': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'indexing_reward_yearly'),
+            'allocation_id': optimizer_data[optimizer_key]['current_allocations'][key].get('allocation_id'),
+            'signalled_tokens_total': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'signalledTokensTotal'),
+            'staked_tokens_total': optimizer_data[optimizer_key]['current_allocations'][key].get(
+                'stakedTokensTotal'),
+
+        })
+    # create dataframe from temp list
+    df = pd.DataFrame(temp_list)
+
+    # create stake to signal ratio column
+    df['stake_signal_ratio'] = df['staked_tokens_total'] / df['signalled_tokens_total']
+    st.markdown("""---""")
+
+    st.subheader('Current Allocations:')
+
+
+    # create metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Pending Rewards", value=str(millify(df['pending_rewards'].sum(), precision=2)) + " GRT")
+    col2.metric("Active Allocations", value=str(len(df)))
+    col3.metric("Average Stake/Signal Ratio",
+                value=str(millify(df['stake_signal_ratio'].mean(), precision=2)))
+    col4.metric("Average Hourly Rewards per Subgraph",
+                value=str(millify(df['indexing_reward_hour'].mean(), precision=2)))
+    # display dataframe in expander
+    with st.expander("Current Allocation Table"):
+        st.dataframe(df)
+    # create plots
+    col1, col2 = st.columns(2)
+    df = df.sort_values('pending_rewards', ascending=False)
+
+    # pending rewards
+    fig = px.bar(df, y='subgraph_name', x='pending_rewards', title='Distribution of Pending Rewards',
+                 text='indexing_reward_hour', height=500,
+                 color_discrete_sequence=px.colors.qualitative.Prism,orientation='h'
+                 )
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+
+    col1.plotly_chart(fig, use_container_width=True)
+
+    # stake signal ratio
+    fig2 = px.pie(df, values='stake_signal_ratio', names='subgraph_name', title='Distribution of Stake Signal Ratio',
+                  color_discrete_sequence=px.colors.qualitative.Prism,
+                  hover_data=['pending_rewards'], height = 500
+                  )
+
+    fig2.update_traces(textposition='outside', textinfo='label+percent')
+    col2.plotly_chart(fig2, use_container_width=True)
+
+
+    st.markdown("""---""")

@@ -48,3 +48,6 @@ httpx
 plotly-express
 streamlit
 millify
+streamlit-lottie
+aiohttp
+

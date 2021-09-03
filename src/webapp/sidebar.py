@@ -6,6 +6,10 @@ def createSidebar():
     with st.sidebar:
         # set sidbar title and subtitle
         st.header('Allocation Optimization Tool')
+        st.markdown(
+            f'<img src="https://www.anyblockanalytics.com/wp-content/uploads/2019/12/cropped-Anyblock-Logo__72dpi_v1.png"  width= "300" height="200">',
+            unsafe_allow_html=True)
+
         st.subheader('Parameters:')
         # create form to submit data for optimization
         with st.form(key='columns_in_form'):
@@ -47,21 +51,20 @@ def createSidebar():
             submitted = st.form_submit_button('Run Optimizer')
 
             return_dict = {
-                'indexer_id' : indexer_id,
-                'blacklist_parameter' : blacklist_parameter,
-                'subgraph_list_parameter' : subgraph_list_parameter,
-                'threshold' : threshold,
-                'parallel_allocations' : parallel_allocations,
-                'max_percentage' : max_percentage,
-                'threshold_interval' : threshold_interval,
-                'reserve_stake' : reserve_stake,
-                'min_allocation' : min_allocation,
-                'min_signalled_grt_subgraph' : min_signalled_grt_subgraph,
-                'min_allocated_grt_subgraph' : min_allocated_grt_subgraph,
-                'submitted' : submitted,
-                'slack_alerting' : slack_alerting,
-                'discord_alerting' : discord_alerting
-
+                'indexer_id': indexer_id,
+                'blacklist_parameter': blacklist_parameter,
+                'subgraph_list_parameter': subgraph_list_parameter,
+                'threshold': threshold,
+                'parallel_allocations': parallel_allocations,
+                'max_percentage': max_percentage,
+                'threshold_interval': threshold_interval,
+                'reserve_stake': reserve_stake,
+                'min_allocation': min_allocation,
+                'min_signalled_grt_subgraph': min_signalled_grt_subgraph,
+                'min_allocated_grt_subgraph': min_allocated_grt_subgraph,
+                'submitted': submitted,
+                'slack_alerting': slack_alerting,
+                'discord_alerting': discord_alerting
 
             }
             return return_dict

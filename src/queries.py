@@ -150,6 +150,7 @@ def getAllocationDataById(allocation_id, variables=None, ):
             status
             id
             createdAt
+            closedAt
             subgraphDeployment {
               signalledTokens
               createdAt
@@ -199,6 +200,7 @@ def getActiveAllocations(indexer_id, variables=None, ):
                     status
                     id
                     createdAt
+                    closedAt
                     subgraphDeployment {
                         signalledTokens
                         createdAt
@@ -287,7 +289,7 @@ def getAllAllocations(indexer_id, variables=None, ):
     return allocations
 
 
-def getClosedAllocations(subgraph_url, indexer_id, variables=None):
+def getClosedAllocations(indexer_id, variables=None):
     """Get's all closed Allocations for a specific Indexer from the Mainnet Subgraph.
        Dumps the results into a dictionary.
 
@@ -296,6 +298,8 @@ def getClosedAllocations(subgraph_url, indexer_id, variables=None):
     dict
         Closed Allocations for Indexer
     """
+    load_dotenv()
+    API_GATEWAY = os.getenv('API_GATEWAY')
     ALLOCATION_DATA = """
 
     query AllocationsByIndexer($input: ID!) {
@@ -314,8 +318,12 @@ def getClosedAllocations(subgraph_url, indexer_id, variables=None):
           indexingRewards
           status
               subgraphDeployment {
-                id
-                originalName
+                        signalledTokens
+                        createdAt
+                        stakedTokens
+                        originalName
+                        id
+                        ipfsHash
               }
             }
           }
@@ -326,7 +334,7 @@ def getClosedAllocations(subgraph_url, indexer_id, variables=None):
     request_json = {'query': ALLOCATION_DATA}
     if indexer_id:
         request_json['variables'] = variables
-    resp = requests.post(subgraph_url, json=request_json)
+    resp = requests.post(API_GATEWAY, json=request_json)
     response = json.loads(resp.text)
     response = response['data']['indexer']
 
@@ -373,12 +381,15 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
         request_json['variables'] = variables
 
     resp = requests.post(API_GATEWAY, json=request_json)
+
+
     subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
 
-    subgraphList = list()
+    subgraphList = []
     for subgraph in subgraphs:
         for version in subgraph['versions']:
             subgraphList.append(version['subgraphDeployment']['ipfsHash'])
+
     return subgraphList
 
 
@@ -585,6 +596,7 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
             stakedTokens
             allocations {
               allocatedTokens
+              id
               subgraphDeployment {
                 originalName
                 id
