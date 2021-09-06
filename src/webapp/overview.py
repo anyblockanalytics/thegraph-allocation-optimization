@@ -21,9 +21,11 @@ def streamlitEntry():
     # display key metrics
     createMetricsOutput()
 
+
     # historical performance
-    df_active = getActiveAllocationPerformance(parameters)
-    df_closed = getClosedAllocationPerformance(parameters)
+    indexer_id = parameters.get('indexer_id')
+    df_active = getActiveAllocationPerformance(indexer_id)
+    df_closed = getClosedAllocationPerformance(indexer_id)
 
     visualizePerformance(df_active,df_closed)
 

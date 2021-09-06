@@ -36,17 +36,17 @@ def getPreviousRuns(col):
 
 
 @st.cache
-def getActiveAllocationPerformance(parameters):
+def getActiveAllocationPerformance(indexer_id):
     # Load Historical performance for Active Allocations
 
-    df = calculateRewardsAllActiveAllocations(parameters.get('indexer_id'))
+    df = calculateRewardsAllActiveAllocations(indexer_id)
     return df
 
 
 @st.cache
-def getClosedAllocationPerformance(parameters):
+def getClosedAllocationPerformance(indexer_id):
     # Load Historical performance for Active Allocations
-    df = calculateRewardsAllClosedAllocations(parameters.get('indexer_id'))
+    df = calculateRewardsAllClosedAllocations(indexer_id)
     return df
 
 
@@ -104,8 +104,8 @@ def visualizeHistoricalPerformanceDiyChart(df):
                    "allocation_status",
                    "timestamp"
                    ]
-        options_col_group = ['subgraph_name', 'subgraph_ipfs_hash', 'None', 'allocation_status']
-        bar_type = ['line', 'bar', 'scatter', 'area']
+        options_col_group = ['None', 'subgraph_name', 'subgraph_ipfs_hash', 'allocation_status']
+        bar_type = ['bar', 'line', 'scatter', 'area']
         x_value = col1.selectbox(label="Select X - Value: ", options=options)
         y_value = col2.selectbox(label="Select Y - Value: ", options=options)
         col_value = col3.selectbox(label="Select Group By Color - Value", options=options_col_group)
@@ -160,8 +160,8 @@ def visualizeHistoricalPerformanceDedicatedCharts(df):
                       title='Rewards per Hour and Accumulated Rewards for Indexer',
                       hover_name="datetime")
         fig.add_scatter(x=allocations_created_count_by_day['allocation_created_timestamp'],
-                        y= allocations_created_count_by_day['amount_allocations'],
-                    name="Allocations Opened (over 1000GRT")
+                        y=allocations_created_count_by_day['amount_allocations'],
+                        name="Allocations Opened (over 1000GRT")
 
         st.plotly_chart(fig, use_container_width=True)
 
