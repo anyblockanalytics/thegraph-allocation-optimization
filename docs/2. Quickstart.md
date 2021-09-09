@@ -1,0 +1,80 @@
+# 🚀Quickstart
+There are different options to run the allocation optimization script. You can either run the optimization via a CLI script or with the **Streamlit Web Application**. If you are interested in a more visual presentation of the optimization process, it is recommended to use the streamlit web application. 
+
+Currently a docker container is work in progress. This quickstart explains the **local installation** of the allocation script.
+
+**Demo Web Application:**
+**![Web App](https://i.imgur.com/3uLj7gv.gif)** 
+
+**Demo CLI tool:**
+![CLI Tooling](https://i.imgur.com/gGHVDyQ.gif)
+
+
+## 💫 Installation
+
+### 🍏 Mac OS
+
+1. Make sure to install [Homebrew](https://brew.sh/)
+2. Install [GLPK](https://www.gnu.org/software/glpk/) (GNU Linear Programming Kit). It is a open source library used for large-scale linear programming, mixed integer programming and other mathematical problems.
+
+```shell
+	brew install glpk
+```
+	
+### 🐧 Linux
+1. Open a Terminal
+2. Install [GLPK](https://www.gnu.org/software/glpk/) (GNU Linear Programming Kit). It is an open source library used for large-scale linear programming, mixed integer programming and other mathematical problems. It also requires some dependencies to be installed.
+```shell
+sudo apt-get install glpk-utils libglpk-dev glpk-doc python-glpk
+```
+
+### General
+1. If Python is not installed on your system yet, it is necessary to install it either directly via the command line or to [download](https://www.python.org/downloads/) the installation file from the web. Subsequently, it is necessary to install the Python package manager pip. Best, open a command line and execute the following command:
+```shell
+	python3 -m pip install --user --upgrade pip
+```
+2. Make sure python and pip is installed correctly.
+
+```shell
+python ––version
+pip3 --version
+```
+3. It is always recommended to create new projects in virtual environments. This way the packages can be managed separately, you can create an isolated Python installation and you do not influence the system Python interpreter. Using virtual environments requires the installation of the “virtualenv” package (for further documentation, visit this [tutorial](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)).
+```shell
+	python3 -m pip install --user virtualenv
+```
+4. Clone the repository into the desired directory:
+```shell
+git clone https://github.com/anyblockanalytics/thegraph-allocation-optimization.git
+```
+5. After creating the directory, we need to change to this folder and create a virtual environment.
+
+```shell
+python3 -m venv env
+```
+6. And then the virtual environment can be activated
+```shell
+source env/bin/activate
+```
+7. Now the requirments.txt file can be installed via pip
+```shell
+pip install -r requirements.txt
+```
+8. Open the ```.env_example``` file and change the rpc key, postgres connection, slack alerting webhook (if a slack alerting is wanted) and the Indexer ID to your credentials. After changing the values, rename the file to ```.env```
+9. Open the ```config.json```file. If you want to provide subgraphs to the blacklist manually, you can include the subgraphs or subgraph developers in this file.
+10. Now everything should be installed. Start a terminal in the repository directory and run the script to check if everything works:
+```shell
+python ./main.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.2 --threshold 20 --parallel_allocations 1 --no-subgraph-list --blacklist 
+```
+11. Some Linux distros may require the following command:
+```shell
+python3 ./main.py --indexer_id 0x453b5e165cf98ff60167ccd3560ebf8d436ca86c --max_percentage 0.2 --threshold 20 --parallel_allocations 1 --no-subgraph-list --blacklist
+```
+12. Start the streamlit server:
+
+```shell
+streamlit run app.py
+```
+13. Open your web browser and navigate to ```http://localhost:8501/``` the streamlit web app should open.
+
+Navigate to [[Usage and Parameters]] for further configurations and explanation of all parameters.

@@ -60,7 +60,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
 
     print("Script Execution on: ", current_datetime)
-
+    """
     # check for metaSubgraphHealth
     if not checkMetaSubgraphHealth():
         print('ATTENTION: MAINNET SUBGRAPH IS DOWN, INDEXER AGENT WONT WORK CORRECTLY')
@@ -69,6 +69,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             pass
         else:
             input("Press Enter to continue...")
+    """
 
     # update blacklist / create blacklist if desired
     if blacklist_parameter:

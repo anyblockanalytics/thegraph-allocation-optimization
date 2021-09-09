@@ -1,0 +1,5 @@
+# Transparency, Caution and Risk ⚠️⛔️
+
+We are aware that this optimization significantly interferes with the revenues of the respective indexers. This requires a lot of trust. From our side, it is therefore extremely important to bring forth a transparent approach to optimization. Still using this script is at your own risk. ALWAYS check the results of the optimization and check the **script.txt** if it is suitable for your use-case and setup.
+
+Following the script and how it is working will be explained in detail. We purposely created the script in a semi-automatic way, where the results of the optimization process are logged and human intervention is necessary for deploying the changes. In future updates we would like to extend the scope to an automatic optimization script and deploy a hosted version with visualizations (contributions appreciated).

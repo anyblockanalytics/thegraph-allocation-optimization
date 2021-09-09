@@ -1,13 +1,16 @@
 import streamlit as st
 
-
+from src.helpers import img_to_bytes
 def createSidebar():
     # create Sidebar with Parameters
     with st.sidebar:
         # set sidbar title and subtitle
         st.header('Allocation Optimization Tool')
+
+
+
         st.markdown(
-            f'<img src="https://www.anyblockanalytics.com/wp-content/uploads/2019/12/cropped-Anyblock-Logo__72dpi_v1.png"  width= "300" height="200">',
+            f'<img src="data:image/png;base64,{img_to_bytes("./assets/logo.png")}"  width= "300" height="200">',
             unsafe_allow_html=True)
 
         st.subheader('Parameters:')

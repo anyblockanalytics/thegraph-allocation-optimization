@@ -1,17 +1,18 @@
 from web3 import Web3
 import logging
 from dotenv import load_dotenv
-import os
 import psycopg2
 import json
 import redis
 import sys
 import datetime as dt
-from datetime import datetime
 import argparse
 import base58
 from itertools import zip_longest
 import requests
+import os
+import base64
+from pathlib import Path
 
 load_dotenv()
 ANYBLOCK_ANALYTICS_ID = os.getenv('ANYBLOCK_ANALYTICS_ID')
@@ -285,3 +286,9 @@ def load_lottieurl(url: str):
     if r.status_code != 200:
         return None
     return r.json()
+
+
+def img_to_bytes(img_path):
+    img_bytes = Path(img_path).read_bytes()
+    encoded_img = base64.b64encode(img_bytes).decode()
+    return encoded_img

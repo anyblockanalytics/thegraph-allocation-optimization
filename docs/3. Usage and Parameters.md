@@ -1,0 +1,108 @@
+# Usage and Parameters
+In this part of the documentation the available parameters for the allocation optimization process are explained 💡 and use-cases are shown. 
+
+The user of this allocation optimization script can adjust the allocation optimization process according to their wishes through some parameters. The following adjustments can be made:
+
+-   A blacklist can be created. The subgraphs in the blacklist are not considered in the allocation process. The script creates a blacklist using various functions to avoid possible bot-bait subgraphs. The script can then blacklist specific subgraph developers, exclude subgraphs with error status or an outdated version, and blacklist subgraphs based on the sync status of the local indexer database.
+    
+-   A predefined subgraph list can be passed. Only these subgraphs should be considered in the allocation process and the stake should be distributed appropriately to these subgraphs.
+    
+-   Slack alerting can be integrated using webhooks. Each execution of the script creates an alert in a defined Slack channel if the threshold for a possible reallocation has been reached.
+    
+-   Threshold: With the threshold a percentage limit is determined. If this threshold is exceeded, a reallocation is appropriate and the tool creates a script.txt file containing the relevant commands for a reallocation.
+    
+-   And many more parameters which are described in the [[Usage and Parameters#Available Parameters]]
+    
+
+The product to be built will allow for:
+
+-   Visualization of the optimization process in a web app, which users can interact with to input various parameters such as the amount of stake to be allocated, maximum number of allocations, and maximum number of subgraphs on which to allocate, etc.
+    
+-   Visualization of the historic and current rewards from Indexing in the web app
+    
+-   Scheduling when such optimization processes should take place while automating the implementation of resulting suggestions.
+    
+
+
+## Available Parameters
+1.  **indexer_id** : It is necessary to supply the indexer address.
+
+2.  **max_percentage**: With max_percentage (a value between **0.0 - 1.0**) it is possible to set an upper limit in how much (percentage-wise) an allocation on one single subgraph can take. In the current status, the optimization often allocates the entire stake into one single subgraph (possibly this won't change, even when there are many subgraphs). The optimizations allocates the entire stake into one subgraph, because this (often) maximizes the indexing rewards. But sometimes it is not useful to allocate everything into one subgraph (risk diversification, ...). Therefore with max_percentage it is possible to limit the amount of stake one single subgraph can take. If it is set to 0.9, and you have a stake of 1.5M GRT, then the single subgraph can at most get 1.35M GRT allocated. The remainder is allocated to the next optimal subgraph, or is split among the rest. We at Anyblock like to diversify, so we set **max_percentage** to **0.2**
+3.  **threshold** : Set the threshold (in %) when an allocation script will be created. Takes a value between **0 - Infinity**. If your current **weekly** Indexing Rewards are 5000 and the threshold is set to **10**. The optimization has to atleast result in an increase of 10% in indexing rewards to create an allocation script. **BUT** the calculation of the threshold takes also the transaction costs into account. This means the indexing rewards have to be higher than 10% compared to the previous indexing rewards **AFTER** the transaction costs for the reallocation have been subtracted. Our **threshold** is **20**%.
+5.  **parallel_allocations**: Amoutn of parallel allocations (required for creating the script.txt file). Basically splits the allocation amount into subsets of the supplied parallel allocation amount. (SOON TO BE DEPRECIATED ⚠️)
+6. **no-subgraph-list**: Disables the config.json, so no manual subgraph list is provided. (Default)    
+7. **subgraph-list**: utilizes the provided list in config.json as subgraphs that should be considered for the optimization.
+8. **blacklist**: tells the script to ignore the blacklisted subgraphs in config.json. Also the blacklist will be created with the functions in **subgraphs_health_check.py**. 
+9. **threshold_interval:** Define the interval which is used for calculating the threshold requirment. Currently the recommended threshold interval is "weekly". Setting the threshold interval to weekly leads the optimization script to calculate threshold requirments based on weekly indexing rewards.
+10. **reserve_stake:** Enables the indexer to define a dedicated amount of stake which should not be considered in the optimization. This reserve stake will not be allocated!
+11. **min_allocation:** Set the minimum allocation in GRT per subgraph. If this value is above 0, every deployed subgraph will get the minimum allocation amount. **ATTENTION 🚨: Setting this value above 0 leads to massive increases in transaction costs**
+12. **min_allocated_grt_subgraph:** Defines the minimum GRT allocation requirment for a subgraph to be considered in the optimization process. If a subgraph have less GRT allocated than the min_allocated_grt_subgraph, then it will not be considered in the optimization process.
+13. **min_signalled_grt_subgraph:** Defines the minimum GRT signal requirment for a subgraph to be considered in the optimization process. If a subgraph have less GRT signalled than the min_signalled_grt_subgraph, then it will not be considered in the optimization process.
+14. **slack_alerting:** Enables the user to configure a slack alerting in a dedicated slack channel. Outputs if the optimization reached the threshold and how much increase / decrease in rewards is expected after the optimization. Configure the webhook and channel in the **.env** file.
+
+## CLI - Tool
+
+![Check out the Demo!](https://i.imgur.com/gGHVDyQ.gif)
+
+The CLI tool should be able to be used to automate the optimization and allocation process. In the future, the CLI tool will be executed with the help of a cron job in defined intervals and when the threshold is reached, the allocations will be automatically adjusted according to the optimization.
+
+The CLI tool is also used to run the optimization script without having to call a web interface. No streamlit web server is required to run the script.
+
+The CLI version supports the same parameterizations as the web interface.
+
+The script currently outputs two files: **script_never.txt** and **script.txt**. In future releases the optimization script will directly work with the indexer agent endpoint and communicate the allocation creation / closing with the help of graphQL mutations.
+
+### script_never.txt
+The **script_never.txt** file contains the necessary commands that must be entered to drop all current allocations at the end of the current epoch. This is necessary to be able to use the script.txt and reallocate. The script_never.txt takes all subgraphs available into consideration and clears all allocations. It should be adapted if this is not the desired outcome.
+
+An example of a script_never.txt file:
+```shell
+graph indexer rules set QmbYFfUKETrUwTQ7z8VD87KFoYJps8TGsSbM6m8bi6TaKG decisionBasis never && \
+graph indexer rules set QmTj6fHgHjuKKm43YL3Sm2hMvMci4AkFzx22Mdo9W3dyn8 decisionBasis never && \
+graph indexer rules get all --merged && \
+graph indexer cost get all
+
+### [](https://github.com/anyblockanalytics/thegraph-allocation-optimization#scripttxt)
+```
+
+### script.txt
+The script file contains the necessary commands that must be entered to change the allocations and adjust them according to the optimization. The allocation script is general. It should be adapted according to the use-case.
+
+An example of a script.txt file:
+
+```shell
+graph indexer rules set QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF allocationAmount 406350.00 parallelAllocations 4 decisionBasis always && \ 
+graph indexer cost set model QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF default.agora && \ 
+graph indexer cost set variables QmRhYzT8HEZ9LziQhP6JfNfd4co9A7muUYQhPMJsMUojSF '{}' && \ 
+graph indexer rules get all --merged && \graph indexer cost get all
+```
+## Streamlit App
+Check out the screencast of the web app:
+
+**![Web App](https://i.imgur.com/3uLj7gv.gif)** 
+
+It is possible to parameterize the optimization run on the sidebar. After setting up the prefered settings, click on the button "run optimization". If the blacklist parameter is checked, the optimization run will take a while (**less than 2 minutes**). 
+
+After running the optimization script, the dashboard is further populated.
+
+
+-   Data from previous optimizations as JSON
+-   Price Data (ETH-USD, GRT-USD, Gas Price in Gwei)  
+-   Historical performance for Closed/Active/Combined allocations
+-   Data Table with allocation data by date
+-   DIY Chart Builder (WIP)
+-   Performance Metrics which visualize rewards per hour and optimized allocations on a timeline
+-   Optimization run metrics:
+-   Indexer stake, current rewards (hour/day/weekly/yearly)
+-   Pending rewards, active allocations, average stake/signal ratio, average hourly rewards
+-   Current allocation table
+-   Distribution of rewards/stake signal ratio
+-   Threshold pop up, 
+-   Information about the subgraphs the optimization tool recommends. (Boxes with dedicated image, description and metrics) 
+-   Output of allocation and allocation closing commands
+
+The web app makes it possible to follow the optimization process in a simple way. The results are visualized and recommendations for action are suggested. If the results are satisfactory, the commands can be copied for reallocation and executed in the Indexer CLI.
+
+The web app represents a semi-automated approach, where allocations are not yet set or closed automatically. The Web App also serves to build trust in the tool so that users know how the optimization works before they use the fully automated version.
+
+    

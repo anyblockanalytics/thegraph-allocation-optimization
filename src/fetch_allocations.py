@@ -297,7 +297,7 @@ if __name__ == '__main__':
         poi_block_number, poi_block_hash = get_poi_data(API_GATEWAY)
 
         # now write output to a file
-        script_null_subgraphs = open("script_null_subgraphs.txt", "w")
+        script_null_subgraphs = open("../script_null_subgraphs.txt", "w")
         for subgraph in subgraphs_to_drop:
             # magic happens here to make it pretty-printed
             script_null_subgraphs.write(f"http -b post http://localhost:8030/graphql \\\n")
