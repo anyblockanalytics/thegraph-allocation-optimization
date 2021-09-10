@@ -1,5 +1,17 @@
-graph indexer rules set QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg allocationAmount 1194860.27 parallelAllocations 2 decisionBasis always && \
-graph indexer cost set model QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg default.agora && \
-graph indexer cost set variables QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg '{}' && \
+graph indexer rules set QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV allocationAmount 477444.11 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV default.agora && \
+graph indexer cost set variables QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV '{}' && \
+graph indexer rules set QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA allocationAmount 477944.11 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA default.agora && \
+graph indexer cost set variables QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA '{}' && \
+graph indexer rules set QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD allocationAmount 477944.11 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD default.agora && \
+graph indexer cost set variables QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD '{}' && \
+graph indexer rules set QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR allocationAmount 477944.11 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR default.agora && \
+graph indexer cost set variables QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR '{}' && \
+graph indexer rules set QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh allocationAmount 477944.11 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh default.agora && \
+graph indexer cost set variables QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh '{}' && \
 graph indexer rules get all --merged && \
 graph indexer cost get all

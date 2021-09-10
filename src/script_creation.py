@@ -141,8 +141,7 @@ def createAllocationScript(indexer_id, fixed_allocations, blacklist_parameter=Tr
     script_never = open("./script_never.txt", "w+")
 
     for subgraph in subgraphs:
-        if subgraph not in fixed_allocations.keys():
-            script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
+        script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
     for subgraph in invalid_subgraphs:
         script_never.write(f"graph indexer rules set {subgraph} decisionBasis never && \\\n")
     script_never.write("graph indexer rules get all --merged && \\\n")
