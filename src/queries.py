@@ -4,7 +4,8 @@ import os
 import requests
 from src.helpers import initialize_rpc
 from pycoingecko import CoinGeckoAPI
-
+from datetime import datetime, timedelta
+import pandas as pd
 
 def getFiatPrice(pairs):
     """Get's the Currency Pairs from Coingecko.
@@ -33,6 +34,53 @@ def getFiatPrice(pairs):
         grt_eth = grt_eth_resp.get('the-graph').get('eth')
         return grt_eth
 
+
+def getHistoricalPriceData(token_identifier, currency='usd', start_datetime=datetime.today() - timedelta(days=90),
+                   end_datetime=datetime.today()):
+    """Get Price data from CoinGecko.
+
+    Parameters
+    ----------
+    token_identifier: str
+        Options: 'eteherum'|'chainlink'|and more
+    currency : str, optional
+        Options: usd|eur
+        Default: 'usd'
+    start_datetime : datetime, optional
+        Default: now - 90 days
+    end_datetime : datetime, optional
+    Default: now
+
+
+    Returns
+    -------
+    pd.DataFrame
+        a json string from a dataframe with the columns 'timestamp' and 'close'
+    """
+
+    coinGeckoApiClient = CoinGeckoAPI()
+    results = coinGeckoApiClient.get_coin_market_chart_range_by_id(
+        id=token_identifier,
+        vs_currency=currency,
+        from_timestamp=int(start_datetime.timestamp()),
+        to_timestamp=int(end_datetime.timestamp())
+    )
+
+    data = []
+    for i in results.get('prices'):
+        data.append({
+            'timestamp': i[0],
+            'close': pd.to_numeric(i[1])
+        })
+    df_price_data = pd.DataFrame(data)
+
+    df_price_data['datetime'] = pd.to_datetime(pd.to_datetime(df_price_data['timestamp'], unit='ms'),
+                                               format='%Y-%m-%d').dt.date
+    df_price_data.drop(['timestamp'], inplace=True, axis=1)
+
+    df_price_data = df_price_data.groupby(df_price_data['datetime'], as_index=False).agg({'close': 'max'})
+
+    return df_price_data
 
 def getGasPrice(speed='fast'):
     """Get's the Gas Price for the latest 200 Blocks in GWEI.Can Choose
@@ -629,3 +677,4 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
     data = data['data']
 
     return data
+
