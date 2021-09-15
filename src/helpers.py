@@ -267,6 +267,11 @@ def initializeParser():
                            type=str,
                            help='Set the app execution (Either "script", or "web")',
                            default="script")
+    my_parser.add_argument('--network',
+                           metavar='network',
+                           type=str,
+                           help='Set Network either "mainnet" or "testnet"',
+                           default="mainnet")
     return my_parser
 
 

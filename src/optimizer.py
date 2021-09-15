@@ -1,6 +1,6 @@
 from src.subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
 from src.queries import getFiatPrice, getDataAllocationOptimizer, getGasPrice
-from src.helpers import getSubgraphIpfsHash, ANYBLOCK_ANALYTICS_ID, percentageIncrease, initialize_rpc, REWARD_MANAGER, \
+from src.helpers import getSubgraphIpfsHash, percentageIncrease, initialize_rpc, REWARD_MANAGER, \
     REWARD_MANAGER_ABI
 from src.script_creation import createAllocationScript
 from src.alerting import alert_to_slack
@@ -10,7 +10,6 @@ import json
 import pandas as pd
 import base58
 import pyomo.environ as pyomo
-import streamlit as st
 from eth_utils import to_checksum_address
 
 
@@ -19,7 +18,7 @@ from eth_utils import to_checksum_address
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
                         subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
                         min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100, app="script",
-                        slack_alerting=False):
+                        slack_alerting=False, network='mainnet'):
     """ Runs the main optimization process.
 
     parameters
@@ -31,7 +30,6 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     returns
     --------
         ...
-
     """
     # Load .env File with Configuration
 
@@ -58,6 +56,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['min_allocated_grt_subgraph'] = min_allocated_grt_subgraph
     optimizer_results[current_datetime]['parameters']['app'] = app
     optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
+    optimizer_results[current_datetime]['parameters']['network'] = network
 
     print("Script Execution on: ", current_datetime)
     """
@@ -72,8 +71,9 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     """
 
     # update blacklist / create blacklist if desired
-    if blacklist_parameter:
-        createBlacklist()
+    if network == 'mainnet':
+        if blacklist_parameter:
+            createBlacklist()
 
     # get price data
     # We need ETH-USD, GRT-USD, GRT-ETH
@@ -94,7 +94,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['price_data']['GRT-ETH'] = grt_eth
 
     # get all relevant data from mainnet subgraph
-    data = getDataAllocationOptimizer(indexer_id=indexer_id)
+    data = getDataAllocationOptimizer(indexer_id=indexer_id, network=network)
 
     # Grab global Network Data
     network_data = data['graphNetworks']
@@ -118,7 +118,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['network_data']["yearly_inflation_percentage"] = yearly_inflation_percentage
 
     # get indexer statistics (Total Stake, Total Allocated Tokens ...)
-    indexer_data = data['indexer']
+    if network == 'mainnet':
+        indexer_data = data['indexer']
+    else:
+        indexer_data = data['indexers'][0]
     indexer_total_stake = int(indexer_data.get('tokenCapacity')) * 10 ** -18
 
     indexer_total_allocated_tokens = int(indexer_data.get('allocatedTokens')) * 10 ** -18
@@ -149,7 +152,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             allocation_list.append(sublist)
 
             # create df from allocations
-            df = pd.DataFrame(allocation_list, columns=['Address', 'Name', 'Allocation', 'IndexingReward', 'allocation_id'])
+            df = pd.DataFrame(allocation_list,
+                              columns=['Address', 'Name', 'Allocation', 'IndexingReward', 'allocation_id'])
             df['Allocation'] = df['Allocation'].astype(float) / 10 ** 18
             df['IndexingReward'] = df['IndexingReward'].astype(float) / 10 ** 18
 
@@ -242,7 +246,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     web3 = initialize_rpc()
     abi = json.loads(REWARD_MANAGER_ABI)
     contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
-    pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10**18 for x in df_log['allocation_id']]
+    pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10 ** 18 for x in
+                       df_log['allocation_id']]
     df_log['pending_rewards'] = pending_rewards
 
     # Create Dictionary to convert to Json for Logging of Allocation Data
@@ -373,7 +378,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                     'address'] = c[1]
                 optimizer_results[current_datetime]['optimizer']['optimized_allocations'][c[-1]][
                     'signal_stake_ratio'] = data[c]['signalledTokensTotal'] / (
-                            data[c]['stakedTokensTotal'] + sliced_stake)
+                        data[c]['stakedTokensTotal'] + sliced_stake)
 
             FIXED_ALLOCATION[data[c]['id']] = model.x[c]() / parallel_allocations * 10 ** 18
         optimizer_results[current_datetime]['optimizer']['optimized_allocations'][
@@ -447,7 +452,8 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         optimizer_results[current_datetime]['optimizer'][
             'threshold_reached'] = True
         createAllocationScript(indexer_id=indexer_id, fixed_allocations=FIXED_ALLOCATION,
-                               blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations)
+                               blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations,
+                               network=network)
     # if not reached
     if diff_rewards < threshold:
         if slack_alerting:
@@ -481,5 +487,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
 
 if __name__ == '__main__':
+    """
     optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="weekly",
-                        reserve_stake=500, threshold=15)
+                       reserve_stake=500, threshold=15)
+    """

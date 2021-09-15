@@ -57,6 +57,7 @@ def getClosedAllocationPerformance(indexer_id):
 def mergeDatasetWithPrices(df, currency='usd'):
     # merge with historical price data
 
+
     start_datetime = datetime.today() - timedelta(days=900)
     end_datetime = datetime.today()
 
@@ -83,28 +84,29 @@ def mergeDatasetWithPrices(df, currency='usd'):
 def visualizePerformance(df_active, df_closed):
     # Show Historical Performance based on Selection of Data
     st.subheader("Historical Performance Metrics (Closed/Active/Combined):")
+    if (df_active.size > 0) & (df_closed.size > 0):
 
-    # combine both datasets
-    df_combined = pd.concat([df_active, df_closed], axis=0, ignore_index=True)
+        # combine both datasets
+        df_combined = pd.concat([df_active, df_closed], axis=0, ignore_index=True)
 
-    # create column for
-    allocations_created_count_by_day = df_combined.groupby(["allocation_created_timestamp", "allocation_id"]) \
-        .size().values
+        # create column for
+        allocations_created_count_by_day = df_combined.groupby(["allocation_created_timestamp", "allocation_id"]) \
+            .size().values
 
-    col1, col2 = st.columns(2)
-    options = col1.selectbox(label='Select Active, Closed or Combined Visualizations:',
-                             options=['Closed', 'Active', 'Combined'])
-    currency_options = col2.selectbox("Fiat Currency", ('usd', 'eur'))
+        col1, col2 = st.columns(2)
+        options = col1.selectbox(label='Select Active, Closed or Combined Visualizations:',
+                                 options=['Closed', 'Active', 'Combined'])
+        currency_options = col2.selectbox("Fiat Currency", ('usd', 'eur'))
 
-    map_options_df = {
-        'Closed': mergeDatasetWithPrices(df_closed, currency_options),
-        'Active': mergeDatasetWithPrices(df_active, currency_options),
-        'Combined': mergeDatasetWithPrices(df_combined, currency_options)
-    }
+        map_options_df = {
+            'Closed': mergeDatasetWithPrices(df_closed, currency_options),
+            'Active': mergeDatasetWithPrices(df_active, currency_options),
+            'Combined': mergeDatasetWithPrices(df_combined, currency_options)
+        }
 
-    tableHistoricalPerformance(map_options_df[options], options)
-    visualizeHistoricalPerformanceDiyChart(map_options_df[options])
-    visualizeHistoricalPerformanceDedicatedCharts(map_options_df[options])
+        tableHistoricalPerformance(map_options_df[options], options)
+        visualizeHistoricalPerformanceDiyChart(map_options_df[options])
+        visualizeHistoricalPerformanceDedicatedCharts(map_options_df[options])
 
 
 def tableHistoricalPerformance(df, options):

@@ -19,6 +19,7 @@ def createSidebar():
             # indexer id field
             indexer_id = st.text_input('Indexer Address', value="0x453b5e165cf98ff60167ccd3560ebf8d436ca86c",
                                        key='indexer_id')
+            network = st.selectbox('Network', options=['mainnet', 'testnet'])
             cols = st.columns(2)
             blacklist_parameter = cols[0].checkbox(label='Blacklist', key='blacklist_parameter', value=True)
             subgraph_list_parameter = cols[1].checkbox(label='Subgraphlist', key='subgraph_list_parameter', value=False)
@@ -67,7 +68,8 @@ def createSidebar():
                 'min_allocated_grt_subgraph': min_allocated_grt_subgraph,
                 'submitted': submitted,
                 'slack_alerting': slack_alerting,
-                'discord_alerting': discord_alerting
+                'discord_alerting': discord_alerting,
+                'network': network
 
             }
             return return_dict

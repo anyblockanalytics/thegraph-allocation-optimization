@@ -76467,5 +76467,2295 @@
         "threshold_reached": false
       }
     }
+  },
+  {
+    "2021-09-14-13:26": {
+      "datetime": "2021-09-14-13:26",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false
+      },
+      "price_data": {
+        "gas_price_gwei": 41.378502755,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3335.92,
+        "GRT-USD": 0.848895,
+        "GRT-ETH": 0.00025447
+      },
+      "network_data": {
+        "total_indexing_rewards": 202796980.22647607,
+        "total_tokens_signalled": 3269003.3719228664,
+        "total_supply": 10186365580.646843,
+        "total_tokens_allocated": 3159598664.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.781605777079816,
+          "indexing_reward_daily": 234.7638663219075,
+          "indexing_reward_weekly": 1643.3465034457743,
+          "indexing_reward_yearly": 85688.86504502373,
+          "pending_rewards": 873.0163919097987
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.620534236369537,
+          "indexing_reward_daily": 206.89751695295405,
+          "indexing_reward_weekly": 1448.2821244306695,
+          "indexing_reward_yearly": 75517.64113486909,
+          "pending_rewards": 769.3000899864732
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.256059394196342,
+          "indexing_reward_daily": 246.15101154970685,
+          "indexing_reward_weekly": 1723.0564928385802,
+          "indexing_reward_yearly": 89845.17566454232,
+          "pending_rewards": 915.4685060993314
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.132426555671264,
+          "indexing_reward_daily": 243.18375608695766,
+          "indexing_reward_weekly": 1702.2857116875616,
+          "indexing_reward_yearly": 88762.12674016916,
+          "pending_rewards": 904.4328865071305
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.834756273084539,
+          "indexing_reward_daily": 236.0395071750927,
+          "indexing_reward_weekly": 1652.2759863708002,
+          "indexing_reward_yearly": 86154.47424897432,
+          "pending_rewards": 877.8624700892965
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.6253822364015,
+        "indexing_reward_daily": 1167.0356580866187,
+        "indexing_reward_weekly": 8169.246818773385,
+        "indexing_reward_yearly": 425968.28283357865
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477444.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRab8e3AH4qteCS1qRA2vTirkkT56aGHaEmp3Vn7kiMuy": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v3-101",
+            "address": "0x302525c628ec93cd52cbe5b0f23af808bbb85c0137ce2c2250387e095a8805e8",
+            "signal_stake_ratio": 0.003519002223045788
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 53.22852294624447,
+          "indexingRewardDay": 1277.484550709867,
+          "indexingRewardWeek": 8942.384505064,
+          "indexingRewardYear": 466281.86100910156
+        },
+        "gas_costs_allocating_eth": 0.01117219574385,
+        "gas_costs_parallel_allocation_new_close_eth": 0.1117219574385,
+        "gas_costs_parallel_allocation_new_close_usd": 372.6955122582409,
+        "gas_costs_parallel_allocation_new_close_grt": 439.03783329469087,
+        "increase_rewards_percentage": -28.16,
+        "increase_rewards_fiat": -278.94,
+        "increase_rewards_grt": -328.59,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-14-13:29": {
+      "datetime": "2021-09-14-13:29",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false
+      },
+      "price_data": {
+        "gas_price_gwei": 40,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3339.51,
+        "GRT-USD": 0.851439,
+        "GRT-ETH": 0.00025496
+      },
+      "network_data": {
+        "total_indexing_rewards": 202796980.22647607,
+        "total_tokens_signalled": 3269003.3719228664,
+        "total_supply": 10186365580.646843,
+        "total_tokens_allocated": 3159598664.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.781605777079816,
+          "indexing_reward_daily": 234.7638663219075,
+          "indexing_reward_weekly": 1643.3465034457743,
+          "indexing_reward_yearly": 85688.86504502373,
+          "pending_rewards": 873.500212021038
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.620534236369537,
+          "indexing_reward_daily": 206.89751695295405,
+          "indexing_reward_weekly": 1448.2821244306695,
+          "indexing_reward_yearly": 75517.64113486909,
+          "pending_rewards": 769.7264809010363
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.256059394196342,
+          "indexing_reward_daily": 246.15101154970685,
+          "indexing_reward_weekly": 1723.0564928385802,
+          "indexing_reward_yearly": 89845.17566454232,
+          "pending_rewards": 915.9757937482167
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.132426555671264,
+          "indexing_reward_daily": 243.18375608695766,
+          "indexing_reward_weekly": 1702.2857116875616,
+          "indexing_reward_yearly": 88762.12674016916,
+          "pending_rewards": 904.9340589991539
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.834756273084539,
+          "indexing_reward_daily": 236.0395071750927,
+          "indexing_reward_weekly": 1652.2759863708002,
+          "indexing_reward_yearly": 86154.47424897432,
+          "pending_rewards": 878.3489191430099
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.6253822364015,
+        "indexing_reward_daily": 1167.0356580866187,
+        "indexing_reward_weekly": 8169.246818773385,
+        "indexing_reward_yearly": 425968.28283357865
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477444.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRab8e3AH4qteCS1qRA2vTirkkT56aGHaEmp3Vn7kiMuy": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v3-101",
+            "address": "0x302525c628ec93cd52cbe5b0f23af808bbb85c0137ce2c2250387e095a8805e8",
+            "signal_stake_ratio": 0.003519002223045788
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 53.22852294624447,
+          "indexingRewardDay": 1277.484550709867,
+          "indexingRewardWeek": 8942.384505064,
+          "indexingRewardYear": 466281.86100910156
+        },
+        "gas_costs_allocating_eth": 0.0108,
+        "gas_costs_parallel_allocation_new_close_eth": 0.10800000000000001,
+        "gas_costs_parallel_allocation_new_close_usd": 360.66708000000006,
+        "gas_costs_parallel_allocation_new_close_grt": 423.5958581738313,
+        "increase_rewards_percentage": -26.83,
+        "increase_rewards_fiat": -266.63,
+        "increase_rewards_grt": -313.15,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-14-13:29": {
+      "datetime": "2021-09-14-13:29",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "weekly",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false
+      },
+      "price_data": {
+        "gas_price_gwei": 40,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3339.51,
+        "GRT-USD": 0.851439,
+        "GRT-ETH": 0.00025496
+      },
+      "network_data": {
+        "total_indexing_rewards": 202796980.22647607,
+        "total_tokens_signalled": 3269003.3719228664,
+        "total_supply": 10186365580.646843,
+        "total_tokens_allocated": 3159598664.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.781605777079816,
+          "indexing_reward_daily": 234.7638663219075,
+          "indexing_reward_weekly": 1643.3465034457743,
+          "indexing_reward_yearly": 85688.86504502373,
+          "pending_rewards": 873.500212021038
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.620534236369537,
+          "indexing_reward_daily": 206.89751695295405,
+          "indexing_reward_weekly": 1448.2821244306695,
+          "indexing_reward_yearly": 75517.64113486909,
+          "pending_rewards": 769.7264809010363
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.256059394196342,
+          "indexing_reward_daily": 246.15101154970685,
+          "indexing_reward_weekly": 1723.0564928385802,
+          "indexing_reward_yearly": 89845.17566454232,
+          "pending_rewards": 915.9757937482167
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.132426555671264,
+          "indexing_reward_daily": 243.18375608695766,
+          "indexing_reward_weekly": 1702.2857116875616,
+          "indexing_reward_yearly": 88762.12674016916,
+          "pending_rewards": 904.9340589991539
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.834756273084539,
+          "indexing_reward_daily": 236.0395071750927,
+          "indexing_reward_weekly": 1652.2759863708002,
+          "indexing_reward_yearly": 86154.47424897432,
+          "pending_rewards": 878.3489191430099
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.6253822364015,
+        "indexing_reward_daily": 1167.0356580866187,
+        "indexing_reward_weekly": 8169.246818773385,
+        "indexing_reward_yearly": 425968.28283357865
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477444.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRab8e3AH4qteCS1qRA2vTirkkT56aGHaEmp3Vn7kiMuy": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v3-101",
+            "address": "0x302525c628ec93cd52cbe5b0f23af808bbb85c0137ce2c2250387e095a8805e8",
+            "signal_stake_ratio": 0.003519002223045788
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 53.22852294624447,
+          "indexingRewardDay": 1277.484550709867,
+          "indexingRewardWeek": 8942.384505064,
+          "indexingRewardYear": 466281.86100910156
+        },
+        "gas_costs_allocating_eth": 0.0108,
+        "gas_costs_parallel_allocation_new_close_eth": 0.10800000000000001,
+        "gas_costs_parallel_allocation_new_close_usd": 360.66708000000006,
+        "gas_costs_parallel_allocation_new_close_grt": 423.5958581738313,
+        "increase_rewards_percentage": 4.28,
+        "increase_rewards_fiat": 297.61,
+        "increase_rewards_grt": 349.54,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-11:18": {
+      "datetime": "2021-09-15-11:18",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": true,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false
+      },
+      "price_data": {
+        "gas_price_gwei": 53.4,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3412.18,
+        "GRT-USD": 0.887417,
+        "GRT-ETH": 0.00025994
+      },
+      "network_data": {
+        "total_indexing_rewards": 203249753.16604912,
+        "total_tokens_signalled": 3267899.340325909,
+        "total_supply": 10186817491.820889,
+        "total_tokens_allocated": 3158695435.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78547140523879,
+          "indexing_reward_daily": 234.85355771389933,
+          "indexing_reward_weekly": 1643.9746234987742,
+          "indexing_reward_yearly": 85721.6170072124,
+          "pending_rewards": 1076.2880597474607
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.62394101646771,
+          "indexing_reward_daily": 206.97656202315974,
+          "indexing_reward_weekly": 1448.8356869586264,
+          "indexing_reward_yearly": 75546.50545610533,
+          "pending_rewards": 948.473984260426
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.260112523395968,
+          "indexing_reward_daily": 246.24505339359024,
+          "indexing_reward_weekly": 1723.7150796511207,
+          "indexing_reward_yearly": 89879.51625003909,
+          "pending_rewards": 1128.6360489889955
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.136430825962355,
+          "indexing_reward_daily": 243.27666429270062,
+          "indexing_reward_weekly": 1702.9363594902038,
+          "indexing_reward_yearly": 88796.05336315864,
+          "pending_rewards": 1115.030776921519
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.83864290598023,
+          "indexing_reward_daily": 236.12968592489477,
+          "indexing_reward_weekly": 1652.9075194515924,
+          "indexing_reward_yearly": 86187.40417611836,
+          "pending_rewards": 1082.2734186879825
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64459867704505,
+        "indexing_reward_daily": 1167.4815233482448,
+        "indexing_reward_weekly": 8172.3692690503185,
+        "indexing_reward_yearly": 426131.09625263384
+      },
+      "optimizer": {
+        "grt_per_allocation": 477944.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389720.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477944.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968126230283943
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.0016465366157696016
+          },
+          "QmPXtp2UdoDsoryngUEMTsy1nPbVMuVrgozCMwyZjXUS8N": {
+            "allocation_amount": 477944.107767677,
+            "name": "Totle Swap",
+            "address": "0x11bd056572a84f4f2700896fcd3a7434947cdb5a768ec4028f7935cd2cc2c687",
+            "signal_stake_ratio": 0.0015409965742757296
+          },
+          "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v2",
+            "address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+            "signal_stake_ratio": 0.0015690450668922045
+          },
+          "QmTtNENux7t81rWkxY58eDsHkqnABpwENahSaDPb39THfP": {
+            "allocation_amount": 1.16415321826935e-10,
+            "name": "chainlink-ethereum-mainnet",
+            "address": "0x526a63827df015647bb515af6d05b6d6655820c38bb04eafb79ce2edfd14cc42",
+            "signal_stake_ratio": 0.0014881286149303688
+          },
+          "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+            "allocation_amount": 477944.107767677,
+            "name": "renft-registry",
+            "address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+            "signal_stake_ratio": 0.0015130432859038353
+          },
+          "indexingRewardHour": 40.136737926256814,
+          "indexingRewardDay": 963.2817102301636,
+          "indexingRewardWeek": 6742.966429446956,
+          "indexingRewardYear": 351597.8242340097
+        },
+        "gas_costs_allocating_eth": 0.014418,
+        "gas_costs_parallel_allocation_new_close_eth": 0.173016,
+        "gas_costs_parallel_allocation_new_close_usd": 590.36173488,
+        "gas_costs_parallel_allocation_new_close_grt": 665.599753789336,
+        "increase_rewards_percentage": -74.5,
+        "increase_rewards_fiat": -771.87,
+        "increase_rewards_grt": -869.8,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-15:32": {
+      "datetime": "2021-09-15-15:32",
+      "parameters": {
+        "indexer_id": "0xBED8E8c97cf3aCCc3A9DFEcc30700B49e30014F3",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false,
+        "network": "testnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 67.805648056,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3426.79,
+        "GRT-USD": 0.876613,
+        "GRT-ETH": 0.00025584
+      },
+      "network_data": {
+        "total_indexing_rewards": 104170374.64432324,
+        "total_tokens_signalled": 4762631.764402577,
+        "total_supply": 10101762109.774693,
+        "total_tokens_allocated": 45152532.11307492,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 100000.0,
+        "indexer_total_allocated_tokens": 0.0
+      },
+      "current_allocations": {},
+      "current_rewards": {
+        "indexing_reward_hourly": 0,
+        "indexing_reward_daily": 0,
+        "indexing_reward_weekly": 0,
+        "indexing_reward_yearly": 0
+      },
+      "optimizer": {
+        "grt_per_allocation": 20000.0,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 100000.0,
+        "optimized_allocations": {
+          "QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE": {
+            "allocation_amount": 20000.0,
+            "name": "Opyn Gamma Mainnet",
+            "address": "0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811",
+            "signal_stake_ratio": 1.4734109172585923
+          },
+          "QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 78-QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495",
+            "address": "0x3393ff23dd3afd47cea5e8d2f085d996ae2727d30034c890fbba86241d4d1e90",
+            "signal_stake_ratio": 1.604671453125
+          },
+          "QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 85-QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr",
+            "address": "0x363aa251791e9b2712037006256b0a83d92f01637b79862017cb60e4e8fc491b",
+            "signal_stake_ratio": 1.6215103099481463
+          },
+          "QmSBJR1Nz2cp2T2kiiDCyk3UK41UxsaDbcaiUSjzatLtwV": {
+            "allocation_amount": 20000.0,
+            "name": "zorattest",
+            "address": "0x390992b0512a12e54306ef4fb72d640ff5ca64a0c011b5da9523f1ab9e1e0f8c",
+            "signal_stake_ratio": 0.6500000002145
+          },
+          "QmSHfVWgzp1HePMPicTkxwcNjePmDXnjDqk8y3XSmQDjx6": {
+            "allocation_amount": 20000.0,
+            "name": "test",
+            "address": "0x3aaae3f57a11b4c2706a1d27f36bc5bb22d681652feb1edf9ea4d99468150f73",
+            "signal_stake_ratio": 0.8125
+          },
+          "indexingRewardHour": 895.211335362053,
+          "indexingRewardDay": 21485.072048689268,
+          "indexingRewardWeek": 150395.38072818323,
+          "indexingRewardYear": 7842051.297771584
+        },
+        "gas_costs_allocating_eth": 0.01830752497512,
+        "gas_costs_parallel_allocation_new_close_eth": 0.18307524975120001,
+        "gas_costs_parallel_allocation_new_close_usd": 627.3604350949147,
+        "gas_costs_parallel_allocation_new_close_grt": 715.5849349249531,
+        "increase_rewards_percentage": 2076848.71,
+        "increase_rewards_fiat": 18206.8,
+        "increase_rewards_grt": 20769.49,
+        "threshold_reached": true
+      }
+    }
+  },
+  {
+    "2021-09-15-15:34": {
+      "datetime": "2021-09-15-15:34",
+      "parameters": {
+        "indexer_id": "0xBED8E8c97cf3aCCc3A9DFEcc30700B49e30014F3",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false,
+        "network": "testnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 69.496123389,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3429.28,
+        "GRT-USD": 0.877115,
+        "GRT-ETH": 0.00025574
+      },
+      "network_data": {
+        "total_indexing_rewards": 104170374.64432324,
+        "total_tokens_signalled": 4762631.764402577,
+        "total_supply": 10101762109.774693,
+        "total_tokens_allocated": 45152532.11307492,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 100000.0,
+        "indexer_total_allocated_tokens": 0.0
+      },
+      "current_allocations": {},
+      "current_rewards": {
+        "indexing_reward_hourly": 0,
+        "indexing_reward_daily": 0,
+        "indexing_reward_weekly": 0,
+        "indexing_reward_yearly": 0
+      },
+      "optimizer": {
+        "grt_per_allocation": 20000.0,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 100000.0,
+        "optimized_allocations": {
+          "QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE": {
+            "allocation_amount": 20000.0,
+            "name": "Opyn Gamma Mainnet",
+            "address": "0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811",
+            "signal_stake_ratio": 1.4734109172585923
+          },
+          "QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 78-QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495",
+            "address": "0x3393ff23dd3afd47cea5e8d2f085d996ae2727d30034c890fbba86241d4d1e90",
+            "signal_stake_ratio": 1.604671453125
+          },
+          "QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 85-QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr",
+            "address": "0x363aa251791e9b2712037006256b0a83d92f01637b79862017cb60e4e8fc491b",
+            "signal_stake_ratio": 1.6215103099481463
+          },
+          "QmSBJR1Nz2cp2T2kiiDCyk3UK41UxsaDbcaiUSjzatLtwV": {
+            "allocation_amount": 20000.0,
+            "name": "zorattest",
+            "address": "0x390992b0512a12e54306ef4fb72d640ff5ca64a0c011b5da9523f1ab9e1e0f8c",
+            "signal_stake_ratio": 0.6500000002145
+          },
+          "QmSHfVWgzp1HePMPicTkxwcNjePmDXnjDqk8y3XSmQDjx6": {
+            "allocation_amount": 20000.0,
+            "name": "test",
+            "address": "0x3aaae3f57a11b4c2706a1d27f36bc5bb22d681652feb1edf9ea4d99468150f73",
+            "signal_stake_ratio": 0.8125
+          },
+          "indexingRewardHour": 895.211335362053,
+          "indexingRewardDay": 21485.072048689268,
+          "indexingRewardWeek": 150395.38072818323,
+          "indexingRewardYear": 7842051.297771584
+        },
+        "gas_costs_allocating_eth": 0.018763953315030002,
+        "gas_costs_parallel_allocation_new_close_eth": 0.18763953315030002,
+        "gas_costs_parallel_allocation_new_close_usd": 643.4684982416609,
+        "gas_costs_parallel_allocation_new_close_grt": 733.7121027226871,
+        "increase_rewards_percentage": 2075035.99,
+        "increase_rewards_fiat": 18201.33,
+        "increase_rewards_grt": 20751.36,
+        "threshold_reached": true
+      }
+    }
+  },
+  {
+    "2021-09-15-15:41": {
+      "datetime": "2021-09-15-15:41",
+      "parameters": {
+        "indexer_id": "0xBED8E8c97cf3aCCc3A9DFEcc30700B49e30014F3",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false,
+        "network": "testnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 69.496123389,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3427.17,
+        "GRT-USD": 0.875987,
+        "GRT-ETH": 0.00025556
+      },
+      "network_data": {
+        "total_indexing_rewards": 104170629.42491867,
+        "total_tokens_signalled": 4762631.764402577,
+        "total_supply": 10101762364.555288,
+        "total_tokens_allocated": 45152532.11307492,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 100000.0,
+        "indexer_total_allocated_tokens": 0.0
+      },
+      "current_allocations": {},
+      "current_rewards": {
+        "indexing_reward_hourly": 0,
+        "indexing_reward_daily": 0,
+        "indexing_reward_weekly": 0,
+        "indexing_reward_yearly": 0
+      },
+      "optimizer": {
+        "grt_per_allocation": 20000.0,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 100000.0,
+        "optimized_allocations": {
+          "QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE": {
+            "allocation_amount": 20000.0,
+            "name": "Opyn Gamma Mainnet",
+            "address": "0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811",
+            "signal_stake_ratio": 1.4734109172585923
+          },
+          "QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 78-QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495",
+            "address": "0x3393ff23dd3afd47cea5e8d2f085d996ae2727d30034c890fbba86241d4d1e90",
+            "signal_stake_ratio": 1.604671453125
+          },
+          "QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 85-QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr",
+            "address": "0x363aa251791e9b2712037006256b0a83d92f01637b79862017cb60e4e8fc491b",
+            "signal_stake_ratio": 1.6215103099481463
+          },
+          "QmSBJR1Nz2cp2T2kiiDCyk3UK41UxsaDbcaiUSjzatLtwV": {
+            "allocation_amount": 20000.0,
+            "name": "zorattest",
+            "address": "0x390992b0512a12e54306ef4fb72d640ff5ca64a0c011b5da9523f1ab9e1e0f8c",
+            "signal_stake_ratio": 0.6500000002145
+          },
+          "QmSHfVWgzp1HePMPicTkxwcNjePmDXnjDqk8y3XSmQDjx6": {
+            "allocation_amount": 20000.0,
+            "name": "test",
+            "address": "0x3aaae3f57a11b4c2706a1d27f36bc5bb22d681652feb1edf9ea4d99468150f73",
+            "signal_stake_ratio": 0.8125
+          },
+          "indexingRewardHour": 895.2113579405371,
+          "indexingRewardDay": 21485.072590572894,
+          "indexingRewardWeek": 150395.38452136546,
+          "indexingRewardYear": 7842051.495559107
+        },
+        "gas_costs_allocating_eth": 0.018763953315030002,
+        "gas_costs_parallel_allocation_new_close_eth": 0.18763953315030002,
+        "gas_costs_parallel_allocation_new_close_usd": 643.0725788267138,
+        "gas_costs_parallel_allocation_new_close_grt": 734.2288822597434,
+        "increase_rewards_percentage": 2074984.37,
+        "increase_rewards_fiat": 18177.47,
+        "increase_rewards_grt": 20750.84,
+        "threshold_reached": true
+      }
+    }
+  },
+  {
+    "2021-09-15-15:53": {
+      "datetime": "2021-09-15-15:53",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 63.74413487,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3432.38,
+        "GRT-USD": 0.879667,
+        "GRT-ETH": 0.00025626
+      },
+      "network_data": {
+        "total_indexing_rewards": 203260916.06539068,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186826863.73951,
+        "total_tokens_allocated": 3156750631.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84341727162348,
+          "indexing_reward_weekly": 1643.9033599292147,
+          "indexing_reward_yearly": 85717.89218191453,
+          "pending_rewards": 1119.1566503208683
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96762524613115,
+          "indexing_reward_weekly": 1448.7728823378723,
+          "indexing_reward_yearly": 75543.22276564153,
+          "pending_rewards": 986.2236271784338
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.23442109244917,
+          "indexing_reward_weekly": 1723.6403594652224,
+          "indexing_reward_yearly": 89875.61075329769,
+          "pending_rewards": 1173.5477179483705
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26616015984717,
+          "indexing_reward_weekly": 1702.8625400273147,
+          "indexing_reward_yearly": 88792.19494567347,
+          "pending_rewards": 1159.401053041507
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1194903823062,
+          "indexing_reward_weekly": 1652.835868655829,
+          "indexing_reward_yearly": 86183.65911116693,
+          "pending_rewards": 1125.3401854700526
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4311141523572,
+        "indexing_reward_weekly": 8172.015010415453,
+        "indexing_reward_yearly": 426112.57975769415
+      },
+      "optimizer": {
+        "grt_per_allocation": 477944.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389720.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477944.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968126230283943
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.0016465366157696016
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017936459044709007
+          },
+          "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+            "allocation_amount": 1.16415321826935e-10,
+            "name": "Bot Bait v2",
+            "address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+            "signal_stake_ratio": 0.0015690450668922045
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.0018044764814373674
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.0016738537087285599
+          },
+          "indexingRewardHour": 43.44567362345459,
+          "indexingRewardDay": 1042.6961669629104,
+          "indexingRewardWeek": 7298.8671696714655,
+          "indexingRewardYear": 380584.1009414622
+        },
+        "gas_costs_allocating_eth": 0.0172109164149,
+        "gas_costs_parallel_allocation_new_close_eth": 0.2065309969788,
+        "gas_costs_parallel_allocation_new_close_usd": 708.8928634100936,
+        "gas_costs_parallel_allocation_new_close_grt": 805.9431709154765,
+        "increase_rewards_percentage": -79.72,
+        "increase_rewards_fiat": -818.69,
+        "increase_rewards_grt": -930.68,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-15:53": {
+      "datetime": "2021-09-15-15:53",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20.0,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "weekly",
+        "reserve_stake": 0,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "script",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 63.74413487,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3432.77,
+        "GRT-USD": 0.879667,
+        "GRT-ETH": 0.00025626
+      },
+      "network_data": {
+        "total_indexing_rewards": 203260916.06539068,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186826863.73951,
+        "total_tokens_allocated": 3156750631.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84341727162348,
+          "indexing_reward_weekly": 1643.9033599292147,
+          "indexing_reward_yearly": 85717.89218191453,
+          "pending_rewards": 1119.2257898481366
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96762524613115,
+          "indexing_reward_weekly": 1448.7728823378723,
+          "indexing_reward_yearly": 75543.22276564153,
+          "pending_rewards": 986.2845598796165
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.23442109244917,
+          "indexing_reward_weekly": 1723.6403594652224,
+          "indexing_reward_yearly": 89875.61075329769,
+          "pending_rewards": 1173.6202110659945
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26616015984717,
+          "indexing_reward_weekly": 1702.8625400273147,
+          "indexing_reward_yearly": 88792.19494567347,
+          "pending_rewards": 1159.4726722825708
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1194903823062,
+          "indexing_reward_weekly": 1652.835868655829,
+          "indexing_reward_yearly": 86183.65911116693,
+          "pending_rewards": 1125.4097006820757
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4311141523572,
+        "indexing_reward_weekly": 8172.015010415453,
+        "indexing_reward_yearly": 426112.57975769415
+      },
+      "optimizer": {
+        "grt_per_allocation": 477944.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389720.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477944.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968126230283943
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.0016465366157696016
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017936459044709007
+          },
+          "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+            "allocation_amount": 1.16415321826935e-10,
+            "name": "Bot Bait v2",
+            "address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+            "signal_stake_ratio": 0.0015690450668922045
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.0018044764814373674
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.0016738537087285599
+          },
+          "indexingRewardHour": 43.44567362345459,
+          "indexingRewardDay": 1042.6961669629104,
+          "indexingRewardWeek": 7298.8671696714655,
+          "indexingRewardYear": 380584.1009414622
+        },
+        "gas_costs_allocating_eth": 0.0172109164149,
+        "gas_costs_parallel_allocation_new_close_eth": 0.2065309969788,
+        "gas_costs_parallel_allocation_new_close_usd": 708.9734104989153,
+        "gas_costs_parallel_allocation_new_close_grt": 805.9431709154765,
+        "increase_rewards_percentage": -20.55,
+        "increase_rewards_fiat": -1477.04,
+        "increase_rewards_grt": -1679.09,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-15:58": {
+      "datetime": "2021-09-15-15:58",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 64.845421335,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3434.7,
+        "GRT-USD": 0.886368,
+        "GRT-ETH": 0.00025778
+      },
+      "network_data": {
+        "total_indexing_rewards": 203260916.06539068,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186826863.73951,
+        "total_tokens_allocated": 3156750631.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84341727162348,
+          "indexing_reward_weekly": 1643.9033599292147,
+          "indexing_reward_yearly": 85717.89218191453,
+          "pending_rewards": 1119.9863247592912
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96762524613115,
+          "indexing_reward_weekly": 1448.7728823378723,
+          "indexing_reward_yearly": 75543.22276564153,
+          "pending_rewards": 986.954819690631
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.23442109244917,
+          "indexing_reward_weekly": 1723.6403594652224,
+          "indexing_reward_yearly": 89875.61075329769,
+          "pending_rewards": 1174.4176354764566
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26616015984717,
+          "indexing_reward_weekly": 1702.8625400273147,
+          "indexing_reward_yearly": 88792.19494567347,
+          "pending_rewards": 1160.2604840494646
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1194903823062,
+          "indexing_reward_weekly": 1652.835868655829,
+          "indexing_reward_yearly": 86183.65911116693,
+          "pending_rewards": 1126.174368126137
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4311141523572,
+        "indexing_reward_weekly": 8172.015010415453,
+        "indexing_reward_yearly": 426112.57975769415
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477444.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968998007974229
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 43.44014333209798,
+          "indexingRewardDay": 1042.5634399703517,
+          "indexingRewardWeek": 7297.938081487192,
+          "indexingRewardYear": 380535.65558917844
+        },
+        "gas_costs_allocating_eth": 0.017508263760449998,
+        "gas_costs_parallel_allocation_new_close_eth": 0.1750826376045,
+        "gas_costs_parallel_allocation_new_close_usd": 601.3563353801761,
+        "gas_costs_parallel_allocation_new_close_grt": 679.1940321378695,
+        "increase_rewards_percentage": -68.87,
+        "increase_rewards_fiat": -712.69,
+        "increase_rewards_grt": -804.06,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-16:09": {
+      "datetime": "2021-09-15-16:09",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 66.591935181,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3451.25,
+        "GRT-USD": 0.889114,
+        "GRT-ETH": 0.0002576
+      },
+      "network_data": {
+        "total_indexing_rewards": 203320044.00036228,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186885991.67448,
+        "total_tokens_allocated": 3151062398.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84481970199727,
+          "indexing_reward_weekly": 1643.9128964557565,
+          "indexing_reward_yearly": 85718.38976421116,
+          "pending_rewards": 1121.7494212690444
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96886120874578,
+          "indexing_reward_weekly": 1448.7812868836518,
+          "indexing_reward_yearly": 75543.66128517721,
+          "pending_rewards": 988.5086375576286
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.2358915472536,
+          "indexing_reward_weekly": 1723.6503585578926,
+          "indexing_reward_yearly": 89876.1324706623,
+          "pending_rewards": 1176.2662504108375
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26761288888633,
+          "indexing_reward_weekly": 1702.872418584781,
+          "indexing_reward_yearly": 88792.71037393657,
+          "pending_rewards": 1162.08681464413
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1209004330924,
+          "indexing_reward_weekly": 1652.8454570011752,
+          "indexing_reward_yearly": 86184.15939718587,
+          "pending_rewards": 1127.9470448066859
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4380857799754,
+        "indexing_reward_weekly": 8172.0624174832565,
+        "indexing_reward_yearly": 426115.05329117307
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477444.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968998007974229
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 43.440395474006806,
+          "indexingRewardDay": 1042.5694913761631,
+          "indexingRewardWeek": 7297.980441293054,
+          "indexingRewardYear": 380537.8643522996
+        },
+        "gas_costs_allocating_eth": 0.01797982249887,
+        "gas_costs_parallel_allocation_new_close_eth": 0.17979822498870002,
+        "gas_costs_parallel_allocation_new_close_usd": 620.5286239922509,
+        "gas_costs_parallel_allocation_new_close_grt": 697.9744758878107,
+        "increase_rewards_percentage": -70.48,
+        "increase_rewards_fiat": -731.6,
+        "increase_rewards_grt": -822.84,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-16:10": {
+      "datetime": "2021-09-15-16:10",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 66.591935181,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3450.48,
+        "GRT-USD": 0.889189,
+        "GRT-ETH": 0.00025769
+      },
+      "network_data": {
+        "total_indexing_rewards": 203320044.00036228,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186885991.67448,
+        "total_tokens_allocated": 3156750631.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84481970199727,
+          "indexing_reward_weekly": 1643.9128964557565,
+          "indexing_reward_yearly": 85718.38976421116,
+          "pending_rewards": 1121.7839912647148
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96886120874578,
+          "indexing_reward_weekly": 1448.7812868836518,
+          "indexing_reward_yearly": 75543.66128517721,
+          "pending_rewards": 988.539104112714
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.2358915472536,
+          "indexing_reward_weekly": 1723.6503585578926,
+          "indexing_reward_yearly": 89876.1324706623,
+          "pending_rewards": 1176.3024972129406
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26761288888633,
+          "indexing_reward_weekly": 1702.872418584781,
+          "indexing_reward_yearly": 88792.71037393657,
+          "pending_rewards": 1162.1226245050207
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1209004330924,
+          "indexing_reward_weekly": 1652.8454570011752,
+          "indexing_reward_yearly": 86184.15939718587,
+          "pending_rewards": 1127.9818026459945
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4380857799754,
+        "indexing_reward_weekly": 8172.0624174832565,
+        "indexing_reward_yearly": 426115.05329117307
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477444.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968998007974229
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 43.440395474006806,
+          "indexingRewardDay": 1042.5694913761631,
+          "indexingRewardWeek": 7297.980441293054,
+          "indexingRewardYear": 380537.8643522996
+        },
+        "gas_costs_allocating_eth": 0.01797982249887,
+        "gas_costs_parallel_allocation_new_close_eth": 0.17979822498870002,
+        "gas_costs_parallel_allocation_new_close_usd": 620.3901793590096,
+        "gas_costs_parallel_allocation_new_close_grt": 697.7307035146882,
+        "increase_rewards_percentage": -70.46,
+        "increase_rewards_fiat": -731.45,
+        "increase_rewards_grt": -822.6,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-16:10": {
+      "datetime": "2021-09-15-16:10",
+      "parameters": {
+        "indexer_id": "0xBED8E8c97cf3aCCc3A9DFEcc30700B49e30014F3",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "testnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 66.591935181,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3450.48,
+        "GRT-USD": 0.889189,
+        "GRT-ETH": 0.00025769
+      },
+      "network_data": {
+        "total_indexing_rewards": 104171509.4492229,
+        "total_tokens_signalled": 4762631.764402577,
+        "total_supply": 10101763244.579592,
+        "total_tokens_allocated": 45152532.11307492,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 100000.0,
+        "indexer_total_allocated_tokens": 0.0
+      },
+      "current_allocations": {},
+      "current_rewards": {
+        "indexing_reward_hourly": 0,
+        "indexing_reward_daily": 0,
+        "indexing_reward_weekly": 0,
+        "indexing_reward_yearly": 0
+      },
+      "optimizer": {
+        "grt_per_allocation": 19900.0,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 99500.0,
+        "optimized_allocations": {
+          "QmNRkaVUwUQAwPwWgdQHYvw53A5gh3CP3giWnWQZdA2BTE": {
+            "allocation_amount": 20000.0,
+            "name": "Opyn Gamma Mainnet",
+            "address": "0x014e8a3184d5fad198123419a7b54d5f7c9f8a981116462591fbb1a922c39811",
+            "signal_stake_ratio": 1.4756408920280975
+          },
+          "QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 78-QmRozPdvaJAQo1kvmtzCTK1Sd78pPAqomoHQbQLgtu7495",
+            "address": "0x3393ff23dd3afd47cea5e8d2f085d996ae2727d30034c890fbba86241d4d1e90",
+            "signal_stake_ratio": 1.607350370409015
+          },
+          "QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr": {
+            "allocation_amount": 20000.0,
+            "name": "Subgraph 85-QmRzLagL1c6Ytn9FHhu2v5YLmdEvAKx5WWuSZaaZULckgr",
+            "address": "0x363aa251791e9b2712037006256b0a83d92f01637b79862017cb60e4e8fc491b",
+            "signal_stake_ratio": 1.6242173388462233
+          },
+          "QmSBJR1Nz2cp2T2kiiDCyk3UK41UxsaDbcaiUSjzatLtwV": {
+            "allocation_amount": 19500.0,
+            "name": "zorattest",
+            "address": "0x390992b0512a12e54306ef4fb72d640ff5ca64a0c011b5da9523f1ab9e1e0f8c",
+            "signal_stake_ratio": 0.65108514211803
+          },
+          "QmSHfVWgzp1HePMPicTkxwcNjePmDXnjDqk8y3XSmQDjx6": {
+            "allocation_amount": 20000.0,
+            "name": "test",
+            "address": "0x3aaae3f57a11b4c2706a1d27f36bc5bb22d681652feb1edf9ea4d99468150f73",
+            "signal_stake_ratio": 0.8138564273789649
+          },
+          "indexingRewardHour": 894.3078644238219,
+          "indexingRewardDay": 21463.388746171728,
+          "indexingRewardWeek": 150243.59773531352,
+          "indexingRewardYear": 7834136.892352681
+        },
+        "gas_costs_allocating_eth": 0.01797982249887,
+        "gas_costs_parallel_allocation_new_close_eth": 0.17979822498870002,
+        "gas_costs_parallel_allocation_new_close_usd": 620.3901793590096,
+        "gas_costs_parallel_allocation_new_close_grt": 697.7307035146882,
+        "increase_rewards_percentage": 2076465.8,
+        "increase_rewards_fiat": 18464.59,
+        "increase_rewards_grt": 20765.66,
+        "threshold_reached": true
+      }
+    }
+  },
+  {
+    "2021-09-15-16:11": {
+      "datetime": "2021-09-15-16:11",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 67.55348228,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3450.64,
+        "GRT-USD": 0.889192,
+        "GRT-ETH": 0.00025761
+      },
+      "network_data": {
+        "total_indexing_rewards": 203320044.00036228,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186885991.67448,
+        "total_tokens_allocated": 3156750631.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84481970199727,
+          "indexing_reward_weekly": 1643.9128964557565,
+          "indexing_reward_yearly": 85718.38976421116,
+          "pending_rewards": 1121.991411247586
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96886120874578,
+          "indexing_reward_weekly": 1448.7812868836518,
+          "indexing_reward_yearly": 75543.66128517721,
+          "pending_rewards": 988.7219034510225
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.2358915472536,
+          "indexing_reward_weekly": 1723.6503585578926,
+          "indexing_reward_yearly": 89876.1324706623,
+          "pending_rewards": 1176.5199780348369
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26761288888633,
+          "indexing_reward_weekly": 1702.872418584781,
+          "indexing_reward_yearly": 88792.71037393657,
+          "pending_rewards": 1162.3374836795276
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1209004330924,
+          "indexing_reward_weekly": 1652.8454570011752,
+          "indexing_reward_yearly": 86184.15939718587,
+          "pending_rewards": 1128.1903496907428
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4380857799754,
+        "indexing_reward_weekly": 8172.0624174832565,
+        "indexing_reward_yearly": 426115.05329117307
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNNqS4Ftof3kGrTGrpynFYgeK5R6vVTEqADSN63vXEKC8": {
+            "allocation_amount": 477444.107767677,
+            "name": "Umbria",
+            "address": "0x008f49562d4bdb43ae1b4b68097952d174fcec525019b0d270d2fe533a047d15",
+            "signal_stake_ratio": 0.0015968998007974229
+          },
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477944.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 43.440395474006806,
+          "indexingRewardDay": 1042.5694913761631,
+          "indexingRewardWeek": 7297.980441293054,
+          "indexingRewardYear": 380537.8643522996
+        },
+        "gas_costs_allocating_eth": 0.0182394402156,
+        "gas_costs_parallel_allocation_new_close_eth": 0.182394402156,
+        "gas_costs_parallel_allocation_new_close_usd": 629.3774198555798,
+        "gas_costs_parallel_allocation_new_close_grt": 708.0253179457319,
+        "increase_rewards_percentage": -71.34,
+        "increase_rewards_fiat": -740.6,
+        "increase_rewards_grt": -832.89,
+        "threshold_reached": false
+      }
+    }
+  },
+  {
+    "2021-09-15-16:15": {
+      "datetime": "2021-09-15-16:15",
+      "parameters": {
+        "indexer_id": "0x453B5E165Cf98FF60167cCd3560EBf8D436ca86C",
+        "blacklist": false,
+        "parallel_allocations": 1,
+        "max_percentage": 0.2,
+        "threshold": 20,
+        "subgraph_list_parameter": false,
+        "threshold_interval": "daily",
+        "reserve_stake": 500,
+        "min_allocation": 0,
+        "min_signalled_grt_subgraph": 100,
+        "min_allocated_grt_subgraph": 100,
+        "app": "web",
+        "slack_alerting": false,
+        "network": "mainnet"
+      },
+      "price_data": {
+        "gas_price_gwei": 67.924863832,
+        "allocation_gas_usage": 270000,
+        "ETH-USD": 3451.25,
+        "GRT-USD": 0.886227,
+        "GRT-ETH": 0.00025676
+      },
+      "network_data": {
+        "total_indexing_rewards": 203324973.7198982,
+        "total_tokens_signalled": 3268044.3500773064,
+        "total_supply": 10186890921.394016,
+        "total_tokens_allocated": 3156291296.089799,
+        "grt_issuance": 1000000012184945188,
+        "yearly_inflation_percentage": 1.0300000002147995
+      },
+      "indexer": {
+        "indexer_total_stake": 2389720.538838383,
+        "indexer_total_allocated_tokens": 2388720.5500000003
+      },
+      "current_allocations": {
+        "QmUmoqoShfH5KoxKGhxJfWnDT6H9v5ckRuaZeDwXiQ2BiD": {
+          "Address": "0x5f97f7d74e0b5a0342d8a8597e7c91ca585762a84072444a1cab6002b8b17276",
+          "Name_x": "renft-registry",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x2de0dd4ffd2e805cf0744a2ab215e9c0c63c4683",
+          "Name_y": "renft-registry",
+          "signalledTokensTotal": 3412.5,
+          "stakedTokensTotal": 1777444.1099999999,
+          "indexing_reward_hourly": 9.78503720403961,
+          "indexing_reward_daily": 234.84481970199727,
+          "indexing_reward_weekly": 1643.9137379139809,
+          "indexing_reward_yearly": 85718.43127615021,
+          "pending_rewards": 1122.4062547050771
+        },
+        "QmU4VyxYkMbYm5d7nLVBsatHqo2hrDTSbm7MvoPpSRMeYV": {
+          "Address": "0x5502f6187f6f27c01f633ae4cc0187c5c5b47a7c8cf47cf2938683ef228ccb56",
+          "Name_x": "AAVE V2",
+          "Allocation": 477444.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x4f85a157dd2c4cba3c2d0de300456b1648985619",
+          "Name_y": "AAVE V2",
+          "signalledTokensTotal": 3411.2070072056467,
+          "stakedTokensTotal": 2016078.06,
+          "indexing_reward_hourly": 8.623558354726034,
+          "indexing_reward_daily": 206.96886120874578,
+          "indexing_reward_weekly": 1448.7820284612205,
+          "indexing_reward_yearly": 75543.6978696706,
+          "pending_rewards": 989.08750520492
+        },
+        "QmRavjdwiaU7mFWT7Uum28Lf6y6cm397z6CdZPpLcFj9iR": {
+          "Address": "0x303b502eba6fc9009263db01c6f1edeabe6427bb40a7e2e9be65f60760e5bb12",
+          "Name_x": "Bot Bait v2",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x5082c227a60c14630974b17748f7ece7e3d712e6",
+          "Name_y": "Bot Bait v2",
+          "signalledTokensTotal": 3412.8412500000004,
+          "stakedTokensTotal": 1697163.1099999999,
+          "indexing_reward_hourly": 10.259657261408384,
+          "indexing_reward_daily": 246.2358915472536,
+          "indexing_reward_weekly": 1723.6512408307751,
+          "indexing_reward_yearly": 89876.17599612451,
+          "pending_rewards": 1176.9549433397456
+        },
+        "QmPU2gPVfovDGxDHt8FpXbhbxPq3dWNT6cNd9xqZYcD7uA": {
+          "Address": "0x10bf983634fabedf30199c6c9c8960162a3b182ee8be3a7a4561e904bcbd0b19",
+          "Name_x": "elyfi",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0x6f23082c9438d5a00b32b158fb8a49663ffd5f59",
+          "Name_y": "elyfi",
+          "signalledTokensTotal": 2438.274427943679,
+          "stakedTokensTotal": 1227318.1099999999,
+          "indexing_reward_hourly": 10.135981051982363,
+          "indexing_reward_daily": 243.26761288888633,
+          "indexing_reward_weekly": 1702.8732902222043,
+          "indexing_reward_yearly": 88792.75337471612,
+          "pending_rewards": 1162.767205645524
+        },
+        "QmU4yY98kYV4GUHJDYvpnrD9fqyB7HmvrTfq5KosWh8Lrh": {
+          "Address": "0x55221e21ce7e608a8931f43a1704122501c58837cbb9aac6fdbb81bf4b507f26",
+          "Name_x": "fei",
+          "Allocation": 477944.11000000004,
+          "IndexingReward": 0.0,
+          "allocation_id": "0xa033445d81d9a3d7b685152a702d2250c69f9c2c",
+          "Name_y": "fei",
+          "signalledTokensTotal": 1924.3399572215883,
+          "stakedTokensTotal": 997944.11,
+          "indexing_reward_hourly": 9.838206345453793,
+          "indexing_reward_daily": 236.1209004330924,
+          "indexing_reward_weekly": 1652.8463030316468,
+          "indexing_reward_yearly": 86184.20113468914,
+          "pending_rewards": 1128.607447290962
+        }
+      },
+      "current_rewards": {
+        "indexing_reward_hourly": 48.64244021761018,
+        "indexing_reward_daily": 1167.4380857799754,
+        "indexing_reward_weekly": 8172.066600459828,
+        "indexing_reward_yearly": 426115.25965135056
+      },
+      "optimizer": {
+        "grt_per_allocation": 477844.1077676766,
+        "allocations_total": 5.0,
+        "stake_to_allocate": 2389220.538838383,
+        "optimized_allocations": {
+          "QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy": {
+            "allocation_amount": 477444.107767677,
+            "name": "Bot Bait v1",
+            "address": "0x098b3a9b9cb4299e66510822a1ce0c106c145a5724531509c3967077f659b8e4",
+            "signal_stake_ratio": 0.001646591135358289
+          },
+          "QmPVjCWWZeaN7Mw5P6GEhbGixFbv8XKvqTa1oTv7RQsosM": {
+            "allocation_amount": 477944.107767677,
+            "name": "uniswap-v2-tokenHourData-subgraph",
+            "address": "0x112efda0d0c6f9d853f3e0e5f7bc789003efbff0603c573fea0d79e63acc5720",
+            "signal_stake_ratio": 0.0017939459234693597
+          },
+          "QmQyWBRb6nMJmrfhJU57QckjZ3kjKb3yCr82BD9Pp3ncTa": {
+            "allocation_amount": 477944.107767677,
+            "name": "EthSign 3.0 Mainnet",
+            "address": "0x2728385332acc29c930a1c79b43e83efe09bbf8ebcf6170244c39408b54396f9",
+            "signal_stake_ratio": 0.0018849292590301288
+          },
+          "QmRhLoEVF13KDzyWg9rmnHygBMcV6j9KotyMoFa6rugTgg": {
+            "allocation_amount": 477944.107767677,
+            "name": "simplefi-uniswap-v2",
+            "address": "0x31e0014aea830875591c5ad86175045d5bc0c955c13b85916f201a157ba6595d",
+            "signal_stake_ratio": 0.001804537017404233
+          },
+          "QmS7VGsn5s8UTMrebMRVNub2qCBYK19Qvg4dGNdTqsHX4k": {
+            "allocation_amount": 477944.107767677,
+            "name": "Test remove soon",
+            "address": "0x380f876c05b7fce7bd8234de974bf0d5a0b262f7325bdb1a785ce4a120691831",
+            "signal_stake_ratio": 0.001673938115320402
+          },
+          "indexingRewardHour": 44.909703167005546,
+          "indexingRewardDay": 1077.8328760081333,
+          "indexingRewardWeek": 7544.823930831783,
+          "indexingRewardYear": 393408.99974296865
+        },
+        "gas_costs_allocating_eth": 0.01833971323464,
+        "gas_costs_parallel_allocation_new_close_eth": 0.18339713234639998,
+        "gas_costs_parallel_allocation_new_close_usd": 632.9493530105129,
+        "gas_costs_parallel_allocation_new_close_grt": 714.2745456706651,
+        "increase_rewards_percentage": -68.86,
+        "increase_rewards_fiat": -712.42,
+        "increase_rewards_grt": -803.88,
+        "threshold_reached": false
+      }
+    }
   }
 ]

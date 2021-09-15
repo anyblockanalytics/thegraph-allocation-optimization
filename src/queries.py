@@ -7,6 +7,7 @@ from pycoingecko import CoinGeckoAPI
 from datetime import datetime, timedelta
 import pandas as pd
 
+
 def getFiatPrice(pairs):
     """Get's the Currency Pairs from Coingecko.
 
@@ -36,7 +37,7 @@ def getFiatPrice(pairs):
 
 
 def getHistoricalPriceData(token_identifier, currency='usd', start_datetime=datetime.today() - timedelta(days=90),
-                   end_datetime=datetime.today()):
+                           end_datetime=datetime.today()):
     """Get Price data from CoinGecko.
 
     Parameters
@@ -81,6 +82,7 @@ def getHistoricalPriceData(token_identifier, currency='usd', start_datetime=date
     df_price_data = df_price_data.groupby(df_price_data['datetime'], as_index=False).agg({'close': 'max'})
 
     return df_price_data
+
 
 def getGasPrice(speed='fast'):
     """Get's the Gas Price for the latest 200 Blocks in GWEI.Can Choose
@@ -430,7 +432,6 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
 
     resp = requests.post(API_GATEWAY, json=request_json)
 
-
     subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
 
     subgraphList = []
@@ -611,7 +612,7 @@ def getSpecificSubgraphData(subgraph_ipfs_hash, variables=None, ):
     return subgraph_data
 
 
-def getDataAllocationOptimizer(indexer_id, variables=None, ):
+def getDataAllocationOptimizer(indexer_id, network='mainnet', variables=None, ):
     """
     Grabs all relevant Data from the Mainnet Meta Subgraph which are used for the
     Optimizer
@@ -628,17 +629,65 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
     """
 
     load_dotenv()
-
-    API_GATEWAY = os.getenv('API_GATEWAY')
-    OPTIMIZATION_DATA = """
-        query MyQuery($input: String){
-          subgraphDeployments {
+    if network == 'mainnet':
+        API_GATEWAY = os.getenv('API_GATEWAY')
+        OPTIMIZATION_DATA = """
+            query MyQuery($input: String){
+              subgraphDeployments {
+                originalName
+                signalledTokens
+                stakedTokens
+                id
+              }
+              indexer(id: $input) {
+                tokenCapacity
+                allocatedTokens
+                stakedTokens
+                allocations {
+                  allocatedTokens
+                  id
+                  subgraphDeployment {
+                    originalName
+                    id
+                  }
+                  indexingRewards
+                }
+                account {
+                  defaultName {
+                    name
+                  }
+                }
+              }
+              graphNetworks {
+                totalTokensAllocated
+                totalTokensStaked
+                totalIndexingRewards
+                totalTokensSignalled
+                totalSupply
+                networkGRTIssuance
+              }
+            }
+            """
+        variables = {'input': indexer_id}
+    else:
+        API_GATEWAY = os.getenv('TESTNET_GATEWAY')
+        OPTIMIZATION_DATA = """
+        query MyQuery($input: String) {
+            subgraphDeployments {
             originalName
             signalledTokens
             stakedTokens
             id
           }
-          indexer(id: $input) {
+          graphNetworks {
+            totalTokensAllocated
+            totalTokensStaked
+            totalIndexingRewards
+            totalTokensSignalled
+            totalSupply
+            networkGRTIssuance
+          }
+          indexers(where: {id: $input}) {
             tokenCapacity
             allocatedTokens
             stakedTokens
@@ -654,20 +703,17 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
             account {
               defaultName {
                 name
+                id
               }
+              balance
+              codeRepository
+              createdAt
             }
           }
-          graphNetworks {
-            totalTokensAllocated
-            totalTokensStaked
-            totalIndexingRewards
-            totalTokensSignalled
-            totalSupply
-            networkGRTIssuance
           }
-        }
         """
-    variables = {'input': indexer_id}
+        variables = {'input': indexer_id}
+
 
     request_json = {'query': OPTIMIZATION_DATA}
     if indexer_id:
@@ -677,4 +723,3 @@ def getDataAllocationOptimizer(indexer_id, variables=None, ):
     data = data['data']
 
     return data
-

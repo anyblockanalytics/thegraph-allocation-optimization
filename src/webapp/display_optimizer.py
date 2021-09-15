@@ -36,7 +36,8 @@ def createOptimizerOutput(parameters):
                                                  min_allocated_grt_subgraph=parameters.get(
                                                      'min_allocated_grt_subgraph'),
                                                  app="web",
-                                                 slack_alerting=parameters.get('slack_alerting')
+                                                 slack_alerting=parameters.get('slack_alerting'),
+                                                 network = parameters.get('network')
                                                  )
 
         optimizer_key = None

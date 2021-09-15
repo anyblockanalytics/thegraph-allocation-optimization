@@ -14,4 +14,4 @@ if __name__ == '__main__':
                         threshold_interval=args.threshold_interval, reserve_stake=args.reserve_stake,
                         min_allocation=args.min_allocation, min_allocated_grt_subgraph=args.min_allocated_grt_subgraph,
                         min_signalled_grt_subgraph=args.min_signalled_grt_subgraph, app=args.app,
-                        slack_alerting=args.slack_alerting)
+                        slack_alerting=args.slack_alerting, network = args.network)

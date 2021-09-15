@@ -103,7 +103,7 @@ def calculateRewardsActiveAllocation(allocation_id, interval=1):
             "block_height": block,
             "allocated_tokens": allocated_tokens,
             "allocation_id": allocation_id,
-            "allocation_created_timestamp":  datetime.utcfromtimestamp(allocation_created_at).strftime('%Y-%m-%d'),
+            "allocation_created_timestamp": datetime.utcfromtimestamp(allocation_created_at).strftime('%Y-%m-%d'),
             "allocation_created_epoch": allocation['createdAtEpoch'],
             "allocation_status": "Open",
             "timestamp": datetime.utcfromtimestamp(
@@ -124,35 +124,58 @@ def calculateRewardsAllActiveAllocations(indexer_id, interval=1):
     """
     # grab all active allocations
     active_allocations = getActiveAllocations(indexer_id=indexer_id)
-    active_allocations = active_allocations['allocations']
+    if active_allocations:
+        active_allocations = active_allocations['allocations']
 
-    df = pd.DataFrame(columns=["datetime",
-                               "subgraph_name",
-                               "subgraph_ipfs_hash",
-                               "accumulated_reward",
-                               "reward_rate_day",
-                               "reward_rate_hour",
-                               "reward_rate_hour_per_token",
-                               "earnings_rate_all_indexers",
-                               "subgraph_age_in_hours",
-                               "subgraph_age_in_days",
-                               "subgraph_created_at",
-                               "subgraph_signal",
-                               "subgraph_stake",
-                               "subgraph_signal_ratio",
-                               "block_height",
-                               "allocated_tokens",
-                               "allocation_id",
-                               "allocation_created_timestamp",
-                               "allocation_created_epoch",
-                               "allocation_status",
-                               "timestamp"
-                               ])
-    # append all active allocations to a temp list with allocation ID
-    for allocation in active_allocations:
-        df_temp = calculateRewardsActiveAllocation(allocation_id=allocation['id'], interval=interval)
-        df = df.append(df_temp)
-
+        df = pd.DataFrame(columns=["datetime",
+                                   "subgraph_name",
+                                   "subgraph_ipfs_hash",
+                                   "accumulated_reward",
+                                   "reward_rate_day",
+                                   "reward_rate_hour",
+                                   "reward_rate_hour_per_token",
+                                   "earnings_rate_all_indexers",
+                                   "subgraph_age_in_hours",
+                                   "subgraph_age_in_days",
+                                   "subgraph_created_at",
+                                   "subgraph_signal",
+                                   "subgraph_stake",
+                                   "subgraph_signal_ratio",
+                                   "block_height",
+                                   "allocated_tokens",
+                                   "allocation_id",
+                                   "allocation_created_timestamp",
+                                   "allocation_created_epoch",
+                                   "allocation_status",
+                                   "timestamp"
+                                   ])
+        # append all active allocations to a temp list with allocation ID
+        for allocation in active_allocations:
+            df_temp = calculateRewardsActiveAllocation(allocation_id=allocation['id'], interval=interval)
+            df = df.append(df_temp)
+    else:
+        df = pd.DataFrame(columns=["datetime",
+                                   "subgraph_name",
+                                   "subgraph_ipfs_hash",
+                                   "accumulated_reward",
+                                   "reward_rate_day",
+                                   "reward_rate_hour",
+                                   "reward_rate_hour_per_token",
+                                   "earnings_rate_all_indexers",
+                                   "subgraph_age_in_hours",
+                                   "subgraph_age_in_days",
+                                   "subgraph_created_at",
+                                   "subgraph_signal",
+                                   "subgraph_stake",
+                                   "subgraph_signal_ratio",
+                                   "block_height",
+                                   "allocated_tokens",
+                                   "allocation_id",
+                                   "allocation_created_timestamp",
+                                   "allocation_created_epoch",
+                                   "allocation_status",
+                                   "timestamp"
+                                   ])
     return df
 
 
@@ -167,94 +190,117 @@ def calculateRewardsAllClosedAllocations(indexer_id):
     closed_allocations = getClosedAllocations(indexer_id=indexer_id)
 
     temp_data = []
-    for allocation in closed_allocations['totalAllocations']:
-        if allocation.get('subgraphDeployment').get('signalledTokens'):
-            subgraph_signal = int(allocation.get('subgraphDeployment').get('signalledTokens')) / 10 ** 18
-        else:
-            subgraph_signal = 0
+    if closed_allocations:
+        for allocation in closed_allocations['totalAllocations']:
+            if allocation.get('subgraphDeployment').get('signalledTokens'):
+                subgraph_signal = int(allocation.get('subgraphDeployment').get('signalledTokens')) / 10 ** 18
+            else:
+                subgraph_signal = 0
 
-        if allocation.get('subgraphDeployment').get('stakedTokens'):
-            subgraph_stake = int(allocation.get('subgraphDeployment').get('stakedTokens')) / 10 ** 18
-        else:
-            subgraph_stake = 0
+            if allocation.get('subgraphDeployment').get('stakedTokens'):
+                subgraph_stake = int(allocation.get('subgraphDeployment').get('stakedTokens')) / 10 ** 18
+            else:
+                subgraph_stake = 0
 
-        try:
-            subgraph_signal_ratio = subgraph_stake / subgraph_signal
-        except ZeroDivisionError:
-            subgraph_signal_ratio = 0
+            try:
+                subgraph_signal_ratio = subgraph_stake / subgraph_signal
+            except ZeroDivisionError:
+                subgraph_signal_ratio = 0
 
-        subgraph_created_at = allocation['subgraphDeployment']['createdAt']
-        subgraph_hours_since_creation = dt.datetime.now() - datetime.fromtimestamp(subgraph_created_at)
-        subgraph_hours_since_creation = subgraph_hours_since_creation.total_seconds() / 3600
+            subgraph_created_at = allocation['subgraphDeployment']['createdAt']
+            subgraph_hours_since_creation = dt.datetime.now() - datetime.fromtimestamp(subgraph_created_at)
+            subgraph_hours_since_creation = subgraph_hours_since_creation.total_seconds() / 3600
 
-        created_at = datetime.utcfromtimestamp(
-            allocation.get('createdAt')).strftime('%Y-%m-%d')
-        closed_at = datetime.utcfromtimestamp(
-            allocation.get('closedAt')).strftime('%Y-%m-%d')
+            created_at = datetime.utcfromtimestamp(
+                allocation.get('createdAt')).strftime('%Y-%m-%d')
+            closed_at = datetime.utcfromtimestamp(
+                allocation.get('closedAt')).strftime('%Y-%m-%d')
 
-        reward_rate_day = (int(allocation.get('indexingRewards')) / 10 ** 18) / (
-                datetime.strptime(closed_at, "%Y-%m-%d") - datetime.strptime(created_at, "%Y-%m-%d")).days
-        temp_data.append({
-            'created_at': created_at,
-            'closed_at': closed_at,
-            "subgraph_name": allocation.get('subgraphDeployment').get('originalName'),
-            "subgraph_ipfs_hash": allocation.get('subgraphDeployment').get('ipfsHash'),
-            "accumulated_reward": int(allocation.get('indexingRewards')) / 10 ** 18,
-            "reward_rate_day": reward_rate_day,
-            "reward_rate_hour": reward_rate_day / 24,
-            "reward_rate_hour_per_token": (reward_rate_day / 24) / (
-                    int(allocation.get('allocatedTokens')) / 10 ** 18),
-            "earnings_rate_all_indexers": np.nan,
-            "subgraph_age_in_hours": subgraph_hours_since_creation,
-            "subgraph_age_in_days":subgraph_hours_since_creation / 24,
-            "subgraph_created_at": datetime.utcfromtimestamp(
-                allocation['subgraphDeployment']['createdAt']).strftime('%Y-%m-%d'),
-            "subgraph_signal": subgraph_signal,
-            "subgraph_stake": subgraph_stake,
-            "subgraph_signal_ratio": subgraph_signal_ratio,
-            "block_height": np.nan,
-            "allocation_id": allocation.get('id'),
-            "allocated_tokens": int(allocation.get('allocatedTokens')) / 10 ** 18,
-            "allocation_created_timestamp": datetime.utcfromtimestamp(allocation.get('createdAt')).strftime('%Y-%m-%d'),
-            "allocation_created_epoch": allocation.get('createdAtEpoch'),
-            "allocation_status": "Closed",
-            "timestamp": datetime.utcfromtimestamp(
-                allocation.get('closedAt')).strftime('%Y-%m-%d'),
-        })
-    df = pd.DataFrame(temp_data)
+            reward_rate_day = (int(allocation.get('indexingRewards')) / 10 ** 18) / (
+                    datetime.strptime(closed_at, "%Y-%m-%d") - datetime.strptime(created_at, "%Y-%m-%d")).days
+            temp_data.append({
+                'created_at': created_at,
+                'closed_at': closed_at,
+                "subgraph_name": allocation.get('subgraphDeployment').get('originalName'),
+                "subgraph_ipfs_hash": allocation.get('subgraphDeployment').get('ipfsHash'),
+                "accumulated_reward": int(allocation.get('indexingRewards')) / 10 ** 18,
+                "reward_rate_day": reward_rate_day,
+                "reward_rate_hour": reward_rate_day / 24,
+                "reward_rate_hour_per_token": (reward_rate_day / 24) / (
+                        int(allocation.get('allocatedTokens')) / 10 ** 18),
+                "earnings_rate_all_indexers": np.nan,
+                "subgraph_age_in_hours": subgraph_hours_since_creation,
+                "subgraph_age_in_days": subgraph_hours_since_creation / 24,
+                "subgraph_created_at": datetime.utcfromtimestamp(
+                    allocation['subgraphDeployment']['createdAt']).strftime('%Y-%m-%d'),
+                "subgraph_signal": subgraph_signal,
+                "subgraph_stake": subgraph_stake,
+                "subgraph_signal_ratio": subgraph_signal_ratio,
+                "block_height": np.nan,
+                "allocation_id": allocation.get('id'),
+                "allocated_tokens": int(allocation.get('allocatedTokens')) / 10 ** 18,
+                "allocation_created_timestamp": datetime.utcfromtimestamp(allocation.get('createdAt')).strftime(
+                    '%Y-%m-%d'),
+                "allocation_created_epoch": allocation.get('createdAtEpoch'),
+                "allocation_status": "Closed",
+                "timestamp": datetime.utcfromtimestamp(
+                    allocation.get('closedAt')).strftime('%Y-%m-%d'),
+            })
+        df = pd.DataFrame(temp_data)
 
-    # explode dataframe between each created_at and closed_at create rows
-    df['day'] = df.apply(lambda row: pd.date_range(row['created_at'], row['closed_at'], freq='d'), axis=1)
-    df = df.explode('day').reset_index() \
-        .rename(columns={'day': 'datetime'}) \
-        .drop(columns=['created_at', 'closed_at', 'index'])
+        # explode dataframe between each created_at and closed_at create rows
+        df['day'] = df.apply(lambda row: pd.date_range(row['created_at'], row['closed_at'], freq='d'), axis=1)
+        df = df.explode('day').reset_index() \
+            .rename(columns={'day': 'datetime'}) \
+            .drop(columns=['created_at', 'closed_at', 'index'])
 
-    # Move Datetime to First column
-    col = df.pop("datetime")
-    df.insert(0, col.name, col)
+        # Move Datetime to First column
+        col = df.pop("datetime")
+        df.insert(0, col.name, col)
 
-    # Calculate accumulated reward from reward rate day
-    df.sort_values(['allocation_id', 'datetime'], inplace=True)
+        # Calculate accumulated reward from reward rate day
+        df.sort_values(['allocation_id', 'datetime'], inplace=True)
 
-    # get cumulative sum of rewards
-    df_cumsum = df.groupby(by=['allocation_id', 'datetime'])['reward_rate_day'].sum() \
-        .groupby(level='allocation_id').cumsum().reset_index(name='accumulated_reward')
+        # get cumulative sum of rewards
+        df_cumsum = df.groupby(by=['allocation_id', 'datetime'])['reward_rate_day'].sum() \
+            .groupby(level='allocation_id').cumsum().reset_index(name='accumulated_reward')
 
-    # drop previous accumulated_reward column
-    df.drop(columns=['accumulated_reward'], inplace=True)
+        # drop previous accumulated_reward column
+        df.drop(columns=['accumulated_reward'], inplace=True)
 
-    # merge with main dataframe
-    df = pd.merge(left=df, right=df_cumsum, how="left", left_on=['allocation_id', 'datetime'],
-                  right_on=["allocation_id", "datetime"])
+        # merge with main dataframe
+        df = pd.merge(left=df, right=df_cumsum, how="left", left_on=['allocation_id', 'datetime'],
+                      right_on=["allocation_id", "datetime"])
 
-    # col accumulated_rewards to 3 position
-    col = df.pop("accumulated_reward")
-    df.insert(3, col.name, col)
+        # col accumulated_rewards to 3 position
+        col = df.pop("accumulated_reward")
+        df.insert(3, col.name, col)
 
-    # change datetime format
-    df['datetime'] = df['datetime'].dt.strftime("%Y-%m-%d")
-
+        # change datetime format
+        df['datetime'] = df['datetime'].dt.strftime("%Y-%m-%d")
+    else:
+        df = pd.DataFrame(columns=['created_at',
+                                   'closed_at',
+                                   "subgraph_name",
+                                   "subgraph_ipfs_hash",
+                                   "accumulated_reward",
+                                   "reward_rate_day",
+                                   "reward_rate_hour",
+                                   "reward_rate_hour_per_token",
+                                   "earnings_rate_all_indexers",
+                                   "subgraph_age_in_hours",
+                                   "subgraph_age_in_days",
+                                   "subgraph_created_at",
+                                   "subgraph_signal",
+                                   "subgraph_stake",
+                                   "subgraph_signal_ratio",
+                                   "block_height",
+                                   "allocation_id",
+                                   "allocated_tokens",
+                                   "allocation_created_timestamp",
+                                   "allocation_created_epoch",
+                                   "allocation_status",
+                                   "timestamp"])
     return df
-
 
 # calculateRewardsAllClosedAllocations(ANYBLOCK_ANALYTICS_ID)
