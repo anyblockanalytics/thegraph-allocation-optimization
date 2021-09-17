@@ -18,7 +18,7 @@ from eth_utils import to_checksum_address
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
                         subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
                         min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100, app="script",
-                        slack_alerting=False, network='mainnet'):
+                        slack_alerting=False, network='mainnet',automation=False):
     """ Runs the main optimization process.
 
     parameters
@@ -57,6 +57,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['app'] = app
     optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
     optimizer_results[current_datetime]['parameters']['network'] = network
+    optimizer_results[current_datetime]['parameters']['automation'] = automation
 
     print("Script Execution on: ", current_datetime)
     """
@@ -77,10 +78,18 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
     # get price data
     # We need ETH-USD, GRT-USD, GRT-ETH
-    eth_usd = getFiatPrice('ETH-USD')
-    grt_usd = getFiatPrice('GRT-USD')
-    grt_eth = getFiatPrice('GRT-ETH')
-
+    try:
+        eth_usd = getFiatPrice('ETH-USD')
+    except:
+        eth_usd = None
+    try:
+        grt_usd = getFiatPrice('GRT-USD')
+    except:
+        grt_usd = None
+    try:
+        grt_eth = getFiatPrice('GRT-ETH')
+    except:
+        grt_eth = None
     # Get Gas Price and usage for Allocation Closing / Allocating
     allocation_gas_usage = 270000
     gas_price_gwei = getGasPrice(speed='fast')
@@ -483,11 +492,14 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         with open("./data/optimizer_log.json", mode='w') as f:
             f.write(json.dumps(feeds, indent=2))
 
+    if automation == True:
+        print("You are in automation mode")
     return optimizer_results
 
 
 if __name__ == '__main__':
     """
-    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=True, threshold_interval="weekly",
-                       reserve_stake=500, threshold=15)
+    optimizeAllocations(indexer_id=ANYBLOCK_ANALYTICS_ID, blacklist_parameter=False, threshold_interval="weekly",
+    reserve_stake=500, threshold=15, automation=True, network='mainnet')
+
     """

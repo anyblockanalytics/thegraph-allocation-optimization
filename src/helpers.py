@@ -272,6 +272,9 @@ def initializeParser():
                            type=str,
                            help='Set Network either "mainnet" or "testnet"',
                            default="mainnet")
+    my_parser.add_argument('--automation', dest='automation', action = 'store_true')
+    my_parser.add_argument('--no-automation', dest='automation', action = 'store_false')
+    my_parser.set_defaults(automation=False)
     return my_parser
 
 
