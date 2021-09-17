@@ -2,7 +2,7 @@ import requests
 import json
 
 
-def make_query(self, query, variables, url, headers):
+def make_query(query, variables, url, headers= None):
     """
     Make query response
     """
