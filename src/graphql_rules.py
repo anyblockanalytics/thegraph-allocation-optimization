@@ -1,4 +1,4 @@
-import request
+import requests
 import json
 
 
@@ -6,7 +6,7 @@ def make_query(self, query, variables, url, headers):
     """
     Make query response
     """
-    request = request.post(url, json={'query': query, 'variables': variables}, headers=headers)
+    request = requests.post(url, json={'query': query, 'variables': variables}, headers=headers)
     if request.status_code == 200:
         return request.json()
     else:
@@ -35,4 +35,6 @@ test_input = {
 }
 variables = {'rule': test_input}
 
-make_query(query = query, variables = variables , url = "http://localhost/8888")
+
+response = make_query(query = query, variables = variables, url = "http://127.0.0.1:8888")
+print(response)
