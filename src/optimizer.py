@@ -494,6 +494,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
     if automation == True:
         print("You are in automation mode")
+
     return optimizer_results
 
 
