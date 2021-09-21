@@ -164,7 +164,8 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
                         f'{"Repository"}</a>'
                         f'<p style="display:inline">{""}</p>'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
+                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
                         f'{"Website"}</a>'
                         f'</p>'
                         f'</div>',
@@ -201,6 +202,7 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
                         f'{"Repository"}</a>'
                         f'<p style="display:inline">{""}</p>'
+                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
                         f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
                         f'{"Website"}</a>'
                         f'</p>'

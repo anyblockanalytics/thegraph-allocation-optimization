@@ -216,8 +216,12 @@ def calculateRewardsAllClosedAllocations(indexer_id):
             closed_at = datetime.utcfromtimestamp(
                 allocation.get('closedAt')).strftime('%Y-%m-%d')
 
-            reward_rate_day = (int(allocation.get('indexingRewards')) / 10 ** 18) / (
-                    datetime.strptime(closed_at, "%Y-%m-%d") - datetime.strptime(created_at, "%Y-%m-%d")).days
+            if (datetime.strptime(closed_at, "%Y-%m-%d") - datetime.strptime(created_at, "%Y-%m-%d")).days > 0:
+                allocation_duration_days = (datetime.strptime(closed_at, "%Y-%m-%d") - datetime.strptime(created_at, "%Y-%m-%d")).days
+            else:
+                allocation_duration_days = 1
+            reward_rate_day = (int(allocation.get('indexingRewards')) / 10 ** 18) / allocation_duration_days
+
             temp_data.append({
                 'created_at': created_at,
                 'closed_at': closed_at,

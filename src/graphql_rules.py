@@ -36,5 +36,5 @@ test_input = {
 variables = {'rule': test_input}
 
 
-response = make_query(query = query, variables = variables, url = "http://127.0.0.1:8888")
+response = make_query(query = query, variables = variables, url = "http://127.0.0.1:8888/")
 print(response)

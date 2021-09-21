@@ -627,13 +627,13 @@ def getDataAllocationOptimizer(indexer_id, network='mainnet', variables=None, ):
     Indexer Data (Allocated Tokens Total and all Allocations),
     Graph Network Data (Total Tokens Allocated, total TokensStaked, Total Supply, GRT Issurance)
     """
-
+    indexer_id = indexer_id.lower()
     load_dotenv()
     if network == 'mainnet':
         API_GATEWAY = os.getenv('API_GATEWAY')
         OPTIMIZATION_DATA = """
             query MyQuery($input: String){
-              subgraphDeployments {
+              subgraphDeployments(first: 1000) {
                 originalName
                 signalledTokens
                 stakedTokens
@@ -723,3 +723,5 @@ def getDataAllocationOptimizer(indexer_id, network='mainnet', variables=None, ):
     data = data['data']
 
     return data
+
+

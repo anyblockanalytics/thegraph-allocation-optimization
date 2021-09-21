@@ -1,5 +1,4 @@
 import streamlit as st
-
 from src.helpers import img_to_bytes
 def createSidebar():
     # create Sidebar with Parameters
@@ -21,7 +20,7 @@ def createSidebar():
                                        key='indexer_id')
             cols = st.columns(2)
             network = cols[0].selectbox('Network', options=['mainnet', 'testnet'])
-            automation = cols[0].selectbox('Automation', options=[True,False])
+            automation = cols[1].selectbox('Automation', options=[True,False])
 
             cols = st.columns(2)
             blacklist_parameter = cols[0].checkbox(label='Blacklist', key='blacklist_parameter', value=True)
@@ -73,7 +72,7 @@ def createSidebar():
                 'slack_alerting': slack_alerting,
                 'discord_alerting': discord_alerting,
                 'network': network,
-                'automation', automation
+                'automation': automation
 
             }
             return return_dict
