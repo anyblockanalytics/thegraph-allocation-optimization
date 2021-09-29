@@ -4,6 +4,7 @@ import json
 import os
 from dotenv import load_dotenv
 from src.queries import getActiveAllocations
+from src.filter_events import asyncFilterAllocationEvents
 
 def setIndexingRuleQuery(deployment, decision_basis = "never",
                          allocation_amount = 0, parallel_allocations = 0):
@@ -161,6 +162,7 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
     active_allocations = getActiveAllocations(indexer_id = indexer_id)
     if active_allocations:
         active_allocations = active_allocations['allocations']
+        allocation_ids = []
         for allocation in active_allocations:
             subgraph_hash = allocation[subgraphDeployment]['id']
             allocation_amount = allocation["allocatedTokens"]
@@ -169,13 +171,19 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
             print("ALLOCATION AMOUNT: " + str(allocation_amount))
             setIndexingRuleQuery(deployment = subgraph_hash, decision_basis = "never", parallel_allocations = parallel_allocations,
                                  allocation_amount = 0 )
-    # TODO: NEED CONFIRMATION OF DE ALLOCATION BEFORE ALLOCATION
+
+            allocation_ids.append(allocation['id'])
+        print("Closing Allocations amount: " + len(allocation_ids))
+        asyncFilterAllocationEvents(indexer_id = indexer_id, allocation_ids = allocation_ids, network= network, event_type = "closing" )
+
     # Allocating via Indexer Agent Endpoint (localhost:18000) set decision_basis to always
     print("NOW RUNNING THE AUTOMATIC ALLOCATION VIA INDEXER MANAGEMENT ENDPOINT")
+    subgraph_deployment_ids = []
     for subgraph in subgraphs:
         if subgraph in fixed_allocations.keys():
             if fixed_allocations[subgraph] != 0:
                 subgraph_hash = "0x"+base58.b58decode(subgraph).hex()[4:]
+                subgraph_deployment_ids.append(subgraph_hash)
                 allocation_amount = fixed_allocations[subgraph] / 10 ** 18
                 print("ALLOCATING SUBGRAPH: " + "0x"+base58.b58decode(subgraph).hex()[4:])
                 print("Allocation Amount: " + allocation_amount)
@@ -184,4 +192,5 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
                                      allocation_amount = allocation_amount)
 
 
-
+    asyncFilterAllocationEvents(indexer_id = indexer_id, allocation_ids = allocation_ids, network = network,
+                                subgraph_deployment_ids = subgraph_deployment_ids)
