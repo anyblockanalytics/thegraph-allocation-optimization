@@ -2,11 +2,11 @@ import json
 from dotenv import load_dotenv
 import os
 import requests
-from src.helpers import initialize_rpc
+from src.helpers import initialize_rpc, initialize_rpc_testnet
 from pycoingecko import CoinGeckoAPI
 from datetime import datetime, timedelta
 import pandas as pd
-
+from web3.middleware import geth_poa_middleware
 
 def getFiatPrice(pairs):
     """Get's the Currency Pairs from Coingecko.
@@ -113,6 +113,18 @@ def getCurrentBlock():
     web3 = initialize_rpc()
     return web3.eth.blockNumber
 
+def getCurrentBlockTestnet():
+    """Get's the current block.
+
+    Returns
+    -------
+    int
+        Current Active block
+    """
+    web3 = initialize_rpc_testnet()
+    web3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
+    return web3.eth.blockNumber
 
 def getCurrentEpoch():
     """Get's the current active Epoche from the Mainnet Subgraph.
@@ -229,7 +241,7 @@ def getAllocationDataById(allocation_id, variables=None, ):
     return allocations
 
 
-def getActiveAllocations(indexer_id, variables=None, ):
+def getActiveAllocations(indexer_id, network='mainnet',variables=None, ):
     """Get's the currently active Allocations for a specific Indexer from the Mainnet Subgraph.
        Dumps the results into a dictionary.
 
@@ -239,8 +251,10 @@ def getActiveAllocations(indexer_id, variables=None, ):
         Active Allocations for Indexer
     """
     load_dotenv()
-    API_GATEWAY = os.getenv('API_GATEWAY')
-
+    if network == 'mainnet':
+        API_GATEWAY = os.getenv('API_GATEWAY')
+    if network == 'testnet':
+        API_GATEWAY = os.getenv('TESTNET_GATEWAY')
     query = """
         query AllocationsByIndexer($input: ID!) {
             indexer(id: $input) {
@@ -391,7 +405,7 @@ def getClosedAllocations(indexer_id, variables=None):
     return response
 
 
-def getSubgraphsFromDeveloper(developer_id, variables=None, ):
+def getSubgraphsFromDeveloper(developer_id,network, variables=None, ):
     """Get's the deployed Subgraphs with the Hashes for a specific Subgraph Developer.
 
     Returns
@@ -401,8 +415,11 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
     """
     # Load .env File with Configuration
     load_dotenv()
+    if network == 'mainnet':
+        API_GATEWAY = os.getenv('API_GATEWAY')
 
-    API_GATEWAY = os.getenv('API_GATEWAY')
+    if network == 'testnet':
+        API_GATEWAY = os.getenv('TESTNET_GATEWAY')
 
     query = """
             query subgraphDeveloperSubgraphs($input: ID!){
@@ -431,18 +448,20 @@ def getSubgraphsFromDeveloper(developer_id, variables=None, ):
         request_json['variables'] = variables
 
     resp = requests.post(API_GATEWAY, json=request_json)
+    try:
+        subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
+        subgraphList = []
+        for subgraph in subgraphs:
+            for version in subgraph['versions']:
+                subgraphList.append(version['subgraphDeployment']['ipfsHash'])
+    except:
+        subgraphList = []
 
-    subgraphs = json.loads(resp.text)['data']['graphAccount']['subgraphs']
-
-    subgraphList = []
-    for subgraph in subgraphs:
-        for version in subgraph['versions']:
-            subgraphList.append(version['subgraphDeployment']['ipfsHash'])
 
     return subgraphList
 
 
-def getInactiveSubgraphs():
+def getInactiveSubgraphs(network):
     """Get's all inactive subgraphs with their Hash
 
     Returns
@@ -453,7 +472,10 @@ def getInactiveSubgraphs():
     # Load .env File with Configuration
     load_dotenv()
 
-    API_GATEWAY = os.getenv('API_GATEWAY')
+    if network == 'mainnet':
+        API_GATEWAY = os.getenv('API_GATEWAY')
+    if network == 'testnet':
+        API_GATEWAY = os.getenv('TESTNET_GATEWAY')
 
     query = """
             query inactivesubgraphs {
@@ -481,7 +503,7 @@ def getInactiveSubgraphs():
     return inactive_subgraph_list
 
 
-def getAllSubgraphDeployments():
+def getAllSubgraphDeployments(network):
     """Get's all Subgraph Hashes
 
     Returns
@@ -492,8 +514,11 @@ def getAllSubgraphDeployments():
 
     """
     load_dotenv()
+    if network == 'mainnet':
+        API_GATEWAY = os.getenv('API_GATEWAY')
+    if network == 'testnet':
+        API_GATEWAY = os.getenv('TESTNET_GATEWAY')
 
-    API_GATEWAY = os.getenv('API_GATEWAY')
     query = """
         {
           subgraphDeployments {

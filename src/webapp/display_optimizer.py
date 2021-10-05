@@ -137,77 +137,147 @@ def createBoxWithAllocationInformation(optimized_allocations_data):
             with col1:
                 # write subgraph data in col1
                 for subgraph in subgraph1_data:
-                    st.markdown(
-                        f'<div style="border-style:outset; border-color: #0000ff">'
-                        f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
-                        f'{str(subgraph.get("originalName"))}</p>'
-                        f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
-                        f'{str(subgraph.get("ipfsHash"))}</p>'
-                        f'<p style="text-align: center">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
-                        f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
-                        f'</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
-                        f'<hr color= "black">'
-                        f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
-                        f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
-                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
-                        f'{"Repository"}</a>'
-                        f'<p style="display:inline">{""}</p>'
-                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
-                        f'{"Website"}</a>'
-                        f'</p>'
-                        f'</div>',
-                        unsafe_allow_html=True)
+                    try:
+                        st.markdown(
+                            f'<div style="border-style:outset; border-color: #0000ff">'
+                            f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("originalName"))}</p>'
+                            f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("ipfsHash"))}</p>'
+                            f'<p style="text-align: center">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
+                            f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
+                            f'</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
+                            f'<hr color= "black">'
+                            f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
+                            f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
+                            f'{"Repository"}</a>'
+                            f'<p style="display:inline">{""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
+                            f'{"Website"}</a>'
+                            f'</p>'
+                            f'</div>',
+                            unsafe_allow_html=True)
+                    except:
+                        st.markdown(
+                            f'<div style="border-style:outset; border-color: #0000ff">'
+                            f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("originalName"))}</p>'
+                            f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("ipfsHash"))}</p>'
+                            f'<p style="text-align: center">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
+                            f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
+                            f'</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Signalled Tokens: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Staked Tokens: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Indexing Rewards: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Stake / Signal Ratio: " + str("N/A")}</p>'
+                            f'<hr color= "black">'
+                            f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
+                            f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
+                            f'{"Repository"}</a>'
+                            f'<p style="display:inline">{""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
+                            f'{"Website"}</a>'
+                            f'</p>'
+                            f'</div>',
+                            unsafe_allow_html=True)
                     st.text("")
 
             # write subgraph data in col2
             with col2:
                 for subgraph in subgraph2_data:
-                    st.markdown(
-                        f'<div style="border-style:outset; border-color: #0000ff">'
-                        f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
-                        f'{str(subgraph.get("originalName"))}</p>'
-                        f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
-                        f'{str(subgraph.get("ipfsHash"))}</p>'
-                        f'<p style="text-align: center">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
-                        f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
-                        f'</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
-                        f'<p style="color: black;font-size:20px;text-align: center">'
-                        f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
-                        f'<hr color= "black">'
-                        f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
-                        f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
-                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
-                        f'{"Repository"}</a>'
-                        f'<p style="display:inline">{""}</p>'
-                        f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
-                        f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
-                        f'{"Website"}</a>'
-                        f'</p>'
-                        f'</div>',
-                        unsafe_allow_html=True)
+                    try:
+                        st.markdown(
+                            f'<div style="border-style:outset; border-color: #0000ff">'
+                            f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("originalName"))}</p>'
+                            f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("ipfsHash"))}</p>'
+                            f'<p style="text-align: center">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
+                            f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
+                            f'</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Signalled Tokens: " + str(millify(int(subgraph.get("signalledTokens")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Staked Tokens: " + str(millify(int(subgraph.get("stakedTokens")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Indexing Rewards: " + str(millify(int(subgraph.get("indexingRewardAmount")) / 10 ** 18, precision=2))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Stake / Signal Ratio: " + str(millify((int(subgraph.get("stakedTokens")) / 10 ** 18) / (int(subgraph.get("signalledTokens")) / 10 ** 18), precision=2))}</p>'
+                            f'<hr color= "black">'
+                            f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
+                            f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
+                            f'{"Repository"}</a>'
+                            f'<p style="display:inline">{""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
+                            f'{"Website"}</a>'
+                            f'</p>'
+                            f'</div>',
+                            unsafe_allow_html=True)
+                    except:
+                        st.markdown(
+                            f'<div style="border-style:outset; border-color: #0000ff">'
+                            f'<p style="background-color:#0066cc;color:black ;font-size:24px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("originalName"))}</p>'
+                            f'<p style="color:black;font-size:16px;border-radius:0%;text-align: center">'
+                            f'{str(subgraph.get("ipfsHash"))}</p>'
+                            f'<p style="text-align: center">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else ""}">'
+                            f'<img src="{subgraph.get("versions")[0].get("subgraph").get("image")}" width="300" height="300"/></a>'
+                            f'</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Subgraph Created: " + str(datetime.utcfromtimestamp(subgraph.get("createdAt")).strftime("%Y-%m-%d"))}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Signalled Tokens: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Staked Tokens: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Indexing Rewards: " + str("N/A")}</p>'
+                            f'<p style="color: black;font-size:20px;text-align: center">'
+                            f'{"Stake / Signal Ratio: " + str("N/A")}</p>'
+                            f'<hr color= "black">'
+                            f'<p style="color: black;font-size:16px;text-align: justify; padding: 10px">'
+                            f'{"Description: " + str(subgraph.get("versions")[0].get("subgraph").get("description")) if subgraph.get("versions")[0].get("subgraph").get("description") else ""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("codeRepository") if subgraph.get("versions")[0].get("subgraph").get("codeRepository") else ""}">'
+                            f'{"Repository"}</a>'
+                            f'<p style="display:inline">{""}</p>'
+                            f'<p style="text-align: center; display:inline; padding-left: 20px; padding-right: 25px">'
+                            f'<a href="{subgraph.get("versions")[0].get("subgraph").get("website") if subgraph.get("versions")[0].get("subgraph").get("website") else " "}">'
+                            f'{"Website"}</a>'
+                            f'</p>'
+                            f'</div>',
+                            unsafe_allow_html=True)
                     st.text("")
 
     st.text("")
@@ -310,10 +380,17 @@ def createCurrentAllocationOutput(optimizer_data, optimizer_key):
         col1, col2, col3, col4 = st.columns(4)
         col1.metric("Pending Rewards", value=str(millify(df['pending_rewards'].sum(), precision=2)) + " GRT")
         col2.metric("Active Allocations", value=str(len(df)))
-        col3.metric("Average Stake/Signal Ratio",
-                    value=str(millify(df['stake_signal_ratio'].mean(), precision=2)))
-        col4.metric("Average Hourly Rewards per Subgraph",
-                    value=str(millify(df['indexing_reward_hour'].mean(), precision=2)))
+        try:
+            col3.metric("Average Stake/Signal Ratio",
+                        value=str(millify(df['stake_signal_ratio'].mean(), precision=2) ))
+        except:
+            col3.metric("Average Stake/Signal Ratio", value=str("N/A"))
+
+        try:
+            col4.metric("Average Hourly Rewards per Subgraph",
+                        value=str(millify(df['indexing_reward_hour'].mean(), precision=2)))
+        except:
+            col4.metric("Average Hourly Rewards per Subgraph", value=str("N/A"))
         # display dataframe in expander
         with st.expander("Current Allocation Table"):
             st.dataframe(df)
@@ -433,9 +510,14 @@ def createPendingRewarsBarChart(df):
     )
 
     annotations = []
-
-    y_s = np.round(df.percentage_total_pending_rewards, decimals=2)
-    y_nw = np.round(df.pending_rewards, decimals=2)
+    try:
+        y_s = np.round(df.percentage_total_pending_rewards, decimals=2)
+    except:
+        y_s = []
+    try:
+        y_nw = np.round(df.pending_rewards, decimals=2)
+    except:
+        y_nw = []
 
     # Adding labels
     for ydn, yd, xd in zip(y_nw, y_s, df.subgraph_name):

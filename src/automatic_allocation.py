@@ -42,7 +42,7 @@ def setIndexingRuleQuery(deployment, decision_basis = "never",
         allocation_input = {
             'deployment' : deployment,
             'decisionBasis' : decision_basis,
-            'allocationAmount': allocation_amount,
+            'allocationAmount': int(allocation_amount) * 10 ** 18,
             'parallelAllocations' : parallel_allocations
 
         }
@@ -112,7 +112,7 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
 
     subgraph_data = requests.post(
         API_GATEWAY,
-        data='{"query":"{ subgraphDeployments(first: 2000) { id originalName stakedTokens signalledTokens } }"}',
+        data='{"query":"{ subgraphDeployments(first: 1000) { id originalName stakedTokens signalledTokens } }"}',
         headers={'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
     ).json()['data']['subgraphDeployments']
 
@@ -159,12 +159,12 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
     # Closing Allocations via Indexer Agent Endpoint (localhost:18000), set decision_basis to never
 
     print("NOW CLOSING ALLOCATIONS AUTOMATICALLY VIA INDEXER MANAGEMENT ENDPOINT")
-    active_allocations = getActiveAllocations(indexer_id = indexer_id)
+    active_allocations = getActiveAllocations(indexer_id = indexer_id, network = network)
     if active_allocations:
         active_allocations = active_allocations['allocations']
         allocation_ids = []
         for allocation in active_allocations:
-            subgraph_hash = allocation[subgraphDeployment]['id']
+            subgraph_hash = allocation["subgraphDeployment"]['id']
             allocation_amount = allocation["allocatedTokens"]
             print("CLOSING ALLOCATION FOR SUBGRAPH: " + str(subgraph_hash))
             print("SUBGRAPH IPFS HASH: " + allocation['subgraphDeployment']['ipfsHash'])
@@ -173,7 +173,7 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
                                  allocation_amount = 0 )
 
             allocation_ids.append(allocation['id'])
-        print("Closing Allocations amount: " + len(allocation_ids))
+        print("Closing Allocations amount: " + str(len(allocation_ids)))
         asyncFilterAllocationEvents(indexer_id = indexer_id, allocation_ids = allocation_ids, network= network, event_type = "closing" )
 
     # Allocating via Indexer Agent Endpoint (localhost:18000) set decision_basis to always
@@ -186,7 +186,7 @@ def setIndexingRules(fixed_allocations, indexer_id,blacklist_parameter = True, p
                 subgraph_deployment_ids.append(subgraph_hash)
                 allocation_amount = fixed_allocations[subgraph] / 10 ** 18
                 print("ALLOCATING SUBGRAPH: " + "0x"+base58.b58decode(subgraph).hex()[4:])
-                print("Allocation Amount: " + allocation_amount)
+                print("Allocation Amount: " + str(allocation_amount))
                 print("")
                 setIndexingRuleQuery(deployment = subgraph_hash, decision_basis = "always", parallel_allocations = parallel_allocations,
                                      allocation_amount = allocation_amount)
