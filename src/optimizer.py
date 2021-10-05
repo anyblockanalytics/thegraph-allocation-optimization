@@ -250,6 +250,11 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                        df_log['allocation_id']]
     df_log['pending_rewards'] = pending_rewards
 
+    # reset index to avoid this error:
+    #  ValueError: DataFrame index must be unique for orient='index'.
+    # see: https://stackoverflow.com/a/37580854
+    df_log.reset_index(drop=True, inplace=True)
+
     # Create Dictionary to convert to Json for Logging of Allocation Data
     allocation_dict_log = df_log.to_dict(orient='index')
     optimizer_results[current_datetime]['current_allocations'] = allocation_dict_log
