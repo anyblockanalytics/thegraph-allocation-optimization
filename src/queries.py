@@ -673,7 +673,7 @@ def getDataAllocationOptimizer(indexer_id, network='mainnet', variables=None, ):
         API_GATEWAY = os.getenv('TESTNET_GATEWAY')
         OPTIMIZATION_DATA = """
         query MyQuery($input: String) {
-            subgraphDeployments {
+            subgraphDeployments (first: 1000){
             originalName
             signalledTokens
             stakedTokens
