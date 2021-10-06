@@ -220,7 +220,7 @@ def initializeParser():
                            metavar='parallel_allocations',
                            type=int,
                            help='Amount of parallel Allocations per Subgraph. Defaults to 1.',
-                           default=2)
+                           default=1)
     # dedicate reserve stake that should not be considered in the allocation process
     my_parser.add_argument('--reserve_stake',
                            metavar='reserve_stake',
