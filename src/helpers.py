@@ -212,7 +212,7 @@ def initializeParser():
     my_parser.add_argument('--threshold',
                            metavar='threshold',
                            type=float,
-                           help='Threshold for Updating the Allocations. How much more Indexing Rewards (in %) have to be \
+                           help='Threshold for Updating the Allocations. How much more Indexing Rewards (in %%) have to be \
                                 gained by the optimization to change the script. Supplied as a value between 0-100 ',
                            default=10.0)
     # amount of parallel allocations per Subgraph
