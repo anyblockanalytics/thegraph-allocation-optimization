@@ -50,4 +50,6 @@ streamlit
 millify
 streamlit-lottie
 aiohttp
+python-dotenv
+psycopg2
 
