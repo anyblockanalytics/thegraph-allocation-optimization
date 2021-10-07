@@ -1,15 +1,18 @@
-graph indexer rules set QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
-graph indexer cost set model QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P default.agora && \
-graph indexer cost set variables QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P '{}' && \
 graph indexer rules set QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
 graph indexer cost set model QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy default.agora && \
 graph indexer cost set variables QmNyuWjzFxSaX9c9WCpWqVYYEo1TCtvfsL9gcqmhx7ArHy '{}' && \
-graph indexer rules set QmfWjxaEaaLDVpZssqXEX3aHvLMiWdxxwbS4n1Vc658q1M allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
-graph indexer cost set model QmfWjxaEaaLDVpZssqXEX3aHvLMiWdxxwbS4n1Vc658q1M default.agora && \
-graph indexer cost set variables QmfWjxaEaaLDVpZssqXEX3aHvLMiWdxxwbS4n1Vc658q1M '{}' && \
-graph indexer rules set Qmcgtsin741cNTtgnkpoDcY92GDK1isRG5F39FNEmEok4n allocationAmount 477444.14 parallelAllocations 1 decisionBasis always && \
-graph indexer cost set model Qmcgtsin741cNTtgnkpoDcY92GDK1isRG5F39FNEmEok4n default.agora && \
-graph indexer cost set variables Qmcgtsin741cNTtgnkpoDcY92GDK1isRG5F39FNEmEok4n '{}' && \
+graph indexer rules set QmTtNENux7t81rWkxY58eDsHkqnABpwENahSaDPb39THfP allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmTtNENux7t81rWkxY58eDsHkqnABpwENahSaDPb39THfP default.agora && \
+graph indexer cost set variables QmTtNENux7t81rWkxY58eDsHkqnABpwENahSaDPb39THfP '{}' && \
+graph indexer rules set QmauYgPmss6CEZXtaRvvGW2oiyLqxpoCkWNCTmFPVTFDfk allocationAmount 0.00 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmauYgPmss6CEZXtaRvvGW2oiyLqxpoCkWNCTmFPVTFDfk default.agora && \
+graph indexer cost set variables QmauYgPmss6CEZXtaRvvGW2oiyLqxpoCkWNCTmFPVTFDfk '{}' && \
+graph indexer rules set QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P default.agora && \
+graph indexer cost set variables QmPDp878JK2RcvXNhWX1UQHYbhF8iEcWPTdnP9bJvy6L6P '{}' && \
+graph indexer rules set QmPhfSkFPbooXNJUMcQSWjMXoJYF3GnWT4JmHkxYXA85Zz allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
+graph indexer cost set model QmPhfSkFPbooXNJUMcQSWjMXoJYF3GnWT4JmHkxYXA85Zz default.agora && \
+graph indexer cost set variables QmPhfSkFPbooXNJUMcQSWjMXoJYF3GnWT4JmHkxYXA85Zz '{}' && \
 graph indexer rules set QmbixVbL2mRsyKA6iCoV2gRMNzmSFZzDEQYMVn7BUaouu5 allocationAmount 477944.14 parallelAllocations 1 decisionBasis always && \
 graph indexer cost set model QmbixVbL2mRsyKA6iCoV2gRMNzmSFZzDEQYMVn7BUaouu5 default.agora && \
 graph indexer cost set variables QmbixVbL2mRsyKA6iCoV2gRMNzmSFZzDEQYMVn7BUaouu5 '{}' && \

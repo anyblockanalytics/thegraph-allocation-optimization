@@ -38,7 +38,8 @@ def createOptimizerOutput(parameters):
                                                  app="web",
                                                  slack_alerting=parameters.get('slack_alerting'),
                                                  network = parameters.get('network'),
-                                                 automation = parameters.get('automation')
+                                                 automation = parameters.get('automation'),
+                                                 ignore_tx_costs= parameters.get('ignore_tx_costs')
                                                  )
 
         optimizer_key = None

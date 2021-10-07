@@ -42,6 +42,7 @@ def createSidebar():
 
             threshold_interval = st.selectbox(label="Threshold Interval", options=['daily', 'weekly'],
                                               key="threshold_interval")
+            ignore_tx_costs = st.selectbox('Ignore TX Gas costs', options= [False,True])
 
             reserve_stake = st.number_input(label="Reserve Stake", min_value=0, value=500, step=100,
                                             key="reserve_stake")
@@ -72,7 +73,8 @@ def createSidebar():
                 'slack_alerting': slack_alerting,
                 'discord_alerting': discord_alerting,
                 'network': network,
-                'automation': automation
+                'automation': automation,
+                'ignore_tx_costs' : ignore_tx_costs
 
             }
             return return_dict

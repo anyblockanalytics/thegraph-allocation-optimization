@@ -18,7 +18,7 @@ from src.automatic_allocation import setIndexingRules, setIndexingRuleQuery
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
                         subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
                         min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100, app="script",
-                        slack_alerting=False, network='mainnet',automation=False):
+                        slack_alerting=False, network='mainnet',automation=False, ignore_tx_costs=False):
     """ Runs the main optimization process.
 
     parameters
@@ -57,7 +57,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
     optimizer_results[current_datetime]['parameters']['network'] = network
     optimizer_results[current_datetime]['parameters']['automation'] = automation
-
+    optimizer_results[current_datetime]['parameters']['ignore_tx_costs'] = ignore_tx_costs
     print("Script Execution on: ", current_datetime)
     """
     # check for metaSubgraphHealth
@@ -475,7 +475,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         'gas_costs_parallel_allocation_new_close_grt'] = allocation_costs_grt
 
     # calculate difference in rewards currently vs optimized
-    final_value = final_value - allocation_costs_grt
+    if ignore_tx_costs == False:
+        final_value = final_value - allocation_costs_grt
+    if ignore_tx_costs == True:
+        final_value = final_value
     diff_rewards = percentageIncrease(starting_value, final_value)  # Percentage increase in Rewards
     diff_rewards_fiat = round(((final_value - starting_value) * grt_usd), 2)  # Fiat increase in Rewards
     diff_rewards_grt = round((final_value - starting_value), 2)
@@ -494,12 +497,20 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             alert_to_slack('threshold_reached', threshold, threshold_interval, starting_value, final_value,
                            diff_rewards_grt)
 
-        print(
-            '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
-             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
-             Allocation script CREATED IN ./script.txt created\n' % (
-                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
-                allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == False:
+            print(
+                '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+                subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
+                Allocation script CREATED IN ./script.txt created\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                    allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == True:
+            print(
+                '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) \n Before: %s GRT \n After: %s GRT \n \
+                Allocation script CREATED IN ./script.txt created\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                     starting_value, final_value))
+            
         optimizer_results[current_datetime]['optimizer'][
             'threshold_reached'] = True
         createAllocationScript(indexer_id=indexer_id, fixed_allocations=FIXED_ALLOCATION,
@@ -516,12 +527,17 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             # alerting
             alert_to_slack('threshold_not_reached', threshold, threshold_interval, starting_value, final_value,
                            diff_rewards_grt)
-
-        print(
-            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
-             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
-                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
-                allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == False:
+            print(
+                '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+                subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                    allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == True:
+            print(
+                '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                     starting_value, final_value))
         optimizer_results[current_datetime]['optimizer'][
             'threshold_reached'] = False
 
