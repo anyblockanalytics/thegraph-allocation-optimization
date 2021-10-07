@@ -59,7 +59,7 @@ def fillBlacklistFromDatabaseBySyncAndError():
         f.close()
 
 
-def fillBlackListFromBlacklistedDevs():
+def fillBlackListFromBlacklistedDevs(network):
     """Get's the blacklistede developers from the config.json file. Adds all Subgraphs that are
     deployed by the blacklisted developer to the blacklist (config.json['blacklist'])
 
@@ -80,7 +80,7 @@ def fillBlackListFromBlacklistedDevs():
 
     # iterate through each blacklisted developer and append the subgraph IpfsHash to the blacklist
     for dev in blacklisted_devs:
-        blacklisted_subgraphs_from_dev = getSubgraphsFromDeveloper(dev)
+        blacklisted_subgraphs_from_dev = getSubgraphsFromDeveloper(dev, network)
         for subgraph in blacklisted_subgraphs_from_dev:
             if subgraph not in blacklisted_subgraphs:
                 blacklisted_subgraphs.append(subgraph)  # append subgraph id to blacklist
@@ -94,7 +94,7 @@ def fillBlackListFromBlacklistedDevs():
         f.close()
 
 
-def fillBlackListFromInactiveSubgraphs():
+def fillBlackListFromInactiveSubgraphs(network):
     """Get's the inactive subgraphs. Adds all Subgraphs that are
     inactive to the blacklist (config.json['blacklist'])
 
@@ -110,7 +110,7 @@ def fillBlackListFromInactiveSubgraphs():
     # gets the List of Blacklisted Subgraphs from config.json
     blacklisted_subgraphs = config.get('blacklist')
 
-    inactive_subgraph_list = getInactiveSubgraphs()
+    inactive_subgraph_list = getInactiveSubgraphs(network = network)
 
     # iterate through each inactive subgraph and append the subgraph IpfsHash to the blacklist
     for subgraph in inactive_subgraph_list:
@@ -168,7 +168,7 @@ def isSubgraphHealthy(subgraph_id):
         return True
 
 
-def fillBlackListFromSubgraphHealthStatus():
+def fillBlackListFromSubgraphHealthStatus(network):
     """Fills Blacklist based on Subgraph Healt status for all SubgraphDeployments
 
     """
@@ -180,7 +180,7 @@ def fillBlackListFromSubgraphHealthStatus():
     # gets the List of Blacklisted Subgraphs from config.json
     blacklisted_subgraphs = config.get('blacklist')
 
-    subgraph_list = getAllSubgraphDeployments()
+    subgraph_list = getAllSubgraphDeployments(network)
 
     # iterate through each subgraph
     for subgraph in subgraph_list:
@@ -218,7 +218,7 @@ def checkMetaSubgraphHealth():
     return meta_subgraph_health
 
 
-def createBlacklist(database=False):
+def createBlacklist(database=False, network='mainnet'):
     """creates Blacklist of Subgraphs from previous Subgraph Checks.
 
     Parameters:
@@ -226,8 +226,8 @@ def createBlacklist(database=False):
     """
     if database:
         fillBlacklistFromDatabaseBySyncAndError()
-    fillBlackListFromBlacklistedDevs()
-    fillBlackListFromInactiveSubgraphs()
-    fillBlackListFromSubgraphHealthStatus()
+    fillBlackListFromBlacklistedDevs(network = network)
+    fillBlackListFromInactiveSubgraphs(network = network)
+    fillBlackListFromSubgraphHealthStatus(network = network)
 
 # createBlacklist()

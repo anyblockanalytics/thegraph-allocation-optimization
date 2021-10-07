@@ -1,7 +1,7 @@
 from src.subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
-from src.queries import getFiatPrice, getDataAllocationOptimizer, getGasPrice
+from src.queries import getFiatPrice, getDataAllocationOptimizer, getGasPrice, getCurrentBlock,getCurrentBlockTestnet
 from src.helpers import getSubgraphIpfsHash, percentageIncrease, initialize_rpc, REWARD_MANAGER, \
-    REWARD_MANAGER_ABI
+    REWARD_MANAGER_ABI,initialize_rpc_testnet
 from src.script_creation import createAllocationScript
 from src.alerting import alert_to_slack
 import os
@@ -11,7 +11,7 @@ import pandas as pd
 import base58
 import pyomo.environ as pyomo
 from eth_utils import to_checksum_address
-
+from src.automatic_allocation import setIndexingRules, setIndexingRuleQuery
 
 # createAllocationScript(indexer_id, fixed_allocations=, blacklist_parameter=, parallel_allocations=)
 
@@ -25,7 +25,6 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     --------
         ...
         ...
-
 
     returns
     --------
@@ -74,8 +73,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # update blacklist / create blacklist if desired
     if network == 'mainnet':
         if blacklist_parameter:
-            createBlacklist()
-
+            createBlacklist(network = 'mainnet')
+    if network == 'testnet':
+        if blacklist_parameter:
+            createBlacklist(network = 'mainnet')
     # get price data
     # We need ETH-USD, GRT-USD, GRT-ETH
     try:
@@ -203,6 +204,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # Merge Allocation Indexer Data with Subgraph Data by Address for Json-Log (Only keep Subgraphs with active allocation)
     df_log = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('id')
 
+    if  not df_log.index.is_unique:
+        print("Not unique index")
+        df_log.reset_index(inplace=True)
+
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Address
     df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
     df.fillna(0, inplace=True)
@@ -252,18 +257,55 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                                            int(indexing_reward_year))
 
     # get pending rewards of current allocations
-    web3 = initialize_rpc()
-    abi = json.loads(REWARD_MANAGER_ABI)
-    contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
-    pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10 ** 18 for x in
-                       df_log['allocation_id']]
-    df_log['pending_rewards'] = pending_rewards
+    if network == 'mainnet':
+        web3 = initialize_rpc()
+
+        abi = json.loads(REWARD_MANAGER_ABI)
+        contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
+        pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10 ** 18 for x in
+                           df_log['allocation_id']]
+        df_log['pending_rewards'] = pending_rewards
+        # check if pending rewards were the same 270 blocks  before - if same, close allocation because it is most likely broken
+
+        current_block = getCurrentBlock()
+
+        pending_rewards_before = [contract.functions.getRewards(to_checksum_address(str(x))).call(
+            block_identifier=current_block - 270) / 10 ** 18 for x in df_log['allocation_id']]
+        df_log['rewards_one_hour_ago'] = pending_rewards_before
+        df_log['difference_rewards'] = df_log['pending_rewards'] - df_log['rewards_one_hour_ago']
+
+        if automation == True:
+            df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
+            for row in df_broken_subgraphs.iterrows():
+                setIndexingRuleQuery(deployment=row[1]['Address'], decision_basis="never")
+        else:
+            df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
+            print()
+            print(40 * "-")
+            print("BROKEN SUBGRAPHS, DEALLOCATE IMMEDIATELY: ")
+            with pd.option_context('display.max_rows', None, 'display.max_columns',
+                                   None):  # more options can be specified also
+                print(df_broken_subgraphs.loc[:, :])
+            print(40 * "-")
+            print()
+    if network == 'testnet':
+        #@TODO create broken allocation cleaning for testnet
+        web3 = initialize_rpc_testnet()
+        current_block = getCurrentBlockTestnet()
+        df_log['rewards_one_hour_ago'] = 0
+        df_log['difference_rewards'] = 0
+
+
+
 
     # Create Dictionary to convert to Json for Logging of Allocation Data
+    print(df_log)
     allocation_dict_log = df_log.to_dict(orient='index')
     optimizer_results[current_datetime]['current_allocations'] = allocation_dict_log
 
-    # Print current rewards and allocations
+
+
+           # Print current rewards and allocations
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
         print(df_log.loc[:, df_log.columns != 'IndexingReward'])
 
@@ -366,7 +408,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
         # set solver to glpk -> In Future this could be changeable
         solver = pyomo.SolverFactory('glpk')
-        solver.solve(model, keepfiles=True)
+        results = solver.solve(model, keepfiles=True)
 
         # list of optimized allocations, formated as key(id): allocation_amount / parallel_allocations * 10** 18
         # passed to createAllocationScript
@@ -463,6 +505,11 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         createAllocationScript(indexer_id=indexer_id, fixed_allocations=FIXED_ALLOCATION,
                                blacklist_parameter=blacklist_parameter, parallel_allocations=parallel_allocations,
                                network=network)
+
+        if automation == True:
+            setIndexingRules(FIXED_ALLOCATION, indexer_id = indexer_id,blacklist_parameter=blacklist_parameter, parallel_allocations = parallel_allocations, network = network)
+
+
     # if not reached
     if diff_rewards < threshold:
         if slack_alerting:
@@ -491,9 +538,6 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         feeds.append(optimizer_results)
         with open("./data/optimizer_log.json", mode='w') as f:
             f.write(json.dumps(feeds, indent=2))
-
-    if automation == True:
-        print("You are in automation mode")
     return optimizer_results
 
 
