@@ -20,7 +20,7 @@ def createSidebar():
                                        key='indexer_id')
             cols = st.columns(2)
             network = cols[0].selectbox('Network', options=['mainnet', 'testnet'])
-            automation = cols[1].selectbox('Automation', options=[True,False])
+            automation = cols[1].selectbox('Automation', options=[False,True])
 
             cols = st.columns(2)
             blacklist_parameter = cols[0].checkbox(label='Blacklist', key='blacklist_parameter', value=True)
