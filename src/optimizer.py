@@ -1,7 +1,7 @@
 from src.subgraph_health_checks import checkMetaSubgraphHealth, createBlacklist
-from src.queries import getFiatPrice, getDataAllocationOptimizer, getGasPrice, getCurrentBlock
+from src.queries import getFiatPrice, getDataAllocationOptimizer, getGasPrice, getCurrentBlock,getCurrentBlockTestnet
 from src.helpers import getSubgraphIpfsHash, percentageIncrease, initialize_rpc, REWARD_MANAGER, \
-    REWARD_MANAGER_ABI
+    REWARD_MANAGER_ABI,initialize_rpc_testnet
 from src.script_creation import createAllocationScript
 from src.alerting import alert_to_slack
 import os
@@ -18,14 +18,13 @@ from src.automatic_allocation import setIndexingRules, setIndexingRuleQuery
 def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocations=1, max_percentage=0.2, threshold=20,
                         subgraph_list_parameter=False, threshold_interval='daily', reserve_stake=0, min_allocation=0,
                         min_signalled_grt_subgraph=100, min_allocated_grt_subgraph=100, app="script",
-                        slack_alerting=False, network='mainnet',automation=False):
+                        slack_alerting=False, network='mainnet',automation=False, ignore_tx_costs=False):
     """ Runs the main optimization process.
 
     parameters
     --------
         ...
         ...
-
 
     returns
     --------
@@ -58,7 +57,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     optimizer_results[current_datetime]['parameters']['slack_alerting'] = slack_alerting
     optimizer_results[current_datetime]['parameters']['network'] = network
     optimizer_results[current_datetime]['parameters']['automation'] = automation
-
+    optimizer_results[current_datetime]['parameters']['ignore_tx_costs'] = ignore_tx_costs
     print("Script Execution on: ", current_datetime)
     """
     # check for metaSubgraphHealth
@@ -74,8 +73,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # update blacklist / create blacklist if desired
     if network == 'mainnet':
         if blacklist_parameter:
-            createBlacklist()
-
+            createBlacklist(network = 'mainnet')
+    if network == 'testnet':
+        if blacklist_parameter:
+            createBlacklist(network = 'mainnet')
     # get price data
     # We need ETH-USD, GRT-USD, GRT-ETH
     try:
@@ -203,6 +204,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
     # Merge Allocation Indexer Data with Subgraph Data by Address for Json-Log (Only keep Subgraphs with active allocation)
     df_log = pd.merge(df, df_subgraphs, how='left', on='Address').set_index('id')
 
+    if  not df_log.index.is_unique:
+        print("Not unique index")
+        df_log.reset_index(inplace=True)
+
     # Merge Allocation Indexer Data with Subgraph Data by Subgraph Address
     df = pd.merge(df, df_subgraphs, how='right', on='Address').set_index(['Name_y', 'Address'])
     df.fillna(0, inplace=True)
@@ -252,33 +257,49 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
                                            int(indexing_reward_year))
 
     # get pending rewards of current allocations
-    web3 = initialize_rpc()
-    abi = json.loads(REWARD_MANAGER_ABI)
-    contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
-    pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10 ** 18 for x in
-                       df_log['allocation_id']]
-    df_log['pending_rewards'] = pending_rewards
+    if network == 'mainnet':
+        web3 = initialize_rpc()
 
-    # check if pending rewards were the same 270 blocks  before - if same, close allocation because it is most likely broken
-    current_block = getCurrentBlock()
-    pending_rewards_before = [contract.functions.getRewards(to_checksum_address(str(x))).call(block_identifier = current_block - 270) / 10 ** 18 for x in df_log['allocation_id']]
-    df_log['rewards_one_hour_ago'] = pending_rewards_before
-    df_log['difference_rewards'] = df_log['pending_rewards'] - df_log['rewards_one_hour_ago']
+        abi = json.loads(REWARD_MANAGER_ABI)
+        contract = web3.eth.contract(address=REWARD_MANAGER, abi=abi)
+        pending_rewards = [contract.functions.getRewards(to_checksum_address(str(x))).call() / 10 ** 18 for x in
+                           df_log['allocation_id']]
+        df_log['pending_rewards'] = pending_rewards
+        # check if pending rewards were the same 270 blocks  before - if same, close allocation because it is most likely broken
 
-    if automation == True:
-        df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
-        for row in df_broken_subgraphs.iterrows():
-            setIndexingRuleQuery(deployment= row[1]['Address'], decision_basis = "never")
-    else:
-        df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
-        print()
-        print(40*"-")
-        print("BROKEN SUBGRAPHS, DEALLOCATE IMMEDIATELY: ")
-        with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-            print(df_broken_subgraphs.loc[:,:])
-        print(40*"-")
-        print()
+        current_block = getCurrentBlock()
+
+        pending_rewards_before = [contract.functions.getRewards(to_checksum_address(str(x))).call(
+            block_identifier=current_block - 270) / 10 ** 18 for x in df_log['allocation_id']]
+        df_log['rewards_one_hour_ago'] = pending_rewards_before
+        df_log['difference_rewards'] = df_log['pending_rewards'] - df_log['rewards_one_hour_ago']
+
+        if automation == True:
+            df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
+            for row in df_broken_subgraphs.iterrows():
+                setIndexingRuleQuery(deployment=row[1]['Address'], decision_basis="never")
+        else:
+            df_broken_subgraphs = df_log[df_log['difference_rewards'] < 1]
+            print()
+            print(40 * "-")
+            print("BROKEN SUBGRAPHS, DEALLOCATE IMMEDIATELY: ")
+            with pd.option_context('display.max_rows', None, 'display.max_columns',
+                                   None):  # more options can be specified also
+                print(df_broken_subgraphs.loc[:, :])
+            print(40 * "-")
+            print()
+    if network == 'testnet':
+        #@TODO create broken allocation cleaning for testnet
+        web3 = initialize_rpc_testnet()
+        current_block = getCurrentBlockTestnet()
+        df_log['rewards_one_hour_ago'] = 0
+        df_log['difference_rewards'] = 0
+
+
+
+
     # Create Dictionary to convert to Json for Logging of Allocation Data
+    print(df_log)
     allocation_dict_log = df_log.to_dict(orient='index')
     optimizer_results[current_datetime]['current_allocations'] = allocation_dict_log
 
@@ -387,7 +408,7 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
 
         # set solver to glpk -> In Future this could be changeable
         solver = pyomo.SolverFactory('glpk')
-        solver.solve(model, keepfiles=True)
+        results = solver.solve(model, keepfiles=True)
 
         # list of optimized allocations, formated as key(id): allocation_amount / parallel_allocations * 10** 18
         # passed to createAllocationScript
@@ -454,7 +475,10 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
         'gas_costs_parallel_allocation_new_close_grt'] = allocation_costs_grt
 
     # calculate difference in rewards currently vs optimized
-    final_value = final_value - allocation_costs_grt
+    if ignore_tx_costs == False:
+        final_value = final_value - allocation_costs_grt
+    if ignore_tx_costs == True:
+        final_value = final_value
     diff_rewards = percentageIncrease(starting_value, final_value)  # Percentage increase in Rewards
     diff_rewards_fiat = round(((final_value - starting_value) * grt_usd), 2)  # Fiat increase in Rewards
     diff_rewards_grt = round((final_value - starting_value), 2)
@@ -473,12 +497,20 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             alert_to_slack('threshold_reached', threshold, threshold_interval, starting_value, final_value,
                            diff_rewards_grt)
 
-        print(
-            '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
-             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
-             Allocation script CREATED IN ./script.txt created\n' % (
-                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
-                allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == False:
+            print(
+                '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+                subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n \
+                Allocation script CREATED IN ./script.txt created\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                    allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == True:
+            print(
+                '\nTHRESHOLD of %s Percent reached. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) \n Before: %s GRT \n After: %s GRT \n \
+                Allocation script CREATED IN ./script.txt created\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                     starting_value, final_value))
+            
         optimizer_results[current_datetime]['optimizer'][
             'threshold_reached'] = True
         createAllocationScript(indexer_id=indexer_id, fixed_allocations=FIXED_ALLOCATION,
@@ -495,12 +527,17 @@ def optimizeAllocations(indexer_id, blacklist_parameter=True, parallel_allocatio
             # alerting
             alert_to_slack('threshold_not_reached', threshold, threshold_interval, starting_value, final_value,
                            diff_rewards_grt)
-
-        print(
-            '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
-             subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
-                threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
-                allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == False:
+            print(
+                '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) after \
+                subtracting Transaction Costs. Transaction Costs %s USD. \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                    allocation_costs_fiat, starting_value, final_value))
+        if ignore_tx_costs == True:
+            print(
+                '\nTHRESHOLD of %s Percent  NOT REACHED. Increase in %s Rewards of %s Percent (%s in USD, %s in GRT) \n Before: %s GRT \n After: %s GRT \n Allocation script NOT CREATED\n' % (
+                    threshold, threshold_interval, diff_rewards, diff_rewards_fiat, diff_rewards_grt,
+                     starting_value, final_value))
         optimizer_results[current_datetime]['optimizer'][
             'threshold_reached'] = False
 

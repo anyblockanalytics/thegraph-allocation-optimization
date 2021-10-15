@@ -20,7 +20,7 @@ def createSidebar():
                                        key='indexer_id')
             cols = st.columns(2)
             network = cols[0].selectbox('Network', options=['mainnet', 'testnet'])
-            automation = cols[1].selectbox('Automation', options=[True,False])
+            automation = cols[1].selectbox('Automation', options=[False,True])
 
             cols = st.columns(2)
             blacklist_parameter = cols[0].checkbox(label='Blacklist', key='blacklist_parameter', value=True)
@@ -42,6 +42,7 @@ def createSidebar():
 
             threshold_interval = st.selectbox(label="Threshold Interval", options=['daily', 'weekly'],
                                               key="threshold_interval")
+            ignore_tx_costs = st.selectbox('Ignore TX Gas costs', options= [False,True])
 
             reserve_stake = st.number_input(label="Reserve Stake", min_value=0, value=500, step=100,
                                             key="reserve_stake")
@@ -72,7 +73,8 @@ def createSidebar():
                 'slack_alerting': slack_alerting,
                 'discord_alerting': discord_alerting,
                 'network': network,
-                'automation': automation
+                'automation': automation,
+                'ignore_tx_costs' : ignore_tx_costs
 
             }
             return return_dict
