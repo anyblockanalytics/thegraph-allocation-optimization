@@ -50,4 +50,7 @@ streamlit
 millify
 streamlit-lottie
 aiohttp
-
+web3
+Web3
+python-dotenv
+psycopg2
