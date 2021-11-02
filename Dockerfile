@@ -8,7 +8,7 @@ COPY requirements.txt /src
 RUN pip install -r requirements.txt
 
 COPY . /src
-RUN mv .env_example .env
-ENV RPC_URL https://api.anyblock.tools/ethereum/ethereum/mainnet/rpc/XXXX-XXXX-XXXX-XXXX/
+COPY .env .env
+#ENV RPC_URL https://api.anyblock.tools/ethereum/ethereum/mainnet/rpc/XXXX-XXXXX-XXXX/
 
 ENTRYPOINT ["python","main.py"]
